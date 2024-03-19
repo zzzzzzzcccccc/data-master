@@ -1,0 +1,13 @@
+{
+  "name": "@db-gui/platform",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --mode development",
+    "build": "vite build --mode production"
+  },
+  "author": "z304307393@163.com",
+  "license": "MIT",
+  "dependencies": {
+    "@db-gui/app": "*"
+  }
+}

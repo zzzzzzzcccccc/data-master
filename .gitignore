@@ -1,0 +1,12 @@
+node_modules
+dist/*
+!dist/index.html
+yarn-error.log
+coverage
+.DS_Store
+.vscode/*
+.DS_Store
+.idea
+.tool-versions
+screenshots/
+packages/*/dist/*
