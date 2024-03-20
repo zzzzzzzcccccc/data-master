@@ -30,13 +30,11 @@ function renderTitle() {
 function bootstrap() {
   const root = document.getElementById('root')
 
-  if (!root) {
-    return
+  if (root) {
+    ;[renderTitle(), renderPlatform()].forEach((element) => {
+      root.appendChild(element)
+    })
   }
-
-  ;[renderTitle(), renderPlatform()].forEach((element) => {
-    root.appendChild(element)
-  })
 }
 
 bootstrap()

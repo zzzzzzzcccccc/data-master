@@ -53,5 +53,8 @@
       "prettier --parser=typescript --write",
       "git add"
     ]
+  },
+  "dependencies": {
+    "electron": "^29.1.4"
   }
 }

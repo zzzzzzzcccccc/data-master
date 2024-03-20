@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { Platform } from '@db-gui/core'
 
 export type BootstrapOptions = {
   injector: HTMLElement
+  platform: Platform
 }
 
 function App() {

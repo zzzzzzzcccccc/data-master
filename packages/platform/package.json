@@ -8,6 +8,7 @@
   "author": "z304307393@163.com",
   "license": "MIT",
   "dependencies": {
-    "@db-gui/app": "*"
+    "@db-gui/app": "*",
+    "@db-gui/core": "*"
   }
 }
