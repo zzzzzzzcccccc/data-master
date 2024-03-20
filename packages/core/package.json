@@ -1,6 +1,7 @@
 {
   "name": "@db-gui/core",
   "version": "0.0.0",
+  "type": "module",
   "main": "./dist/index.es.js",
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",

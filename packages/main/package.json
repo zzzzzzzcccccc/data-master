@@ -1,17 +1,21 @@
 {
   "name": "@db-gui/main",
   "version": "0.0.0",
-  "main": "./dist/index.es.js",
+  "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
+  "cjs": "./dist/index.cjs.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
-    "dev": "tsc -w",
-    "build": "tsc",
-    "start": "electron ./dist/index.js"
+    "dev": "yarn build --watch",
+    "build": "rimraf dist && rollup -c rollup.config.js",
+    "start": "electron ./dist/index.cjs.js"
   },
   "author": "z304307393@163.com",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@db-gui/core": "*"
+  }
 }

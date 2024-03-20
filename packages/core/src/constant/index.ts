@@ -1,0 +1,1 @@
+export const PRELOAD_INJECTOR = '__PRELOAD_INJECTOR__'

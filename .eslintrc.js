@@ -7,7 +7,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  ignorePatterns: ['dist', 'node_modules'],
+  ignorePatterns: ['dist', 'node_modules', 'rollup.config.js', 'index.d.ts', 'db-global.d.ts', '.eslintrc.js'],
   extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -21,5 +21,8 @@ module.exports = {
     react: {
       version: 'detect',
     },
+  },
+  rules: {
+    '@typescript-eslint/no-explicit-any': IGNORE,
   },
 }

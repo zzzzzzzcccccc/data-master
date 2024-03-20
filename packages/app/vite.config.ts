@@ -1,20 +1,45 @@
 import { defineConfig } from 'vite'
-import reactPlugin from '@vitejs/plugin-react'
-import dts from 'vite-plugin-dts'
+import legacyPlugin from '@vitejs/plugin-legacy'
+import * as fs from 'fs'
+import * as path from 'path'
 
-export default defineConfig({
-  build: {
-    sourcemap: true,
-    lib: {
-      entry: 'src/index.ts',
-      name: '@db-gui/app',
-      fileName: (format) => `index.${format}.js`,
+function getRollupOptionsInput() {
+  const root = path.resolve(__dirname)
+
+  return fs
+    .readdirSync(root)
+    .filter((file) => file.endsWith('.html'))
+    .reduce(
+      (acc, html) => {
+        return {
+          ...acc,
+          [html.split('.')[0]]: path.resolve(root, html),
+        }
+      },
+      {} as Record<string, string>,
+    )
+}
+
+export default defineConfig(() => {
+  const envDir = '../../env'
+  const input = getRollupOptionsInput()
+
+  return {
+    base: './',
+    envDir,
+    server: {
+      port: 3333,
     },
-  },
-  plugins: [
-    reactPlugin(),
-    dts({
-      include: ['src'],
-    }),
-  ],
+    build: {
+      sourcemap: true,
+      rollupOptions: {
+        input,
+      },
+    },
+    plugins: [
+      legacyPlugin({
+        targets: ['> 0.5%', 'ie >= 11'],
+      }),
+    ],
+  }
 })
