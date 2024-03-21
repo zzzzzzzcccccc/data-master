@@ -1,28 +1,16 @@
 import { defineConfig } from 'vite'
 import legacyPlugin from '@vitejs/plugin-legacy'
-import * as fs from 'fs'
 import * as path from 'path'
 
-function getRollupOptionsInput() {
-  const root = path.resolve(__dirname)
-
-  return fs
-    .readdirSync(root)
-    .filter((file) => file.endsWith('.html'))
-    .reduce(
-      (acc, html) => {
-        return {
-          ...acc,
-          [html.split('.')[0]]: path.resolve(root, html),
-        }
-      },
-      {} as Record<string, string>,
-    )
-}
-
-export default defineConfig(() => {
+export default defineConfig((config) => {
   const envDir = '../../env'
-  const input = getRollupOptionsInput()
+  const isDevelopment = config.mode === 'development'
+  const wdyr = path.resolve(
+    __dirname,
+    isDevelopment
+      ? 'node_modules/@welldone-software/why-did-you-render'
+      : 'src/__mocks__/@welldone-software/why-did-you-render/index.ts',
+  )
 
   return {
     base: './',
@@ -30,11 +18,13 @@ export default defineConfig(() => {
     server: {
       port: 3333,
     },
+    resolve: {
+      alias: {
+        '@welldone-software/why-did-you-render': wdyr,
+      },
+    },
     build: {
       sourcemap: true,
-      rollupOptions: {
-        input,
-      },
     },
     plugins: [
       legacyPlugin({

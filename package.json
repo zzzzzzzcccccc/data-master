@@ -11,7 +11,8 @@
     "prettier:fix": "prettier --write ./packages",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx ./packages",
     "lint:fix": "yarn link --fix",
-    "start": "lerna run dev",
+    "dev": "lerna run dev --parallel",
+    "start": "lerna run start",
     "build": "lerna run build",
     "prepare": "husky"
   },
@@ -19,6 +20,9 @@
     "electron": "^29.1.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.24.3",
+    "@babel/preset-env": "^7.24.3",
+    "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.6",

@@ -1,11 +1,13 @@
 {
   "extends": "../../base.tsconfig.json",
-  "include": ["src"],
   "compilerOptions": {
     "noEmit": false,
     "baseUrl": "./",
     "declarationDir": "dist",
-    "emitDeclarationOnly": true,
-    "jsx": "react"
+    "emitDeclarationOnly": false,
+    "module": "esnext",
+    "sourceMap": true,
+    "outDir": "dist",
+    "moduleResolution": "node"
   }
 }
