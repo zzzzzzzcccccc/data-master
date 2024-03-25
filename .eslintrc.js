@@ -7,8 +7,9 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  ignorePatterns: ['dist', 'node_modules', 'rollup.config.js', 'index.d.ts', 'db-global.d.ts', '.eslintrc.js'],
-  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
+  ignorePatterns: ['dist', 'node_modules', 'rollup.config.js', 'index.d.ts', 'db-global.d.ts', '.eslintrc.js', '__mocks__'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended', 'plugin:react-hooks/recommended', 'prettier'],
+  plugins: ['prettier', '@typescript-eslint', 'react', 'react-hooks'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -23,6 +24,6 @@ module.exports = {
     },
   },
   rules: {
-    '@typescript-eslint/no-explicit-any': IGNORE,
+    'prettier/prettier': ERROR
   },
 }

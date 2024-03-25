@@ -11,6 +11,10 @@ export default defineConfig((config) => {
       ? 'node_modules/@welldone-software/why-did-you-render'
       : 'src/__mocks__/@welldone-software/why-did-you-render/index.ts',
   )
+  const reduxLogger = path.resolve(
+    __dirname,
+    isDevelopment ? 'node_modules/redux-logger' : 'src/__mocks__/redux-logger/index.ts',
+  )
 
   return {
     base: './',
@@ -21,6 +25,7 @@ export default defineConfig((config) => {
     resolve: {
       alias: {
         '@welldone-software/why-did-you-render': wdyr,
+        'redux-logger': reduxLogger,
       },
     },
     build: {

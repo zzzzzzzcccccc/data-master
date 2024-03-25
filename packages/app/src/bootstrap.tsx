@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { Provider } from 'react-redux'
+import { store } from './store'
 import { App } from './components'
 import { getPreloadInjector } from './utils'
-import { DeviceProvider, InitializeProvider } from './context'
 import wdyr from '@welldone-software/why-did-you-render'
 
 function setDeviceInfo(target: HTMLElement) {
@@ -27,15 +28,13 @@ export default async function bootstrap() {
 
   const injector = document.getElementById('root')
   if (injector) {
-    const deviceInfo = setDeviceInfo(injector)
+    setDeviceInfo(injector)
 
     ReactDOM.createRoot(injector).render(
       <React.StrictMode>
-        <DeviceProvider deviceInfo={deviceInfo}>
-          <InitializeProvider>
-            <App />
-          </InitializeProvider>
-        </DeviceProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
       </React.StrictMode>,
     )
   }

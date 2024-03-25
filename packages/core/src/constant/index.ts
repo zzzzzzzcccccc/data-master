@@ -15,3 +15,5 @@ export const ELECTRON_WINDOW_EVENT_NAME = {
   readyToShow: 'ready-to-show',
   close: 'close',
 } as const
+
+export const STORAGE_NAME_SPACE = 'DB_GUI'
