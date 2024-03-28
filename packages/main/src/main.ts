@@ -1,6 +1,14 @@
 import * as electron from 'electron'
 import * as path from 'path'
-import { DARWIN, WIN32, ELECTRON_APP_EVENT_NAME, ELECTRON_WINDOW_EVENT_NAME } from '@db-gui/core'
+import {
+  DARWIN,
+  WIN32,
+  ELECTRON_APP_EVENT_NAME,
+  ELECTRON_WINDOW_EVENT_NAME,
+  APP_NAME,
+  DEFAULT_MAIN_WINDOW_LAYOUT,
+} from '@db-gui/core'
+import { logger } from './utils'
 
 class Client {
   private _isRunning = false
@@ -16,21 +24,24 @@ class Client {
 
   private createWindow() {
     if (!this._mainWindow) {
-      electron.Menu.setApplicationMenu(null)
-
-      this._mainWindow = new electron.BrowserWindow({
-        title: 'DB-GUI',
-        width: 800,
-        height: 600,
+      const options: electron.BrowserWindowConstructorOptions = {
+        title: APP_NAME,
+        ...DEFAULT_MAIN_WINDOW_LAYOUT,
         useContentSize: true,
         titleBarStyle: this.isWin32 ? 'hidden' : 'hiddenInset',
         show: false,
+        frame: false,
         webPreferences: {
           preload: path.join(__dirname, 'preload.js'),
           javascript: true,
           nodeIntegration: false,
         },
-      })
+      }
+      logger.info(`Create main window with options = ${JSON.stringify(options)}`)
+      electron.Menu.setApplicationMenu(null)
+
+      this._mainWindow = new electron.BrowserWindow(options)
+      logger.info('Create main window')
     }
 
     return this._mainWindow
@@ -57,6 +68,8 @@ class Client {
   }
 
   private appOnReady() {
+    logger.info('App on ready')
+
     const window = this.createWindow()
     const boundReadyToShow = this.mainWindowOnReadyToShow.bind(this)
     const boundClose = this.mainWindowOnClose.bind(this)
@@ -74,6 +87,8 @@ class Client {
   }
 
   private appOnActivate() {
+    logger.info('App on activate')
+
     if (this._isRunning && this._mainWindow) {
       this._mainWindow.show()
     } else {
@@ -83,21 +98,29 @@ class Client {
   }
 
   private appOnBeforeQuit() {
+    logger.info('App on before quit')
+
     this.destroy()
     electron.app.exit()
   }
 
   private appOnWindowAllClosed() {
+    logger.info('App on window all closed')
+
     if (!this.isDarwin) {
       electron.app.quit()
     }
   }
 
   private mainWindowOnReadyToShow() {
+    logger.info('Main window on ready to show')
+
     this._mainWindow?.show()
   }
 
   private mainWindowOnClose(event: electron.Event) {
+    logger.info('Main window on close')
+
     if (this.isDarwin) {
       if (!event.defaultPrevented) {
         event.preventDefault()

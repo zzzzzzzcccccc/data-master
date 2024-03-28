@@ -6,24 +6,28 @@
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "vite --mode development",
-    "build": "vite build --mode production"
+    "start": "vite --mode development",
+    "build": "rimraf dist && vite build --mode production"
   },
   "author": "z304307393@163.com",
   "license": "MIT",
   "dependencies": {
     "@db-gui/core": "*",
+    "@db-gui/logger": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.1.0",
     "react-router-dom": "^6.22.3",
+    "react-error-boundary": "^4.0.12",
     "history": "^5.3.0",
     "antd": "^5.15.3",
+    "@ant-design/icons": "^5.3.5",
     "@reduxjs/toolkit": "^2.2.2",
     "redux": "^5.0.1",
     "react-redux": "^9.1.0",
     "redux-persist": "^6.0.0",
-    "i18next": "^23.10.1"
+    "i18next": "^23.10.1",
+    "tslog": "^4.9.1"
   },
   "devDependencies": {
     "@welldone-software/why-did-you-render": "^8.0.1",

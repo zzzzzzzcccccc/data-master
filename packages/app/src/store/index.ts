@@ -1,8 +1,8 @@
-import store from './store'
+import store, { persist } from './store'
 import { appSlice } from './slices'
 
 export * from './types'
 
-export const { setHistoryUpdate, setTheme, setStatus } = appSlice.actions
+export const { setHistoryUpdate, setTheme, setSettingsVisible } = appSlice.actions
 
-export { store }
+export { store, persist }

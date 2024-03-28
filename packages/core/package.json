@@ -6,7 +6,6 @@
   "cjs": "./dist/index.cjs.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "yarn build --watch",
     "build": "rimraf dist && rollup -c rollup.config.js"
   },
   "files": [

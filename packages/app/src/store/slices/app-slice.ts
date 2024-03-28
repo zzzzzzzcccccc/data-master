@@ -1,19 +1,20 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { type Update } from 'history'
 import { history } from '../../utils'
-import { ASYNC_STATUS, THEME_MODE } from '@db-gui/core'
+import { THEME_MODE, SIZE, DEFAULT_THEME_PRIMARY_COLOR } from '@db-gui/core'
 
 export interface AppState {
-  status: ASYNC_STATUS
   historyUpdate: Update
   theme: {
     lang: string
     mode: THEME_MODE
+    primaryColor: string
+    size: SIZE
   }
+  settingsVisible: boolean
 }
 
 const initialState: AppState = {
-  status: ASYNC_STATUS.idle,
   historyUpdate: {
     location: history.location,
     action: history.action,
@@ -21,7 +22,10 @@ const initialState: AppState = {
   theme: {
     lang: navigator.language || 'en-US',
     mode: THEME_MODE.system,
+    primaryColor: DEFAULT_THEME_PRIMARY_COLOR,
+    size: SIZE.small,
   },
+  settingsVisible: false,
 }
 
 export const appSlice = createSlice({
@@ -37,8 +41,8 @@ export const appSlice = createSlice({
         ...action.payload,
       }
     },
-    setStatus(state, action: PayloadAction<ASYNC_STATUS>) {
-      state.status = action.payload
+    setSettingsVisible(state, action: PayloadAction<boolean>) {
+      state.settingsVisible = action.payload
     },
   },
 })

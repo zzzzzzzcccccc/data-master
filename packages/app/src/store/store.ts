@@ -13,7 +13,7 @@ import {
 import storage from 'redux-persist/lib/storage'
 import { appSlice } from './slices'
 import { createLogger } from 'redux-logger'
-import { STORAGE_NAME_SPACE } from '@db-gui/core'
+import { APP_NAME } from '@db-gui/core'
 import { RootState } from './types'
 
 const middleware: Middleware[] = [
@@ -38,10 +38,7 @@ const store = configureStore({
       (acc, key) => {
         const configuration = persistConfig[key]
         if (configuration.config) {
-          acc[key] = persistReducer(
-            { ...configuration.config, key: `${STORAGE_NAME_SPACE}_${key}` },
-            configuration.reducer,
-          )
+          acc[key] = persistReducer({ ...configuration.config, key: `${APP_NAME}_${key}` }, configuration.reducer)
         } else {
           acc[key] = configuration.reducer
         }
@@ -58,5 +55,8 @@ const store = configureStore({
     }).concat(middleware),
 })
 
-persistStore(store)
+const persist = persistStore(store)
+
+export { persist }
+
 export default store

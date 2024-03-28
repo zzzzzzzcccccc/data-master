@@ -4,6 +4,7 @@ import GlobalLayout from '../global-layout'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import { history } from '../../utils'
 import { setHistoryUpdate } from '../../store'
+import { BASE_ROUTE } from '@db-gui/core'
 
 function App() {
   const { historyUpdate } = useAppSelector((state) => state.app)
@@ -22,7 +23,7 @@ function App() {
   return (
     <Router navigator={history} location={historyUpdate.location} navigationType={historyUpdate.action}>
       <Routes>
-        <Route path="/" element={<GlobalLayout />} />
+        <Route path={BASE_ROUTE} element={<GlobalLayout />} />
       </Routes>
     </Router>
   )

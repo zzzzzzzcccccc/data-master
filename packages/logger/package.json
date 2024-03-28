@@ -1,0 +1,19 @@
+{
+  "name": "@db-gui/logger",
+  "version": "0.0.0",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "cjs": "./dist/index.cjs.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rimraf dist && rollup -c rollup.config.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "author": "z304307393@163.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "tslog": "^4.9.1"
+  }
+}

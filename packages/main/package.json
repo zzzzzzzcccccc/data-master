@@ -6,13 +6,15 @@
   "cjs": "./dist/index.cjs.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "yarn build --watch",
-    "build": "rimraf dist && rollup -c rollup.config.js",
-    "start": "electron ./dist/index.cjs.js"
+    "start": "yarn build --watch",
+    "start:main": "electron ./dist/index.cjs.js",
+    "build": "rimraf dist && rollup -c rollup.config.js"
   },
   "author": "z304307393@163.com",
   "license": "MIT",
   "dependencies": {
-    "@db-gui/core": "*"
+    "@db-gui/core": "*",
+    "@db-gui/logger": "*",
+    "tslog": "^4.9.1"
   }
 }

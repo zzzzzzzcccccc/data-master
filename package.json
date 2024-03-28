@@ -11,13 +11,14 @@
     "prettier:fix": "prettier --write ./packages",
     "lint": "eslint -c .eslintrc.js --ext .ts,.tsx ./packages",
     "lint:fix": "yarn link --fix",
-    "dev": "lerna run dev --parallel",
     "start": "lerna run start",
+    "start:main": "lerna run start:main",
     "build": "lerna run build",
     "prepare": "husky"
   },
   "dependencies": {
-    "electron": "^29.1.4"
+    "electron": "^29.1.4",
+    "tslog": "^4.9.2"
   },
   "devDependencies": {
     "@babel/core": "^7.24.3",
@@ -46,7 +47,9 @@
     "pretty-quick": "^4.0.0",
     "rimraf": "^5.0.5",
     "rollup": "^4.13.0",
+    "sass": "^1.72.0",
     "terser": "^5.4.0",
+    "tslib": "^2.6.2",
     "typescript": "^5.4.2",
     "vite": "^5.1.6",
     "vite-plugin-dts": "^3.7.3"

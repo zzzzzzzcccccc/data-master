@@ -1,0 +1,14 @@
+{
+  "extends": "../../base.tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "baseUrl": "./",
+    "declarationDir": "dist",
+    "emitDeclarationOnly": false,
+    "module": "esnext",
+    "sourceMap": true,
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "target": "es2020"
+  }
+}

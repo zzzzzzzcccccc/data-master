@@ -10,3 +10,9 @@ export enum THEME_MODE {
   light = 'light',
   system = 'system',
 }
+
+export enum SIZE {
+  small = 'small',
+  middle = 'middle',
+  large = 'large',
+}
