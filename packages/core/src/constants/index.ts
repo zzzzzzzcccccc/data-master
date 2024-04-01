@@ -23,3 +23,20 @@ export const ELECTRON_WINDOW_EVENT_NAME = {
 export const DEFAULT_THEME_PRIMARY_COLOR = '#1890ff'
 export const DARK_MEDIA_QUERY = '(prefers-color-scheme: dark)'
 export const BASE_ROUTE = '/'
+export const HTTP_REQUEST_CODE = {
+  ok: 200,
+  badRequest: 400,
+  unauthorized: 401,
+  notFound: 404,
+  timeout: 408,
+  internalServerError: 500,
+}
+export const REQUEST_TIMEOUT = 10 * 1000
+
+export const URI = {
+  database: 'database',
+}
+
+export const CLIENT_NAMES = {
+  mysql: 'mysql',
+}

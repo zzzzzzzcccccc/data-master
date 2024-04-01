@@ -10,3 +10,4 @@ coverage
 .tool-versions
 screenshots/
 packages/*/dist/*
+.resources

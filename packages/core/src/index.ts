@@ -1,3 +1,4 @@
 export * from './enums'
-export * from './constant'
+export * from './constants'
 export * from './types'
+export * from './utils'

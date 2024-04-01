@@ -1,7 +1,9 @@
 import i18n, { type InitOptions } from 'i18next'
-import { logger } from '../../utils'
+import { logger as baseLogger } from '../../utils'
 import { initReactI18next } from 'react-i18next'
 import { type Locale } from 'antd/es/locale'
+
+const logger = baseLogger.getSubLogger('I18nConfig')
 
 function I18nConfig() {
   let _lang = ''

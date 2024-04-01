@@ -8,6 +8,7 @@ import {
   APP_NAME,
   DEFAULT_MAIN_WINDOW_LAYOUT,
 } from '@db-gui/core'
+import { rendererListener } from './renderer'
 import { logger } from './utils'
 
 class Client {
@@ -19,6 +20,7 @@ class Client {
     if (!this._isRunning) {
       this._isRunning = true
       this._unListener = this.listener()
+      rendererListener.init()
     }
   }
 
@@ -37,11 +39,10 @@ class Client {
           nodeIntegration: false,
         },
       }
-      logger.info(`Create main window with options = ${JSON.stringify(options)}`)
       electron.Menu.setApplicationMenu(null)
 
       this._mainWindow = new electron.BrowserWindow(options)
-      logger.info('Create main window')
+      logger.info(`Create main window with options = ${JSON.stringify(options)}`)
     }
 
     return this._mainWindow
@@ -92,7 +93,6 @@ class Client {
     if (this._isRunning && this._mainWindow) {
       this._mainWindow.show()
     } else {
-      this.destroy()
       this.init()
     }
   }
@@ -132,6 +132,7 @@ class Client {
   }
 
   private destroy() {
+    rendererListener.destroy()
     this._unListener?.()
     this._mainWindow = null
     this._isRunning = false

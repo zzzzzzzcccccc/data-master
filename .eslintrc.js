@@ -7,8 +7,22 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  ignorePatterns: ['dist', 'node_modules', 'rollup.config.js', 'index.d.ts', 'db-global.d.ts', '.eslintrc.js', '__mocks__'],
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended', 'plugin:react-hooks/recommended', 'prettier'],
+  ignorePatterns: [
+    'dist',
+    'node_modules',
+    'rollup.config.js',
+    'index.d.ts',
+    'db-global.d.ts',
+    '.eslintrc.js',
+    '__mocks__',
+  ],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'prettier',
+  ],
   plugins: ['prettier', '@typescript-eslint', 'react', 'react-hooks'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -24,6 +38,16 @@ module.exports = {
     },
   },
   rules: {
-    'prettier/prettier': ERROR
+    'prettier/prettier': ERROR,
+    'react-hooks/rules-of-hooks': ERROR,
+    'react-hooks/exhaustive-deps': WARNING,
   },
+  overrides: [
+    {
+      files: ['packages/client/src/database-clients/database-client.ts'],
+      rules: {
+        '@typescript-eslint/no-unused-vars': IGNORE,
+      },
+    },
+  ],
 }

@@ -4,6 +4,10 @@ const { babel } = require('@rollup/plugin-babel')
 const commonjs = require('@rollup/plugin-commonjs')
 const typescript = require('@rollup/plugin-typescript')
 
+const external = Array.from(
+  new Set([...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.devDependencies || {})]),
+)
+
 module.exports = {
   input: 'src/index.ts',
   output: [
@@ -20,7 +24,7 @@ module.exports = {
       sourcemap: true,
     },
   ],
-  external: ['electron'],
+  external,
   plugins: [
     resolve({
       extensions: ['.ts'],

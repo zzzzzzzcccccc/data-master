@@ -15,6 +15,7 @@
   "dependencies": {
     "@db-gui/core": "*",
     "@db-gui/logger": "*",
+    "@db-gui/client": "*",
     "tslog": "^4.9.1"
   }
 }

@@ -6,8 +6,10 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { Provider } from 'react-redux'
 import { store } from './store'
 import { GlobalError, App } from './components'
-import { logger, getPreloadInjector } from './utils'
+import { logger as baseLogger, getPreloadInjector } from './utils'
 import wdyr from '@welldone-software/why-did-you-render'
+
+const logger = baseLogger.getSubLogger('Bootstrap')
 
 function setDeviceInfo(target: HTMLElement) {
   const { getDeviceInfo } = getPreloadInjector()
@@ -27,7 +29,7 @@ function setupWhyDidRender() {
 }
 
 export default async function bootstrap() {
-  logger.debug('Start bootstrap')
+  logger.debug('Start')
 
   setupWhyDidRender()
 
@@ -51,6 +53,6 @@ export default async function bootstrap() {
       </React.StrictMode>,
     )
 
-    logger.debug('Success bootstrap')
+    logger.debug('Success')
   }
 }

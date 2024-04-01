@@ -3,10 +3,12 @@ import { Form, Select, Radio, ColorPicker } from 'antd'
 import { type Color } from 'antd/es/color-picker'
 import { useTranslation, useAppSelector, useAppDispatch } from '../../hooks'
 import { i18nConfig } from '../../config'
-import { logger } from '../../utils'
+import { logger as baseLogger } from '../../utils'
 import { THEME_MODE, SIZE } from '@db-gui/core'
 import { setTheme } from '../../store'
 import styles from './settings.module.scss'
+
+const logger = baseLogger.getSubLogger('SettingsTheme')
 
 function Theme() {
   const { theme } = useAppSelector((state) => state.app)
@@ -19,7 +21,7 @@ function Theme() {
   }))
 
   const handleOnValuesChange = (current: Record<string, string | Color>) => {
-    logger.debug(`Settings theme changed: ${JSON.stringify(current)}`)
+    logger.debug(`changed to: ${JSON.stringify(current)}`)
 
     if (current.primaryColor) {
       current.primaryColor = (current.primaryColor as Color).toHexString()

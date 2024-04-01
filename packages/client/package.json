@@ -1,5 +1,5 @@
 {
-  "name": "@db-gui/core",
+  "name": "@db-gui/client",
   "version": "0.0.0",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
@@ -13,10 +13,10 @@
   ],
   "author": "z304307393@163.com",
   "license": "MIT",
-  "peerDependencies": {
-    "mysql2": "^3.9.3"
-  },
-  "devDependencies": {
-    "mysql2": "^3.9.3"
+  "dependencies": {
+    "@db-gui/core": "*",
+    "mysql2": "^3.9.3",
+    "class-validator": "^0.14.1",
+    "class-transformer": "^0.5.1"
   }
 }
