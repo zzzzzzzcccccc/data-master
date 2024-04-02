@@ -1,5 +1,5 @@
 import DatabaseClient from '../database-client'
-import { CLIENT_NAMES } from '@db-gui/core'
+import { CLIENT_NAMES } from '@dm/core'
 import mysql, { Connection } from 'mysql2/promise'
 
 class MysqlClient extends DatabaseClient<mysql.ConnectionOptions, Connection> {
@@ -7,9 +7,9 @@ class MysqlClient extends DatabaseClient<mysql.ConnectionOptions, Connection> {
     super(CLIENT_NAMES.mysql)
   }
 
-  public override async connection(configuration: mysql.ConnectionOptions, autoConnection = true) {
+  public override async connection(configuration: mysql.ConnectionOptions, autoDisConnection = true) {
     const connection = await mysql.createConnection(configuration)
-    if (autoConnection) {
+    if (autoDisConnection) {
       await this.disconnection(connection)
     }
     return connection

@@ -8,6 +8,8 @@
     "module": "esnext",
     "sourceMap": true,
     "outDir": "dist",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }

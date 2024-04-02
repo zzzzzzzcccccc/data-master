@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { PRELOAD_INJECTOR, PreloadInjector } from '@db-gui/core'
+import { PRELOAD_INJECTOR, PreloadInjector } from '@dm/core'
 
 interface ImportMetaEnv {
   VITE_RUNTIME_ENV: string

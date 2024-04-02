@@ -79,8 +79,8 @@ importers:
   packages/app:
     specifiers:
       '@ant-design/icons': ^5.3.5
-      '@db-gui/core': '*'
-      '@db-gui/logger': '*'
+      '@dm/core': '*'
+      '@dm/logger': '*'
       '@reduxjs/toolkit': ^2.2.2
       '@welldone-software/why-did-you-render': ^8.0.1
       antd: ^5.15.3
@@ -98,8 +98,8 @@ importers:
       tslog: ^4.9.1
     dependencies:
       '@ant-design/icons': 5.3.5_biqbaboplfbrettd7655fr4n2y
-      '@db-gui/core': link:../core
-      '@db-gui/logger': link:../logger
+      '@dm/core': link:../core
+      '@dm/logger': link:../logger
       '@reduxjs/toolkit': 2.2.2_xjpui5vowofmlfxsssmirucdoe
       antd: 5.15.3_biqbaboplfbrettd7655fr4n2y
       history: 5.3.0
@@ -119,12 +119,12 @@ importers:
 
   packages/client:
     specifiers:
-      '@db-gui/core': '*'
+      '@dm/core': '*'
       class-transformer: ^0.5.1
       class-validator: ^0.14.1
       mysql2: ^3.9.3
     dependencies:
-      '@db-gui/core': link:../core
+      '@dm/core': link:../core
       class-transformer: 0.5.1
       class-validator: 0.14.1
       mysql2: 3.9.3
@@ -140,14 +140,14 @@ importers:
 
   packages/main:
     specifiers:
-      '@db-gui/client': '*'
-      '@db-gui/core': '*'
-      '@db-gui/logger': '*'
+      '@dm/client': '*'
+      '@dm/core': '*'
+      '@dm/logger': '*'
       tslog: ^4.9.1
     dependencies:
-      '@db-gui/client': link:../client
-      '@db-gui/core': link:../core
-      '@db-gui/logger': link:../logger
+      '@dm/client': link:../client
+      '@dm/core': link:../core
+      '@dm/logger': link:../logger
       tslog: 4.9.2
 
 packages:

@@ -7,7 +7,7 @@ import {
   ELECTRON_WINDOW_EVENT_NAME,
   APP_NAME,
   DEFAULT_MAIN_WINDOW_LAYOUT,
-} from '@db-gui/core'
+} from '@dm/core'
 import { rendererListener } from './renderer'
 import { logger } from './utils'
 

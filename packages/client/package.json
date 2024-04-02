@@ -1,5 +1,5 @@
 {
-  "name": "@db-gui/client",
+  "name": "@dm/client",
   "version": "0.0.0",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
@@ -14,7 +14,7 @@
   "author": "z304307393@163.com",
   "license": "MIT",
   "dependencies": {
-    "@db-gui/core": "*",
+    "@dm/core": "*",
     "mysql2": "^3.9.3",
     "class-validator": "^0.14.1",
     "class-transformer": "^0.5.1"

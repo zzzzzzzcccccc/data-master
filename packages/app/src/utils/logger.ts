@@ -1,4 +1,4 @@
-import Logger from '@db-gui/logger'
+import Logger from '@dm/logger'
 
 const logger = Logger({
   name: 'App',

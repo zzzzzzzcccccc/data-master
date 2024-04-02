@@ -1,5 +1,5 @@
 {
-  "name": "@db-gui/app",
+  "name": "@dm/app",
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.es.js",
@@ -12,8 +12,8 @@
   "author": "z304307393@163.com",
   "license": "MIT",
   "dependencies": {
-    "@db-gui/core": "*",
-    "@db-gui/logger": "*",
+    "@dm/core": "*",
+    "@dm/logger": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.1.0",

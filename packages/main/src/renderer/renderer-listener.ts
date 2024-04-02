@@ -1,6 +1,6 @@
 import * as electron from 'electron'
-import { URI, RpcRequestMessage, DatabaseParams, HTTP_REQUEST_CODE, safePromiseCall } from '@db-gui/core'
-import { databaseClients } from '@db-gui/client'
+import { URI, RpcRequestMessage, DatabaseParams, HTTP_REQUEST_CODE, safePromiseCall } from '@dm/core'
+import { databaseClients } from '@dm/client'
 
 class RendererListener {
   private _unListener: (() => void) | null = null

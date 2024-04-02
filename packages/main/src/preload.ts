@@ -1,5 +1,5 @@
 import * as electron from 'electron'
-import { PRELOAD_INJECTOR, PreloadInjector } from '@db-gui/core'
+import { PRELOAD_INJECTOR, PreloadInjector } from '@dm/core'
 import { getDeviceInfo, rpcRequest } from './exposes'
 
 function bootstrap() {

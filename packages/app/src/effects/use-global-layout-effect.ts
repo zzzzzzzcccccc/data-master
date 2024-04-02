@@ -1,6 +1,6 @@
 import { useAppSelector, useMediaQuery } from '../hooks'
 import { theme as resourceAntdTheme, type ConfigProviderProps } from 'antd'
-import { THEME_MODE, DARK_MEDIA_QUERY } from '@db-gui/core'
+import { THEME_MODE, DARK_MEDIA_QUERY } from '@dm/core'
 import { antdLocales, i18nConfig } from '../config'
 import { RootState } from '../store'
 

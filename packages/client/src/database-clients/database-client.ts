@@ -18,7 +18,7 @@ class DatabaseClient<Configuration = object, Connection = unknown> {
     }
   }
 
-  public connection(configuration: Configuration, autoConnection = true) {
+  public connection(configuration: Configuration, autoDisConnection = true) {
     // TODO implement
   }
 

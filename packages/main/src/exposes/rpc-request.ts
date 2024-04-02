@@ -1,5 +1,5 @@
 import * as electron from 'electron'
-import { HTTP_REQUEST_CODE, REQUEST_TIMEOUT, RpcRequestResponse, RpcRequestMessage } from '@db-gui/core'
+import { HTTP_REQUEST_CODE, REQUEST_TIMEOUT, RpcRequestResponse, RpcRequestMessage } from '@dm/core'
 
 const genEventId = (function GenEventId() {
   const map = new Map<string, number>()

@@ -4,7 +4,7 @@ import { type Color } from 'antd/es/color-picker'
 import { useTranslation, useAppSelector, useAppDispatch } from '../../hooks'
 import { i18nConfig } from '../../config'
 import { logger as baseLogger } from '../../utils'
-import { THEME_MODE, SIZE } from '@db-gui/core'
+import { THEME_MODE, SIZE } from '@dm/core'
 import { setTheme } from '../../store'
 import styles from './settings.module.scss'
 

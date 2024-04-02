@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { type Update } from 'history'
 import { history } from '../../utils'
-import { THEME_MODE, SIZE, DEFAULT_THEME_PRIMARY_COLOR } from '@db-gui/core'
+import { THEME_MODE, SIZE, DEFAULT_THEME_PRIMARY_COLOR } from '@dm/core'
 
 export interface AppState {
   historyUpdate: Update

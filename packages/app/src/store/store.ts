@@ -13,7 +13,7 @@ import {
 import storage from 'redux-persist/lib/storage'
 import { appSlice } from './slices'
 import { createLogger } from 'redux-logger'
-import { APP_NAME } from '@db-gui/core'
+import { APP_NAME } from '@dm/core'
 import { RootState } from './types'
 
 const middleware: Middleware[] = [

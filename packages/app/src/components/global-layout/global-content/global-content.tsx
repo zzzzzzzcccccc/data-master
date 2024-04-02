@@ -3,7 +3,7 @@ import styles from '../global-layout.module.scss'
 import { Flex } from 'antd'
 import { Outlet, useLocation } from 'react-router-dom'
 import { GlobalContentEmpty } from '../../empty'
-import { BASE_ROUTE } from '@db-gui/core'
+import { BASE_ROUTE } from '@dm/core'
 
 function GlobalContent() {
   const location = useLocation()

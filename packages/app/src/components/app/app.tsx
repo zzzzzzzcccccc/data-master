@@ -4,7 +4,7 @@ import GlobalLayout from '../global-layout'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import { history } from '../../utils'
 import { setHistoryUpdate } from '../../store'
-import { BASE_ROUTE } from '@db-gui/core'
+import { BASE_ROUTE } from '@dm/core'
 
 function App() {
   const { historyUpdate } = useAppSelector((state) => state.app)
