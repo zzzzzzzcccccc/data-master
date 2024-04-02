@@ -14,6 +14,7 @@ importers:
       '@types/react': ^18.2.66
       '@types/react-dom': ^18.2.22
       '@types/redux-logger': ^3.0.13
+      '@types/uuid': ^9.0.8
       '@typescript-eslint/eslint-plugin': ^7.3.1
       '@typescript-eslint/parser': ^7.3.1
       '@vitejs/plugin-legacy': ^5.3.2
@@ -53,6 +54,7 @@ importers:
       '@types/react': 18.2.66
       '@types/react-dom': 18.2.22
       '@types/redux-logger': 3.0.13
+      '@types/uuid': 9.0.8
       '@typescript-eslint/eslint-plugin': 7.3.1_q4iweqlzux7a2mccg7whi6suuq
       '@typescript-eslint/parser': 7.3.1_5iotri5aeibafrgj7thsggiclm
       '@vitejs/plugin-legacy': 5.3.2_terser@5.29.2+vite@5.1.6
@@ -144,11 +146,13 @@ importers:
       '@dm/core': '*'
       '@dm/logger': '*'
       tslog: ^4.9.1
+      uuid: ^9.0.1
     dependencies:
       '@dm/client': link:../client
       '@dm/core': link:../core
       '@dm/logger': link:../logger
       tslog: 4.9.2
+      uuid: 9.0.1
 
 packages:
   /@aashutoshrathi/word-wrap/1.2.6:
@@ -3139,6 +3143,11 @@ packages:
     resolution:
       { integrity: sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA== }
     dev: false
+
+  /@types/uuid/9.0.8:
+    resolution:
+      { integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA== }
+    dev: true
 
   /@types/validator/13.11.9:
     resolution:
@@ -10669,7 +10678,6 @@ packages:
     resolution:
       { integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA== }
     hasBin: true
-    dev: true
 
   /validate-npm-package-license/3.0.4:
     resolution:

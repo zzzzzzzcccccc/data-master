@@ -1,3 +1,5 @@
+export const STORE_ROOT_DIR_NAME = '.data-master-store'
+export const STORE_VERSION = 0
 export const APP_NAME = 'DataMaster'
 export const PRELOAD_INJECTOR = '__PRELOAD_INJECTOR__'
 export const CSS_VARS_NAME_SPACE = '--dm'
@@ -32,11 +34,10 @@ export const HTTP_REQUEST_CODE = {
   internalServerError: 500,
 }
 export const REQUEST_TIMEOUT = 10 * 1000
-
 export const URI = {
   database: 'database',
+  configuration: 'configuration',
 }
-
 export const CLIENT_NAMES = {
   mysql: 'mysql',
 }

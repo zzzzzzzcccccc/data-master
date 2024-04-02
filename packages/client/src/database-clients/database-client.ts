@@ -9,12 +9,12 @@ class DatabaseClient<Configuration = object, Connection = unknown> {
     return this._name
   }
 
-  public invokeMethod(method: string, ...args: unknown[]) {
+  public invoke(method: string, ...args: unknown[]) {
     const methodInstance = this[method as keyof this]
     if (!methodInstance || typeof methodInstance !== 'function') {
       throw new Error(`DatabaseClient Method "${method}" not found`)
     } else {
-      return methodInstance(...args)
+      return methodInstance.apply(this, args)
     }
   }
 

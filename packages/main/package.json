@@ -16,6 +16,7 @@
     "@dm/core": "*",
     "@dm/logger": "*",
     "@dm/client": "*",
-    "tslog": "^4.9.1"
+    "tslog": "^4.9.1",
+    "uuid": "^9.0.1"
   }
 }

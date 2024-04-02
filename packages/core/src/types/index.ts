@@ -14,3 +14,8 @@ export interface PreloadInjector {
 }
 
 export type DatabaseParams<Metadata = object> = [string, { id?: string; metadata?: Metadata }]
+export type StoreParams = unknown[]
+
+export type JSONObject = { [key: string]: JSONValue }
+export type JSONArray = JSONValue[]
+export type JSONValue = JSONObject | JSONArray | string | number | boolean | null
