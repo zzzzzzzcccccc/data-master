@@ -1,10 +1,9 @@
 import DatabaseClient from '../database-client'
-import { CLIENT_NAMES } from '@dm/core'
 import mysql, { Connection } from 'mysql2/promise'
 
 class MysqlClient extends DatabaseClient<mysql.ConnectionOptions, Connection> {
   constructor() {
-    super(CLIENT_NAMES.mysql)
+    super()
   }
 
   public override async connection(configuration: mysql.ConnectionOptions, autoDisConnection = true) {

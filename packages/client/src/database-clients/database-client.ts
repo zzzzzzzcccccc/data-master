@@ -1,14 +1,4 @@
 class DatabaseClient<Configuration = object, Connection = unknown> {
-  private readonly _name: string = ''
-
-  constructor(name: string) {
-    this._name = name
-  }
-
-  get name() {
-    return this._name
-  }
-
   public invoke(method: string, ...args: unknown[]) {
     const methodInstance = this[method as keyof this]
     if (!methodInstance || typeof methodInstance !== 'function') {

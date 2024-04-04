@@ -39,5 +39,26 @@ export const URI = {
   configuration: 'configuration',
 }
 export const CLIENT_NAMES = {
-  mysql: 'mysql',
+  mysql: {
+    key: 'mysql',
+    icon: 'icon-mysql',
+    defaultConfiguration: {
+      name: '',
+      metadata: {
+        host: 'localhost',
+        database: '',
+        user: '',
+        password: '',
+        port: 3306,
+      },
+    },
+  },
+  postgres: {
+    key: 'postgres',
+    icon: 'icon-pgsql',
+    defaultConfiguration: {
+      name: '',
+      metadata: {},
+    },
+  },
 }

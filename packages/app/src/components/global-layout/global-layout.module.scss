@@ -7,7 +7,7 @@
 .appDark {
   width: 100%;
   height: 100%;
-  background-color: var(--dm-black);
+  background-color: var(--dm-dark);
 }
 
 .layout {
@@ -27,10 +27,6 @@
   background-color: transparent;
   flex: 1;
 }
-.headerTool {
-  height: 100%;
-  padding-right: var(--dm-spacing-2);
-}
 
 .container {
   width: 100%;
@@ -38,9 +34,9 @@
 }
 
 .slider {
-  width: 56px;
   height: 100%;
   overflow: auto;
+  padding: 0 var(--dm-spacing-4);
 }
 
 .content {

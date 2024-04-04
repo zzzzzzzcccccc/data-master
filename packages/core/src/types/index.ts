@@ -5,6 +5,8 @@ export interface DeviceInfo {
   chromeVersion: string
 }
 
+export type ObjectMetadata = Record<string, string | number | boolean | null>
+
 export type RpcRequestMessage<Params = unknown[]> = { method: string; replyEvent: string; args: Params }
 export type RpcRequestResponse<Data> = { data: Data | null; error: unknown | null; code: string | number }
 
@@ -13,9 +15,12 @@ export interface PreloadInjector {
   rpcRequest<Data>(uri: string, method: string, ...args: unknown[]): Promise<RpcRequestResponse<Data> | null>
 }
 
-export type DatabaseParams<Metadata = object> = [string, { id?: string; metadata?: Metadata }]
+export type DatabaseParams = [string, ObjectMetadata]
 export type StoreParams = unknown[]
 
-export type JSONObject = { [key: string]: JSONValue }
-export type JSONArray = JSONValue[]
-export type JSONValue = JSONObject | JSONArray | string | number | boolean | null
+export interface ConnectionConfiguration {
+  id: string
+  name: string
+  client: string
+  metadata: Record<string, ObjectMetadata>
+}

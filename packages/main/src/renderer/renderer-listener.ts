@@ -13,35 +13,31 @@ class RendererListener {
     logger.info(`start databaseHandler message=${jsonToString(message)}`)
 
     const { replyEvent, method, args } = message
-    const [clientName, payload] = args
-    const { id, metadata } = payload
-    const client = databaseClients[clientName]
+    const [id, payload] = args
 
-    if (!client) {
+    if (!id) {
       event.reply(replyEvent, {
         data: null,
-        error: `Database client "${clientName}" not found`,
+        error: 'id is required',
         code: HTTP_REQUEST_CODE.notFound,
       })
     } else {
-      safePromiseCall(() => {
-        const currentArgs: unknown[] = []
-        if (id) {
-          const configuration = store.configuration.findById(id)
-          if (configuration) {
-            currentArgs.push(configuration)
-          }
-        }
-        if (metadata) {
-          currentArgs.push(metadata)
-        }
-        return client.invoke(method, ...currentArgs)
-      }).then((result) => {
+      const configuration = store.configuration.findById(id)
+      if (!configuration) {
         event.reply(replyEvent, {
-          ...result,
-          code: result.error ? HTTP_REQUEST_CODE.internalServerError : HTTP_REQUEST_CODE.ok,
+          data: null,
+          error: `configuration is not found for ${id}`,
+          code: HTTP_REQUEST_CODE.notFound,
         })
-      })
+      } else {
+        const client = databaseClients[configuration.client]
+        safePromiseCall(() => client.invoke(method, configuration, payload)).then((result) => {
+          event.reply(replyEvent, {
+            ...result,
+            code: result.error ? HTTP_REQUEST_CODE.internalServerError : HTTP_REQUEST_CODE.ok,
+          })
+        })
+      }
     }
   }
 

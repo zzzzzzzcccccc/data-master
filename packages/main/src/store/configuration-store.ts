@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import { StoreOptions } from './types'
 import { generateUUID, jsonToString, stringToJson, logger as baseLogger } from '../utils'
-import { JSONObject, URI } from '@dm/core'
+import { ConnectionConfiguration, URI } from '@dm/core'
 
 const logger = baseLogger.getSubLogger('ConfigurationStore')
 
@@ -15,7 +15,7 @@ class ConfigurationStore {
     this.init()
   }
 
-  public findAll(): JSONObject[] {
+  public findAll(): ConnectionConfiguration[] {
     const response = stringToJson(fs.readFileSync(this.storePath, { encoding: this._options.encoding }).toString(), {
       version: this._options.version,
       data: [],
@@ -23,14 +23,14 @@ class ConfigurationStore {
     return response?.data || []
   }
 
-  public findById(id: string): JSONObject | null {
-    return this.findAll().find((item: JSONObject) => item.id === id) || null
+  public findById(id: string): ConnectionConfiguration | null {
+    return this.findAll().find((item: ConnectionConfiguration) => item.id === id) || null
   }
 
-  public insert(item: JSONObject) {
+  public insert(item: Omit<ConnectionConfiguration, 'id'>) {
     logger.info(`Inserting item = ${jsonToString(item)}`)
     const data = this.findAll()
-    const current = { ...item, id: generateUUID(), createAt: new Date().toISOString(), updateAt: null }
+    const current = { ...item, id: generateUUID(), createAt: new Date().toString(), updateAt: null }
     data.push(current)
     fs.writeFileSync(this.storePath, jsonToString({ version: this._options.version, data }), {
       encoding: this._options.encoding,
@@ -38,11 +38,11 @@ class ConfigurationStore {
     return current
   }
 
-  public update(item: JSONObject) {
+  public update(item: Partial<ConnectionConfiguration> & { id: string }) {
     const data = this.findAll()
-    const index = data?.findIndex((i: JSONObject) => i.id === item.id) || -1
+    const index = data?.findIndex((i: ConnectionConfiguration) => i.id === item.id) || -1
     if (index > -1) {
-      data[index] = { ...data[index], ...item, updateAt: new Date().toISOString() }
+      data[index] = { ...data[index], ...item, updateAt: new Date().toString() }
       fs.writeFileSync(this.storePath, jsonToString({ version: this._options.version, data }), {
         encoding: this._options.encoding,
       })
