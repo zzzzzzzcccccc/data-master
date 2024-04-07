@@ -1,21 +1,26 @@
 import { RpcRequestResponse } from '../types'
 
-type Result<R> = Omit<RpcRequestResponse<R>, 'code'>
+type Result<R> = Omit<RpcRequestResponse<R>, 'code'> & { isError: boolean }
 
-export async function safePromiseCall<R = unknown>(fn: () => Promise<R>): Promise<Result<R>> {
+export async function safePromiseCall<R = unknown>(
+  fn: () => Promise<R>,
+  onError?: (error: unknown) => void,
+): Promise<Result<R>> {
   try {
     const result = await fn()
-    return { data: result, error: null }
+    return { data: result, error: null, isError: false }
   } catch (error) {
-    return { data: null, error }
+    onError?.(error)
+    return { data: null, error, isError: true }
   }
 }
 
-export function safeCall<R = void>(fn: () => R): Result<R> {
+export function safeCall<R = void>(fn: () => R, onError?: (error: unknown) => void): Result<R> {
   try {
     const result = fn()
-    return { data: result, error: null }
+    return { data: result, error: null, isError: false }
   } catch (error) {
-    return { data: null, error }
+    onError?.(error)
+    return { data: null, error, isError: true }
   }
 }

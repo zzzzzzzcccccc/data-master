@@ -34,7 +34,7 @@ function SelectConnection() {
           open={item.key === currentAddConnectionClient}
           key={item.key}
           content={
-            <Flex vertical justify="flex-start" align="flex-start" style={{ width: 260 }}>
+            <Flex vertical justify="flex-start" align="flex-start" style={{ width: 360 }}>
               <ConnectionForm client={item.key} />
             </Flex>
           }

@@ -1,5 +1,5 @@
 import * as electron from 'electron'
-import { URI, RpcRequestMessage, DatabaseParams, StoreParams, HTTP_REQUEST_CODE, safePromiseCall } from '@dm/core'
+import { URI_GATE_WAY, URI_NAMESPACES, RpcRequestMessage, HTTP_REQUEST_CODE, safePromiseCall } from '@dm/core'
 import { databaseClients } from '@dm/client'
 import { logger as baseLogger, jsonToString } from '../utils'
 import store from '../store'
@@ -9,50 +9,59 @@ const logger = baseLogger.getSubLogger('RendererListener')
 class RendererListener {
   private _unListener: (() => void) | null = null
 
-  private static databaseHandler = (event: electron.IpcMainEvent, message: RpcRequestMessage<DatabaseParams>) => {
+  private static handlerError<T>(error: T) {
+    if (!error) return null
+    if (error instanceof Error) {
+      return error.message
+    }
+    if (typeof error === 'string') {
+      return error
+    }
+    return error
+  }
+
+  private static safePromiseHandlerOnError(path: string, method: string, error: unknown) {
+    logger.error(`path=${path} method=${method}`, error)
+  }
+
+  private static databaseHandler = (client: string, event: electron.IpcMainEvent, message: RpcRequestMessage) => {
     logger.info(`start databaseHandler message=${jsonToString(message)}`)
 
     const { replyEvent, method, args } = message
-    const [id, payload] = args
+    const databaseClient = databaseClients[client]
 
-    if (!id) {
+    if (!databaseClient) {
       event.reply(replyEvent, {
         data: null,
-        error: 'id is required',
+        error: `database client is not found for ${client}`,
         code: HTTP_REQUEST_CODE.notFound,
       })
     } else {
-      const configuration = store.configuration.findById(id)
-      if (!configuration) {
+      safePromiseCall(
+        () => databaseClient.invoke(method, ...args),
+        (error) => RendererListener.safePromiseHandlerOnError(client, method, error),
+      ).then((result) => {
         event.reply(replyEvent, {
-          data: null,
-          error: `configuration is not found for ${id}`,
-          code: HTTP_REQUEST_CODE.notFound,
+          ...result,
+          error: RendererListener.handlerError(result.error),
+          code: result.isError ? HTTP_REQUEST_CODE.internalServerError : HTTP_REQUEST_CODE.ok,
         })
-      } else {
-        const client = databaseClients[configuration.client]
-        safePromiseCall(() => client.invoke(method, configuration, payload)).then((result) => {
-          event.reply(replyEvent, {
-            ...result,
-            code: result.error ? HTTP_REQUEST_CODE.internalServerError : HTTP_REQUEST_CODE.ok,
-          })
-        })
-      }
+      })
     }
   }
 
-  private static storeHandler = (
-    instance: string,
-    event: electron.IpcMainEvent,
-    message: RpcRequestMessage<StoreParams>,
-  ) => {
+  private static storeHandler = (instance: string, event: electron.IpcMainEvent, message: RpcRequestMessage) => {
     logger.info(`start storeHandler instance=${instance} message=${jsonToString(message)}`)
 
     const { replyEvent, method, args } = message
-    safePromiseCall(() => store.invoke(instance, method, ...args)).then((result) => {
+    safePromiseCall(
+      () => store.invoke(instance, method, ...args),
+      (error) => RendererListener.safePromiseHandlerOnError(instance, method, error),
+    ).then((result) => {
       event.reply(replyEvent, {
         ...result,
-        code: result.error ? HTTP_REQUEST_CODE.internalServerError : HTTP_REQUEST_CODE.ok,
+        error: RendererListener.handlerError(result.error),
+        code: result.isError ? HTTP_REQUEST_CODE.internalServerError : HTTP_REQUEST_CODE.ok,
       })
     })
   }
@@ -69,16 +78,38 @@ class RendererListener {
   }
 
   private listener() {
-    electron.ipcMain.on(URI.database, RendererListener.databaseHandler)
-    electron.ipcMain.on(URI.configuration, (event, message) =>
-      RendererListener.storeHandler(URI.configuration, event, message),
-    )
+    const handler = (event: electron.IpcMainEvent, message: RpcRequestMessage) => {
+      logger.info(`start gateway handler message=${jsonToString(message)}`)
+
+      const uri = message.uri
+      const [namespace, path] = (uri || '').split('/')
+      if (!namespace || !path) {
+        event.reply(message.replyEvent, {
+          data: null,
+          error: 'uri is invalid',
+          code: HTTP_REQUEST_CODE.badRequest,
+        })
+      } else {
+        const uriHandlers = {
+          [URI_NAMESPACES.database]: () => RendererListener.databaseHandler(path, event, message),
+          [URI_NAMESPACES.store]: () => RendererListener.storeHandler(path, event, message),
+        }
+        if (!uriHandlers[namespace]) {
+          event.reply(message.replyEvent, {
+            data: null,
+            error: `uri namespace is not found for ${namespace}`,
+            code: HTTP_REQUEST_CODE.notFound,
+          })
+        } else {
+          uriHandlers[namespace]()
+        }
+      }
+    }
+
+    electron.ipcMain.on(URI_GATE_WAY, handler)
 
     return () => {
-      electron.ipcMain.off(URI.database, RendererListener.databaseHandler)
-      electron.ipcMain.off(URI.configuration, (event: electron.IpcMainEvent, message) =>
-        RendererListener.storeHandler(URI.configuration, event, message),
-      )
+      electron.ipcMain.off(URI_GATE_WAY, handler)
     }
   }
 }

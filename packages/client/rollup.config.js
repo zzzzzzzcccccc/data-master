@@ -25,7 +25,9 @@ module.exports = {
       preferBuiltins: false,
     }),
     json(),
-    typescript(),
+    typescript({
+      tsconfig: './tsconfig.json',
+    }),
     commonjs(),
   ],
 }

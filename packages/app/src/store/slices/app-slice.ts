@@ -15,6 +15,7 @@ export interface AppState {
   settingsVisible: boolean
   currentAddConnectionClient: string
   addConnectionConfigurationsLoading: Record<string, boolean>
+  addConnectionConfigurationsConnectionError: Record<string, boolean>
   addConnectionConfigurations: Record<string, ConnectionConfiguration>
   connectionConfigurations: ConnectionConfiguration[]
 }
@@ -34,6 +35,10 @@ const initialState: AppState = {
   addConnectionConfigurationsLoading: Object.keys(CLIENT_NAMES).reduce(
     (acc, key) => ({ ...acc, [key]: false }),
     {} as AppState['addConnectionConfigurationsLoading'],
+  ),
+  addConnectionConfigurationsConnectionError: Object.keys(CLIENT_NAMES).reduce(
+    (acc, key) => ({ ...acc, [key]: false }),
+    {} as AppState['addConnectionConfigurationsConnectionError'],
   ),
   addConnectionConfigurations: Object.keys(CLIENT_NAMES).reduce(
     (acc, key) => {
@@ -89,9 +94,21 @@ export const appSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    const { fetchAddConnectionConfiguration } = thunks.appThunk
+    const { fetchTestConnection, fetchAddConnectionConfiguration } = thunks.appThunk
+
+    builder.addCase(fetchTestConnection.pending, (state, action) => {
+      state.addConnectionConfigurationsLoading[action.meta.arg.client] = true
+    })
+    builder.addCase(fetchTestConnection.fulfilled, (state, action) => {
+      state.addConnectionConfigurationsLoading[action.meta.arg.client] = false
+    })
+    builder.addCase(fetchTestConnection.rejected, (state, action) => {
+      state.addConnectionConfigurationsLoading[action.meta.arg.client] = false
+      state.addConnectionConfigurationsConnectionError[action.meta.arg.client] = true
+    })
 
     builder.addCase(fetchAddConnectionConfiguration.pending, (state, action) => {
+      state.addConnectionConfigurationsConnectionError[action.meta.arg.client] = false
       state.addConnectionConfigurationsLoading[action.meta.arg.client] = true
     })
     builder.addCase(fetchAddConnectionConfiguration.fulfilled, (state, action) => {

@@ -7,7 +7,7 @@ export interface DeviceInfo {
 
 export type ObjectMetadata = Record<string, string | number | boolean | null>
 
-export type RpcRequestMessage<Params = unknown[]> = { method: string; replyEvent: string; args: Params }
+export type RpcRequestMessage<Params = unknown[]> = { uri: string; method: string; replyEvent: string; args: Params }
 export type RpcRequestResponse<Data> = { data: Data | null; error: unknown | null; code: string | number }
 
 export interface PreloadInjector {
@@ -15,7 +15,7 @@ export interface PreloadInjector {
   rpcRequest<Data>(uri: string, method: string, ...args: unknown[]): Promise<RpcRequestResponse<Data> | null>
 }
 
-export type DatabaseParams = [string, ObjectMetadata]
+export type DatabaseParams = [string, ...unknown[]]
 export type StoreParams = unknown[]
 
 export interface ConnectionConfiguration {
@@ -23,4 +23,6 @@ export interface ConnectionConfiguration {
   name: string
   client: string
   metadata: Record<string, ObjectMetadata>
+  createAt: string
+  updateAt: string
 }

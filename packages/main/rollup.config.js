@@ -9,7 +9,9 @@ const commonConfiguration = {
     resolve({
       extensions: ['.ts'],
     }),
-    typescript(),
+    typescript({
+      tsconfig: './tsconfig.json',
+    }),
     commonjs(),
   ],
 }

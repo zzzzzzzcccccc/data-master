@@ -7,6 +7,9 @@ class DatabaseClient<Configuration = object, Connection = unknown> {
       return methodInstance.apply(this, args)
     }
   }
+  public testConnection(configuration: Configuration) {
+    // TODO implement
+  }
 
   public connection(configuration: Configuration, autoDisConnection = true) {
     // TODO implement

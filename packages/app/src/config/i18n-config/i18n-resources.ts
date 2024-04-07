@@ -25,6 +25,9 @@ const resources = {
       'add.connection.port': 'Port',
       'form.input.required': 'Please input the {{ label }}',
       'form.input.number': '{{ label }} must be a number',
+      'connection.failed.title': 'Connection failed',
+      'connection.failed.message':
+        'Currently unable to connect to the data source, do you want to continue saving this configuration?',
     },
     displayLang: '🇺🇸 English',
   },
@@ -54,6 +57,8 @@ const resources = {
       'add.connection.port': '端口',
       'form.input.required': '请输入{{ label }}!',
       'form.input.number': '{{ label }}必须是数字!',
+      'connection.failed.title': '连接失败',
+      'connection.failed.message': '当前无法连接到数据源，是否继续保存此配置?',
     },
     displayLang: '🇨🇳 简体中文',
   },

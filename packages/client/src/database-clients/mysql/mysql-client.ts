@@ -1,9 +1,14 @@
 import DatabaseClient from '../database-client'
-import mysql, { Connection } from 'mysql2/promise'
+import mysql, { Connection, ConnectionOptions } from 'mysql2/promise'
 
 class MysqlClient extends DatabaseClient<mysql.ConnectionOptions, Connection> {
   constructor() {
     super()
+  }
+
+  public override async testConnection(configuration: ConnectionOptions) {
+    await this.connection(configuration)
+    return true
   }
 
   public override async connection(configuration: mysql.ConnectionOptions, autoDisConnection = true) {

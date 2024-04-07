@@ -34,9 +34,10 @@ export const HTTP_REQUEST_CODE = {
   internalServerError: 500,
 }
 export const REQUEST_TIMEOUT = 10 * 1000
-export const URI = {
+export const URI_GATE_WAY = 'data-master://gateway'
+export const URI_NAMESPACES = {
   database: 'database',
-  configuration: 'configuration',
+  store: 'store',
 }
 export const CLIENT_NAMES = {
   mysql: {
@@ -61,4 +62,27 @@ export const CLIENT_NAMES = {
       metadata: {},
     },
   },
+}
+export const STORE_NAMES = {
+  configuration: {
+    key: 'configuration',
+  },
+}
+export const URI = {
+  database: Object.keys(CLIENT_NAMES).reduce(
+    (acc, key) => {
+      const item = CLIENT_NAMES[key as keyof typeof CLIENT_NAMES]
+      acc[item.key] = `${URI_NAMESPACES.database}/${item.key}`
+      return acc
+    },
+    {} as Record<string, string>,
+  ),
+  store: Object.keys(STORE_NAMES).reduce(
+    (acc, key) => {
+      const item = STORE_NAMES[key as keyof typeof STORE_NAMES]
+      acc[item.key] = `${URI_NAMESPACES.store}/${item.key}`
+      return acc
+    },
+    {} as Record<string, string>,
+  ),
 }

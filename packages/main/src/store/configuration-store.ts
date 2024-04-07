@@ -1,14 +1,14 @@
 import * as fs from 'fs'
 import { StoreOptions } from './types'
 import { generateUUID, jsonToString, stringToJson, logger as baseLogger } from '../utils'
-import { ConnectionConfiguration, URI } from '@dm/core'
+import { ConnectionConfiguration, STORE_NAMES } from '@dm/core'
 
 const logger = baseLogger.getSubLogger('ConfigurationStore')
 
 class ConfigurationStore {
   private readonly _options: StoreOptions
 
-  private readonly dirName = `${URI.configuration}.json`
+  private readonly dirName = `${STORE_NAMES.configuration.key}.json`
 
   constructor(options: StoreOptions) {
     this._options = options
@@ -30,7 +30,7 @@ class ConfigurationStore {
   public insert(item: Omit<ConnectionConfiguration, 'id'>) {
     logger.info(`Inserting item = ${jsonToString(item)}`)
     const data = this.findAll()
-    const current = { ...item, id: generateUUID(), createAt: new Date().toString(), updateAt: null }
+    const current = { ...item, id: generateUUID(), createAt: new Date().toString(), updateAt: '' }
     data.push(current)
     fs.writeFileSync(this.storePath, jsonToString({ version: this._options.version, data }), {
       encoding: this._options.encoding,

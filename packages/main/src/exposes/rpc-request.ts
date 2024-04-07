@@ -1,5 +1,5 @@
 import * as electron from 'electron'
-import { HTTP_REQUEST_CODE, REQUEST_TIMEOUT, RpcRequestResponse, RpcRequestMessage } from '@dm/core'
+import { URI_GATE_WAY, HTTP_REQUEST_CODE, RpcRequestResponse, RpcRequestMessage } from '@dm/core'
 
 const genEventId = (function GenEventId() {
   const map = new Map<string, number>()
@@ -25,23 +25,13 @@ function rpcRequest<Data>(uri: string, method: string, ...args: unknown[]): Prom
   }
 
   return new Promise<RpcRequestResponse<Data>>((resolve) => {
-    const eventId = genEventId(`${uri}-${method}`)
-    const replyEvent = `${uri}:${method}:${eventId}`
+    const replyEvent = genEventId(`${uri}-${method}`)
     const handler = (_event: Electron.IpcRendererEvent, response: RpcRequestResponse<Data>) => {
-      clearTimeout(timer)
       resolve(response)
     }
-    const timer = setTimeout(() => {
-      electron.ipcRenderer.off(replyEvent, handler)
-      resolve({
-        data: null,
-        error: `${uri} ${method} timeout ${REQUEST_TIMEOUT} ms`,
-        code: HTTP_REQUEST_CODE.timeout,
-      })
-    }, REQUEST_TIMEOUT)
-    const senderPayload: RpcRequestMessage = { method, args, replyEvent }
+    const senderPayload: RpcRequestMessage = { uri, method, args, replyEvent }
 
-    electron.ipcRenderer.send(uri, senderPayload)
+    electron.ipcRenderer.send(URI_GATE_WAY, senderPayload)
     electron.ipcRenderer.once(replyEvent, handler)
   })
 }

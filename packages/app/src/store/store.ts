@@ -13,7 +13,7 @@ import {
 import storage from 'redux-persist/lib/storage'
 import { appSlice } from './slices'
 import { createLogger } from 'redux-logger'
-import { APP_NAME } from '@dm/core'
+import { APP_NAME, STORE_VERSION } from '@dm/core'
 import { RootState } from './types'
 
 const middleware: Middleware[] = [
@@ -25,7 +25,7 @@ const persistConfig: Record<string, { reducer: Reducer; config?: Omit<PersistCon
   app: {
     reducer: appSlice.reducer,
     config: {
-      version: 1,
+      version: STORE_VERSION,
       storage,
       whitelist: ['theme'],
     },
