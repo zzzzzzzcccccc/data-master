@@ -82,14 +82,15 @@ class RendererListener {
       logger.info(`start gateway handler message=${jsonToString(message)}`)
 
       const uri = message.uri
-      const [namespace, path] = (uri || '').split('/')
-      if (!namespace || !path) {
+      const [namespace, ...paths] = (uri || '').split('/')
+      if (!namespace || !paths?.length) {
         event.reply(message.replyEvent, {
           data: null,
           error: 'uri is invalid',
           code: HTTP_REQUEST_CODE.badRequest,
         })
       } else {
+        const path = paths.join('/')
         const uriHandlers = {
           [URI_NAMESPACES.database]: () => RendererListener.databaseHandler(path, event, message),
           [URI_NAMESPACES.store]: () => RendererListener.storeHandler(path, event, message),

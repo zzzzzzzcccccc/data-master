@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import * as electron from 'electron'
-import { STORE_ROOT_DIR_NAME, STORE_VERSION } from '@dm/core'
+import { APP_NAME, STORE_ROOT_DIR_NAME, STORE_VERSION } from '@dm/core'
 import ConfigurationStore from './configuration-store'
 import { jsonToString, logger as baseLogger } from '../utils'
 
@@ -18,7 +18,12 @@ class Store {
   }
 
   constructor() {
-    this._rootPath = `${electron.app.getAppPath()}/${STORE_ROOT_DIR_NAME}`
+    const appPath = electron.app.getPath('appData') + `/${APP_NAME}`
+
+    Store.mkdirSync(appPath)
+
+    this._rootPath = `${appPath}/${STORE_ROOT_DIR_NAME}`
+
     Store.mkdirSync(this._rootPath)
 
     this._configuration = new ConfigurationStore({

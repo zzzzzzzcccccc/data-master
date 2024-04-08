@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Button, Flex, Spin, Alert } from 'antd'
+import { Form, Button, Flex, Spin, Popconfirm } from 'antd'
 import { CLIENT_NAMES, ConnectionConfiguration, ASYNC_STATUS } from '@dm/core'
 import { ConnectionFormProps } from './types'
 import ConnectionMysql from './connection-mysql'
@@ -8,6 +8,7 @@ import {
   setAddConnectionConfigurationForClient,
   fetchTestConnection,
   fetchAddConnectionConfiguration,
+  setAddConnectionConfigurationsConnectionErrorForClient,
 } from '../../store'
 import { logger as baseLogger } from '../../utils'
 import Icon from '../icon'
@@ -44,6 +45,20 @@ function ConnectionForm(props: ConnectionFormProps) {
     dispatch(setAddConnectionConfigurationForClient({ client, payload: changedValues }))
   }
 
+  const handleOnSaveConnection = async () => {
+    const values = form.getFieldsValue() as Omit<ConnectionConfiguration, 'id'>
+    const resultFetchAddConnectionConfigurationAction = await dispatch(
+      fetchAddConnectionConfiguration({ client, configuration: values }),
+    )
+    if (resultFetchAddConnectionConfigurationAction.meta.requestStatus === ASYNC_STATUS.fulfilled) {
+      form.resetFields()
+    }
+  }
+
+  const handlerOnCancel = () => {
+    dispatch(setAddConnectionConfigurationsConnectionErrorForClient({ client, target: false }))
+  }
+
   const handlerOnFinish = async (values: Omit<ConnectionConfiguration, 'id'>) => {
     logger.debug(`submit to: ${JSON.stringify(values)}`)
 
@@ -51,12 +66,7 @@ function ConnectionForm(props: ConnectionFormProps) {
       const resultFetchTestConnectionAction = await dispatch(fetchTestConnection({ client, configuration: values }))
 
       if (resultFetchTestConnectionAction.meta.requestStatus === ASYNC_STATUS.fulfilled) {
-        const resultFetchAddConnectionConfigurationAction = await dispatch(
-          fetchAddConnectionConfiguration({ client, configuration: values }),
-        )
-        if (resultFetchAddConnectionConfigurationAction.meta.requestStatus === ASYNC_STATUS.fulfilled) {
-          form.resetFields()
-        }
+        handleOnSaveConnection()
       }
     }
   }
@@ -73,24 +83,25 @@ function ConnectionForm(props: ConnectionFormProps) {
     >
       <Spin spinning={loading}>
         {formMapper[client]}
-        {connectionError && (
-          <Alert
-            message={t('connection.failed.title')}
-            description={t('connection.failed.message')}
-            type="warning"
-            showIcon
-          />
-        )}
         <Flex style={{ width: '100%' }} vertical align="flex-start" justify="flex-start">
-          <Button
-            icon={<Icon target="icon-save" />}
-            disabled={loading}
-            style={{ width: '100%' }}
-            type="primary"
-            htmlType="submit"
+          <Popconfirm
+            title={t('connection.failed.title')}
+            description={t('connection.failed.message')}
+            open={connectionError}
+            okButtonProps={{ loading }}
+            onConfirm={handleOnSaveConnection}
+            onCancel={handlerOnCancel}
           >
-            Submit
-          </Button>
+            <Button
+              icon={<Icon target="icon-save" />}
+              disabled={loading}
+              style={{ width: '100%' }}
+              type="primary"
+              htmlType="submit"
+            >
+              {t('connection.save')}
+            </Button>
+          </Popconfirm>
         </Flex>
       </Spin>
     </Form>

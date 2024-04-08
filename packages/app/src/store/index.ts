@@ -10,7 +10,8 @@ export const {
   setSettingsVisible,
   setCurrentAddConnectionClient,
   setAddConnectionConfigurationForClient,
+  setAddConnectionConfigurationsConnectionErrorForClient,
 } = appSlice.actions
-export const { fetchTestConnection, fetchAddConnectionConfiguration } = thunks.appThunk
+export const { fetchTestConnection, fetchAddConnectionConfiguration, fetchConnectionConfigurations } = thunks.appThunk
 
 export { store, persist }

@@ -1,7 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { type Update } from 'history'
 import { history } from '../../utils'
-import { THEME_MODE, SIZE, DEFAULT_THEME_PRIMARY_COLOR, CLIENT_NAMES, ConnectionConfiguration } from '@dm/core'
+import {
+  THEME_MODE,
+  SIZE,
+  DEFAULT_THEME_PRIMARY_COLOR,
+  CLIENT_NAMES,
+  ConnectionConfiguration,
+  ASYNC_STATUS,
+} from '@dm/core'
 import thunks from '../thunks'
 
 export interface AppState {
@@ -17,6 +24,7 @@ export interface AppState {
   addConnectionConfigurationsLoading: Record<string, boolean>
   addConnectionConfigurationsConnectionError: Record<string, boolean>
   addConnectionConfigurations: Record<string, ConnectionConfiguration>
+  connectionConfigurationsStatus: ASYNC_STATUS
   connectionConfigurations: ConnectionConfiguration[]
 }
 
@@ -48,6 +56,7 @@ const initialState: AppState = {
     {} as AppState['addConnectionConfigurations'],
   ),
   settingsVisible: false,
+  connectionConfigurationsStatus: ASYNC_STATUS.idle,
   connectionConfigurations: [],
 }
 
@@ -68,6 +77,7 @@ export const appSlice = createSlice({
       state.settingsVisible = action.payload
     },
     setCurrentAddConnectionClient(state, action: PayloadAction<AppState['currentAddConnectionClient']>) {
+      state.addConnectionConfigurationsConnectionError[state.currentAddConnectionClient] = false
       state.currentAddConnectionClient = action.payload
     },
     setAddConnectionConfigurationForClient(
@@ -92,9 +102,15 @@ export const appSlice = createSlice({
         }
       }
     },
+    setAddConnectionConfigurationsConnectionErrorForClient(
+      state,
+      action: PayloadAction<{ client: string; target: boolean }>,
+    ) {
+      state.addConnectionConfigurationsConnectionError[action.payload.client] = action.payload.target
+    },
   },
   extraReducers: (builder) => {
-    const { fetchTestConnection, fetchAddConnectionConfiguration } = thunks.appThunk
+    const { fetchTestConnection, fetchAddConnectionConfiguration, fetchConnectionConfigurations } = thunks.appThunk
 
     builder.addCase(fetchTestConnection.pending, (state, action) => {
       state.addConnectionConfigurationsLoading[action.meta.arg.client] = true
@@ -122,6 +138,19 @@ export const appSlice = createSlice({
     })
     builder.addCase(fetchAddConnectionConfiguration.rejected, (state, action) => {
       state.addConnectionConfigurationsLoading[action.meta.arg.client] = false
+    })
+
+    builder.addCase(fetchConnectionConfigurations.pending, (state) => {
+      state.connectionConfigurationsStatus = ASYNC_STATUS.pending
+    })
+    builder.addCase(fetchConnectionConfigurations.fulfilled, (state, action) => {
+      state.connectionConfigurationsStatus = ASYNC_STATUS.fulfilled
+      if (action.payload) {
+        state.connectionConfigurations = action.payload
+      }
+    })
+    builder.addCase(fetchConnectionConfigurations.rejected, (state) => {
+      state.connectionConfigurationsStatus = ASYNC_STATUS.rejected
     })
   },
 })

@@ -11,23 +11,30 @@ class MysqlClient extends DatabaseClient<mysql.ConnectionOptions, Connection> {
     return true
   }
 
-  public override async connection(configuration: mysql.ConnectionOptions, autoDisConnection = true) {
+  public override async connection<R>(
+    configuration: mysql.ConnectionOptions,
+    inConnection?: (connection: Connection) => R | Promise<R>,
+  ) {
     const connection = await mysql.createConnection(configuration)
-    if (autoDisConnection) {
+    if (inConnection) {
+      const result = await inConnection(connection)
       await this.disconnection(connection)
+      return result
+    } else {
+      await this.disconnection(connection)
+      return null
     }
-    return connection
   }
 
   public override disconnection(connection: Connection) {
     return connection.end()
   }
 
-  public override async getTables(configuration: mysql.ConnectionOptions) {
-    const connection = await this.connection(configuration, false)
-    const [rows] = await connection.query('SHOW TABLES')
-    await this.disconnection(connection)
-    return { rows }
+  public override getTables(configuration: mysql.ConnectionOptions) {
+    return this.connection(configuration, async (connection) => {
+      const [queryResult] = await connection.query('SHOW TABLES')
+      return queryResult
+    })
   }
 }
 

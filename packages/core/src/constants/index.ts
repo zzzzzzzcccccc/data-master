@@ -1,4 +1,4 @@
-export const STORE_ROOT_DIR_NAME = '.data-master-store'
+export const STORE_ROOT_DIR_NAME = 'store'
 export const STORE_VERSION = 0
 export const APP_NAME = 'DataMaster'
 export const PRELOAD_INJECTOR = '__PRELOAD_INJECTOR__'

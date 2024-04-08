@@ -11,7 +11,7 @@ class DatabaseClient<Configuration = object, Connection = unknown> {
     // TODO implement
   }
 
-  public connection(configuration: Configuration, autoDisConnection = true) {
+  public connection<R = void>(configuration: Configuration, inConnection?: (connection: Connection) => R | Promise<R>) {
     // TODO implement
   }
 

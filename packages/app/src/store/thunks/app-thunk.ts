@@ -19,7 +19,12 @@ const fetchAddConnectionConfiguration = createAsyncThunk(
   },
 )
 
+const fetchConnectionConfigurations = createAsyncThunk('app/fetchConnectionConfigurations', () => {
+  return rpcRequest<ConnectionConfiguration[]>(URI.store.configuration, 'findAll')
+})
+
 export default {
   fetchTestConnection,
   fetchAddConnectionConfiguration,
+  fetchConnectionConfigurations,
 }

@@ -16,6 +16,7 @@
   "dependencies": {
     "@dm/core": "*",
     "mysql2": "^3.9.3",
+    "pg": "^8.11.5",
     "class-validator": "^0.14.1",
     "class-transformer": "^0.5.1"
   }

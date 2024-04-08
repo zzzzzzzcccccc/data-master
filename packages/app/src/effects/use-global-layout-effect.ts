@@ -1,8 +1,8 @@
-import { useAppSelector, useMediaQuery } from '../hooks'
+import { useAppSelector, useAppDispatch, useMediaQuery, useFpsEffect } from '../hooks'
 import { theme as resourceAntdTheme, type ConfigProviderProps } from 'antd'
 import { THEME_MODE, DARK_MEDIA_QUERY } from '@dm/core'
 import { antdLocales, i18nConfig } from '../config'
-import { RootState } from '../store'
+import { RootState, fetchConnectionConfigurations } from '../store'
 
 function handleOnAppChange(before: RootState['app'], after: RootState['app']) {
   if (after.theme.lang) {
@@ -16,6 +16,7 @@ export default function useGlobalLayoutEffect() {
     (state) => state.app,
     (before, after) => handleOnAppChange(before, after),
   )
+  const dispatch = useAppDispatch()
 
   const { enable: darkQueryEnable } = useMediaQuery(DARK_MEDIA_QUERY)
 
@@ -30,6 +31,10 @@ export default function useGlobalLayoutEffect() {
       },
     },
   }
+
+  useFpsEffect(() => {
+    dispatch(fetchConnectionConfigurations())
+  })
 
   return {
     configProviderProps,
