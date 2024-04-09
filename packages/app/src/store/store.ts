@@ -11,7 +11,7 @@ import {
   type PersistConfig,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { appSlice } from './slices'
+import { appSlice, containerSlice } from './slices'
 import { createLogger } from 'redux-logger'
 import { APP_NAME, STORE_VERSION } from '@dm/core'
 import { RootState } from './types'
@@ -27,7 +27,15 @@ const persistConfig: Record<string, { reducer: Reducer; config?: Omit<PersistCon
     config: {
       version: STORE_VERSION,
       storage,
-      whitelist: ['theme'],
+      whitelist: ['theme', 'selectedConnectionConfiguration'],
+    },
+  },
+  container: {
+    reducer: containerSlice.reducer,
+    config: {
+      version: STORE_VERSION,
+      storage,
+      whitelist: [],
     },
   },
 }

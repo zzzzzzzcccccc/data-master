@@ -5,6 +5,7 @@ import { useAppDispatch, useTheme, useTranslation } from '../../../hooks'
 import { setSettingsVisible } from '../../../store'
 import SliderMenu from './slider-menu'
 import SelectConnection from '../../select-connection'
+import Connections from '../../connections'
 
 function GlobalSlider() {
   const { colorPrimary, size } = useTheme()
@@ -23,7 +24,7 @@ function GlobalSlider() {
       title: 'add.data.connections',
       content: <SelectConnection />,
     },
-    { icon: 'icon-iconconnection', title: 'connections' },
+    { icon: 'icon-iconconnection', title: 'connections', content: <Connections /> },
     { icon: 'icon-Settings', title: 'settings', onClick: handleOnClickSettings },
   ]
 

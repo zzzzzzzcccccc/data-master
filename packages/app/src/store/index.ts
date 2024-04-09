@@ -13,5 +13,6 @@ export const {
   setAddConnectionConfigurationsConnectionErrorForClient,
 } = appSlice.actions
 export const { fetchTestConnection, fetchAddConnectionConfiguration, fetchConnectionConfigurations } = thunks.appThunk
+export const { fetchTables } = thunks.containerThunk
 
 export { store, persist }

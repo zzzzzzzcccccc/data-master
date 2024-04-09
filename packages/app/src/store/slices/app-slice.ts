@@ -56,11 +56,11 @@ const initialState: AppState = {
     {} as AppState['addConnectionConfigurations'],
   ),
   settingsVisible: false,
-  connectionConfigurationsStatus: ASYNC_STATUS.idle,
+  connectionConfigurationsStatus: ASYNC_STATUS.pending,
   connectionConfigurations: [],
 }
 
-export const appSlice = createSlice({
+const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {

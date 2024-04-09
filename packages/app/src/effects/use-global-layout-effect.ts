@@ -1,4 +1,4 @@
-import { useAppSelector, useAppDispatch, useMediaQuery, useFpsEffect } from '../hooks'
+import { useAppSelector, useAppDispatch, useMediaQuery, useTimeoutEffect } from '../hooks'
 import { theme as resourceAntdTheme, type ConfigProviderProps } from 'antd'
 import { THEME_MODE, DARK_MEDIA_QUERY } from '@dm/core'
 import { antdLocales, i18nConfig } from '../config'
@@ -32,7 +32,7 @@ export default function useGlobalLayoutEffect() {
     },
   }
 
-  useFpsEffect(() => {
+  useTimeoutEffect(() => {
     dispatch(fetchConnectionConfigurations())
   })
 

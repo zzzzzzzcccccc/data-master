@@ -1,34 +1,14 @@
 import React from 'react'
 import { Flex, Button, Popover } from 'antd'
-import { CLIENT_NAMES } from '@dm/core'
-import { useTheme, useTranslation, useAppSelector, useAppDispatch } from '../../hooks'
-import { setCurrentAddConnectionClient } from '../../store'
+import { useSelectConnectionEffect } from '../../effects'
 import Icon from '../icon'
 import ConnectionForm from '../connection-form'
 
 function SelectConnection() {
-  const t = useTranslation()
-  const { size } = useTheme()
-
-  const { currentAddConnectionClient } = useAppSelector((state) => state.app)
-  const dispatch = useAppDispatch()
-
-  const list = Object.keys(CLIENT_NAMES).map((key) => {
-    const item = CLIENT_NAMES[key as keyof typeof CLIENT_NAMES]
-    return {
-      key,
-      icon: item.icon,
-      label: t(key),
-    }
-  })
-
-  const handleOnClick = (client: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation()
-    dispatch(setCurrentAddConnectionClient(client))
-  }
+  const { size, list, currentAddConnectionClient, handleOnClick } = useSelectConnectionEffect()
 
   return (
-    <Flex vertical justify="flex-start" align="flex-start" gap={size}>
+    <Flex style={{ width: 200 }} vertical justify="flex-start" align="flex-start" gap={size}>
       {list.map((item) => (
         <Popover
           open={item.key === currentAddConnectionClient}

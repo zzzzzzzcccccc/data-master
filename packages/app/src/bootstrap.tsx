@@ -44,7 +44,7 @@ export default async function bootstrap() {
       <React.StrictMode>
         <ErrorBoundary
           fallback={<GlobalError />}
-          onError={(error, info) => logger.error(`UI render oops`, error, info)}
+          onError={(error, info) => logger.error('UI render oops', error, info)}
         >
           <Provider store={store}>
             <App />
