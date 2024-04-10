@@ -1,20 +1,18 @@
 import DatabaseClient from '../database-client'
+import { DatabaseClientImp } from '../types'
 import mysql, { Connection, ConnectionOptions } from 'mysql2/promise'
 
-class MysqlClient extends DatabaseClient<mysql.ConnectionOptions, Connection> {
+class MysqlClient extends DatabaseClient implements DatabaseClientImp<ConnectionOptions, Connection> {
   constructor() {
     super()
   }
 
-  public override async testConnection(configuration: ConnectionOptions) {
+  public async testConnection(configuration: ConnectionOptions) {
     await this.connection(configuration)
     return true
   }
 
-  public override async connection<R>(
-    configuration: mysql.ConnectionOptions,
-    inConnection?: (connection: Connection) => R | Promise<R>,
-  ) {
+  public async connection<R>(configuration: ConnectionOptions, inConnection?: (connection: Connection) => Promise<R>) {
     const connection = await mysql.createConnection(configuration)
     if (inConnection) {
       const result = await inConnection(connection)
@@ -26,14 +24,25 @@ class MysqlClient extends DatabaseClient<mysql.ConnectionOptions, Connection> {
     }
   }
 
-  public override disconnection(connection: Connection) {
-    return connection.end()
+  public async disconnection(connection: Connection) {
+    await connection.end()
+    return true
   }
 
-  public override getTables(configuration: mysql.ConnectionOptions) {
+  public getTables(configuration: ConnectionOptions) {
     return this.connection(configuration, async (connection) => {
-      const [queryResult] = await connection.query('SHOW TABLES')
-      return queryResult
+      await connection.query('SHOW TABLES')
+      return [] as string[]
+    })
+  }
+
+  public async createTable(configuration: ConnectionOptions, sql: string) {
+    return this.connection(configuration, async (connection) => {
+      if (!sql) {
+        return Promise.reject(new Error('SQL is required'))
+      }
+      await connection.execute(sql)
+      return true
     })
   }
 }

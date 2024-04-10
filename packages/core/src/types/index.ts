@@ -26,3 +26,5 @@ export interface ConnectionConfiguration {
   createAt: string
   updateAt: string
 }
+
+export * from './table'
