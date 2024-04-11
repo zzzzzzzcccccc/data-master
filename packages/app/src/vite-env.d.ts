@@ -13,5 +13,8 @@ interface ImportMeta {
 declare global {
   interface Window {
     [PRELOAD_INJECTOR]: PreloadInjector
+    MonacoEnvironment: {
+      getWorker: (_: unknown, label: string) => Worker
+    }
   }
 }

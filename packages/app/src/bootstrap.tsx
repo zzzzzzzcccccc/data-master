@@ -28,9 +28,14 @@ function setupWhyDidRender() {
   }
 }
 
+async function preloadModules() {
+  await import('./config/monaco-language-worker')
+}
+
 export default async function bootstrap() {
   logger.debug('Start')
 
+  preloadModules()
   setupWhyDidRender()
 
   const injector = document.getElementById('root')

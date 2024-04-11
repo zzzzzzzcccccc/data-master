@@ -35,16 +35,6 @@ class MysqlClient extends DatabaseClient implements DatabaseClientImp<Connection
       return [] as string[]
     })
   }
-
-  public async createTable(configuration: ConnectionOptions, sql: string) {
-    return this.connection(configuration, async (connection) => {
-      if (!sql) {
-        return Promise.reject(new Error('SQL is required'))
-      }
-      await connection.execute(sql)
-      return true
-    })
-  }
 }
 
 const mysqlClient = new MysqlClient()

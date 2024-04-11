@@ -27,4 +27,4 @@ export interface ConnectionConfiguration {
   updateAt: string
 }
 
-export * from './table'
+export * from './database-table'

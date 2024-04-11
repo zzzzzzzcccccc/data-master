@@ -17,7 +17,7 @@ export interface DatabaseColumn {
   dataType: string
   size?: number
   defaultValue?: unknown
-  noNull?: boolean
+  notNull?: boolean
   comment?: string
 }
 
