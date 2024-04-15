@@ -1,5 +1,5 @@
 import store, { persist } from './store'
-import { appSlice } from './slices'
+import { appSlice, containerSlice } from './slices'
 import thunks from './thunks'
 
 export * from './types'
@@ -12,6 +12,7 @@ export const {
   setAddConnectionConfigurationForClient,
   setAddConnectionConfigurationsConnectionErrorForClient,
 } = appSlice.actions
+export const { setWh, setSqlRunCode } = containerSlice.actions
 export const { fetchTestConnection, fetchAddConnectionConfiguration, fetchConnectionConfigurations } = thunks.appThunk
 export const { fetchTables } = thunks.containerThunk
 

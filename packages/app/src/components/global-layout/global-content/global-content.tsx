@@ -6,23 +6,32 @@ import { GlobalContentEmpty } from '../../empty'
 import { useGlobalContentEffect } from '../../../effects'
 
 function GlobalContent() {
-  const { error, loading, isBaseRoute } = useGlobalContentEffect()
+  const { contentRef, error, loading, isBaseRoute } = useGlobalContentEffect()
 
-  if (error) {
-    return 'global content some error'
+  const renderLoading = () => {
+    if (!loading) return null
+    return (
+      <Flex className="w100 h100" vertical justify="center" align="center">
+        <Spin />
+      </Flex>
+    )
+  }
+
+  const renderError = () => {
+    if (!error) return null
+    return 'some global content error'
+  }
+
+  const renderContent = () => {
+    if (error || loading) return null
+    return isBaseRoute ? <GlobalContentEmpty /> : <Outlet />
   }
 
   return (
-    <Flex className={styles.content} vertical justify="flex-start" align="flex-start" flex={1}>
-      {loading ? (
-        <Flex vertical justify="center" align="center" style={{ width: '100%', height: '100%' }}>
-          <Spin />
-        </Flex>
-      ) : isBaseRoute ? (
-        <GlobalContentEmpty />
-      ) : (
-        <Outlet />
-      )}
+    <Flex ref={contentRef} className={styles.content} vertical justify="flex-start" align="flex-start" flex={1}>
+      {renderLoading()}
+      {renderError()}
+      {renderContent()}
     </Flex>
   )
 }

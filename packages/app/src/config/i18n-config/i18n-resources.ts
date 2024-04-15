@@ -29,6 +29,7 @@ const resources = {
       'connection.failed.title': 'Connection failed',
       'connection.failed.message':
         'Currently unable to connect to the data source, do you want to continue saving this configuration?',
+      'sql.run': 'Run',
     },
     displayLang: '🇺🇸 English',
   },
@@ -61,6 +62,7 @@ const resources = {
       'connection.save': '保存',
       'connection.failed.title': '连接失败',
       'connection.failed.message': '当前无法连接到数据源，是否继续保存此配置?',
+      'sql.run': '运行',
     },
     displayLang: '🇨🇳 简体中文',
   },

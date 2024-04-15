@@ -1,19 +1,30 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import thunks from '../thunks'
 import { ASYNC_STATUS } from '@dm/core'
 
 export interface ContainerState {
+  wh: [number, number]
   tables: Record<string, { value: string[]; status: ASYNC_STATUS }>
+  sqlRunCodes: Record<string, string>
 }
 
 const initialState: ContainerState = {
+  wh: [0, 0],
   tables: {},
+  sqlRunCodes: {},
 }
 
 const containerSlice = createSlice({
   name: 'container',
   initialState,
-  reducers: {},
+  reducers: {
+    setWh(state, action: PayloadAction<ContainerState['wh']>) {
+      state.wh = action.payload
+    },
+    setSqlRunCode(state, action: PayloadAction<{ id: string; code: string }>) {
+      state.sqlRunCodes[action.payload.id] = action.payload.code
+    },
+  },
   extraReducers: (builder) => {
     const { fetchTables } = thunks.containerThunk
 

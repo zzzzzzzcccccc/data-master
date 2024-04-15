@@ -4,6 +4,7 @@ import useConnectionsEffect from './use-connections-effect'
 import useSelectConnectionEffect from './use-select-connection-effect'
 import useDatabaseEffect from './use-database-effect'
 import useDatabaseItemEffect from './use-database-item-effect'
+import useDatabaseItemSqlQueryEffect from './use-database-item-sql-query-effect'
 
 export {
   useGlobalLayoutEffect,
@@ -12,4 +13,5 @@ export {
   useSelectConnectionEffect,
   useDatabaseEffect,
   useDatabaseItemEffect,
+  useDatabaseItemSqlQueryEffect,
 }

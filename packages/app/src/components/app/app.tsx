@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Router, Routes, Route } from 'react-router-dom'
 import GlobalLayout from '../global-layout'
-import Database, { DatabaseItem } from '../database'
+import Database, { DatabaseItem, DatabaseItemSqlQuery } from '../database'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import { history } from '../../utils'
 import { setHistoryUpdate } from '../../store'
@@ -26,7 +26,9 @@ function App() {
       <Routes>
         <Route path={BASE_ROUTE} element={<GlobalLayout />}>
           <Route path={URI_NAMESPACES.database} element={<Database />}>
-            <Route path=":databaseId" element={<DatabaseItem />} />
+            <Route path=":databaseId" element={<DatabaseItem />}>
+              <Route path="sql-query" element={<DatabaseItemSqlQuery />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
