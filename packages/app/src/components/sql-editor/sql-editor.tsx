@@ -15,7 +15,7 @@ function SqlEditor(props: SqlEditorProps) {
   const codeOptions = useMemo(() => {
     const isDark = theme.mode === THEME_MODE.system ? darkQueryEnable : theme.mode === THEME_MODE.dark
     return {
-      language: 'typescript',
+      language: 'mysql',
       theme: isDark ? 'vs-dark' : 'vs-light',
       automaticLayout: true,
       minimap: {

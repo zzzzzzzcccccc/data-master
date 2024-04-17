@@ -1,18 +1,11 @@
 import React from 'react'
 import { Flex, Tabs, Button } from 'antd'
 import Icon from '../../icon'
-import { useAppSelector, useTheme } from '../../../hooks'
 import styles from './database-item.module.scss'
-import { history } from '../../../utils'
+import { useDatabaseItemHeaderEffect } from '../../../effects'
 
 function DatabaseItemHeader() {
-  const { size } = useTheme()
-  const { historyUpdate } = useAppSelector((state) => state.app)
-
-  const handleOnClickSqlQuery = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation()
-    history.push(`${historyUpdate.location.pathname}/sql-query`)
-  }
+  const { size, tabs, tabActive, handleOnClickSqlQuery, handleOnTabChange } = useDatabaseItemHeaderEffect()
 
   const headerRight = (
     <Flex className={styles.dbHeaderRight} gap={size}>
@@ -22,7 +15,14 @@ function DatabaseItemHeader() {
   )
   return (
     <Flex vertical className={styles.dbHeader}>
-      <Tabs className="w100" tabBarExtraContent={{ right: headerRight }} />
+      <Tabs
+        activeKey={tabActive}
+        type="card"
+        items={tabs}
+        className="w100"
+        tabBarExtraContent={{ right: headerRight }}
+        onChange={handleOnTabChange}
+      />
     </Flex>
   )
 }

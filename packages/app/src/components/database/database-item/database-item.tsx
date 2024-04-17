@@ -5,9 +5,7 @@ import DatabaseItemHeader from './database-item-header'
 import { Outlet } from 'react-router-dom'
 
 function DatabaseItem() {
-  const { tableError, tableLoading } = useDatabaseItemEffect()
-
-  if (tableLoading) return 'loading database item'
+  const { tableError } = useDatabaseItemEffect()
 
   if (tableError) return 'some database item error'
 

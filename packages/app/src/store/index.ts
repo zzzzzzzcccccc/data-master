@@ -12,8 +12,8 @@ export const {
   setAddConnectionConfigurationForClient,
   setAddConnectionConfigurationsConnectionErrorForClient,
 } = appSlice.actions
-export const { setWh, setSqlRunCode } = containerSlice.actions
+export const { setWh, setSqlRunCode, setActiveTable } = containerSlice.actions
 export const { fetchTestConnection, fetchAddConnectionConfiguration, fetchConnectionConfigurations } = thunks.appThunk
-export const { fetchTables } = thunks.containerThunk
+export const { fetchTables, fetchRunSql } = thunks.containerThunk
 
 export { store, persist }

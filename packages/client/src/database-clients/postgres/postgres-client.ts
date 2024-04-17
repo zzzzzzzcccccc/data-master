@@ -38,6 +38,12 @@ class PostgresClient extends DatabaseClient implements DatabaseClientImp<ClientC
       return queryResult.rows.map((row) => row.table_name) as string[]
     })
   }
+
+  public runSql(configuration: ClientConfig, sql: string) {
+    return this.connection(configuration, async (connection) => {
+      return connection.query(sql)
+    })
+  }
 }
 
 const postgresClient = new PostgresClient()

@@ -1,9 +1,11 @@
 .dbHeader {
   width: 100%;
+  box-sizing: border-box;
 }
 
 .dbHeaderRight {
   padding: 0 var(--dm-spacing-4);
+  box-sizing: border-box;
 }
 
 .dbDrawerHeader {
@@ -13,4 +15,20 @@
 
 .dbDrawerBody {
   padding: 0 !important;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.dbDrawerWrapper {
+  width: 100%;
+  flex: 1;
+}
+.dbDrawerEditor {
+  width: 100%;
+  height: 300px;
+}
+.dbDrawerError {
+  width: 100%;
+  padding: 0 var(--dm-spacing-4) var(--dm-spacing-4) var(--dm-spacing-4);
+  box-sizing: border-box;
 }

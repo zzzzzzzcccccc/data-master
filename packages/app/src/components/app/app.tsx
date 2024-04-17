@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useLayoutEffect } from 'react'
 import { Router, Routes, Route } from 'react-router-dom'
 import GlobalLayout from '../global-layout'
 import Database, { DatabaseItem, DatabaseItemSqlQuery } from '../database'
@@ -11,7 +11,7 @@ function App() {
   const { historyUpdate } = useAppSelector((state) => state.app)
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const unbind = history.listen((update) => {
       dispatch(setHistoryUpdate(update))
     })

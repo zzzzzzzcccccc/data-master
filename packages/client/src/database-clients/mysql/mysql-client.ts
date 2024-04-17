@@ -31,8 +31,17 @@ class MysqlClient extends DatabaseClient implements DatabaseClientImp<Connection
 
   public getTables(configuration: ConnectionOptions) {
     return this.connection(configuration, async (connection) => {
-      await connection.query('SHOW TABLES')
+      const [queryResult] = await connection.execute('SHOW TABLES')
+      if (queryResult && Array.isArray(queryResult)) {
+        return queryResult.map((item: object) => Object.values(item).join('')).filter(Boolean)
+      }
       return [] as string[]
+    })
+  }
+
+  public runSql(configuration: ConnectionOptions, sql: string): Promise<unknown> {
+    return this.connection(configuration, (connection) => {
+      return connection.execute(sql)
     })
   }
 }
