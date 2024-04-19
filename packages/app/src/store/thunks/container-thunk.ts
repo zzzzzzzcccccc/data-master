@@ -21,4 +21,18 @@ const fetchRunSql = createAsyncThunk(
   },
 )
 
-export default { fetchTables, fetchRunSql }
+const fetchTableDetails = createAsyncThunk(
+  'container/fetchTableDetails',
+  (payload: { configuration: ConnectionConfiguration; table: string }) => {
+    if (!payload || !payload.configuration) return Promise.reject(new Error('No found connection configuration'))
+    if (!payload.table) return Promise.reject(new Error('No found table name'))
+    return rpcRequest(
+      URI.database?.[payload.configuration.client],
+      'getTableInfo',
+      payload.configuration.metadata,
+      payload.table,
+    )
+  },
+)
+
+export default { fetchTables, fetchRunSql, fetchTableDetails }

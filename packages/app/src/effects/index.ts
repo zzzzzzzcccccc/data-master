@@ -6,6 +6,7 @@ import useDatabaseEffect from './use-database-effect'
 import useDatabaseItemEffect from './use-database-item-effect'
 import useDatabaseItemHeaderEffect from './use-database-item-header-effect'
 import useDatabaseItemSqlQueryEffect from './use-database-item-sql-query-effect'
+import useDatabaseItemTableEffect from './use-database-item-table-effect'
 
 export {
   useGlobalLayoutEffect,
@@ -16,4 +17,5 @@ export {
   useDatabaseItemEffect,
   useDatabaseItemHeaderEffect,
   useDatabaseItemSqlQueryEffect,
+  useDatabaseItemTableEffect,
 }

@@ -44,6 +44,11 @@ class PostgresClient extends DatabaseClient implements DatabaseClientImp<ClientC
       return connection.query(sql)
     })
   }
+
+  public getTableInfo() {
+    // TODO implement
+    return Promise.resolve(null)
+  }
 }
 
 const postgresClient = new PostgresClient()

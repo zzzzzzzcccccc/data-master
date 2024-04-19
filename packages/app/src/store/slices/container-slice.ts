@@ -5,6 +5,7 @@ import { ASYNC_STATUS } from '@dm/core'
 export interface ContainerState {
   wh: [number, number]
   tables: Record<string, { value: string[]; status: ASYNC_STATUS; active: string }>
+  tableDetails: Record<string, { value: unknown; status: ASYNC_STATUS }>
   sqlRunCodes: Record<string, string>
   sqlRunCodesResult: Record<string, { status?: ASYNC_STATUS; data?: unknown; errorMsg?: string }>
 }
@@ -12,6 +13,7 @@ export interface ContainerState {
 const initialState: ContainerState = {
   wh: [0, 0],
   tables: {},
+  tableDetails: {},
   sqlRunCodes: {},
   sqlRunCodesResult: {},
 }
@@ -31,7 +33,7 @@ const containerSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    const { fetchTables, fetchRunSql } = thunks.containerThunk
+    const { fetchTables, fetchRunSql, fetchTableDetails } = thunks.containerThunk
 
     builder.addCase(fetchTables.pending, (state, action) => {
       if (!state.tables[action.meta.arg.id]) {
@@ -68,6 +70,20 @@ const containerSlice = createSlice({
     builder.addCase(fetchRunSql.rejected, (state, action) => {
       state.sqlRunCodesResult[action.meta.arg.configuration.id].status = ASYNC_STATUS.rejected
       state.sqlRunCodesResult[action.meta.arg.configuration.id].errorMsg = action.error.message
+    })
+
+    builder.addCase(fetchTableDetails.pending, (state, action) => {
+      if (!state.tableDetails[action.meta.arg.table]) {
+        state.tableDetails[action.meta.arg.table] = { value: null, status: ASYNC_STATUS.pending }
+      }
+      state.tableDetails[action.meta.arg.table].status = ASYNC_STATUS.pending
+    })
+    builder.addCase(fetchTableDetails.fulfilled, (state, action) => {
+      state.tableDetails[action.meta.arg.table].status = ASYNC_STATUS.fulfilled
+      state.tableDetails[action.meta.arg.table].value = action.payload
+    })
+    builder.addCase(fetchTableDetails.rejected, (state, action) => {
+      state.tableDetails[action.meta.arg.table].status = ASYNC_STATUS.rejected
     })
   },
 })
