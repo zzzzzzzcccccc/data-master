@@ -1,26 +1,30 @@
 import React from 'react'
 import { Spin, Flex } from 'antd'
-import { ASYNC_STATUS } from '@dm/core'
+import { ConnectionConfiguration, BASE_ROUTE, URI_NAMESPACES } from '@dm/core'
 import ConnectionItem from './connection-item'
-import { useConnectionsEffect } from '../../effects'
+import { useGetDatabaseConfiguration, useTheme } from '../../hooks'
+import { history } from '../../utils'
 
 function Connections() {
-  const { loading, error, size, connectionConfigurations, databaseId, handleOnClick, tables } = useConnectionsEffect()
+  const { databaseId, configurations, isLoading, isError } = useGetDatabaseConfiguration()
+  const {
+    theme: { size },
+  } = useTheme()
+
+  const handleOnClick = (item: ConnectionConfiguration) => () => {
+    if (databaseId !== item.id) {
+      history.push(`${BASE_ROUTE}${URI_NAMESPACES.database}/${item.id}`)
+    }
+  }
 
   return (
-    <Spin spinning={loading}>
-      {error ? (
+    <Spin spinning={isLoading}>
+      {isError ? (
         'connections error'
       ) : (
         <Flex style={{ width: 200 }} vertical justify="flex-start" align="flex-start" gap={size}>
-          {connectionConfigurations.map((item) => (
-            <ConnectionItem
-              onClick={handleOnClick(item)}
-              item={item}
-              key={item.id}
-              loading={tables[item.id]?.status === ASYNC_STATUS.pending}
-              active={databaseId === item.id}
-            />
+          {configurations.map((item) => (
+            <ConnectionItem onClick={handleOnClick(item)} item={item} key={item.id} active={databaseId === item.id} />
           ))}
         </Flex>
       )}

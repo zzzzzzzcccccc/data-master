@@ -1,27 +1,58 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Flex, Button, Alert } from 'antd'
 import RouteDrawer from '../../route-drawer'
-import { useDatabaseItemSqlQueryEffect } from '../../../effects'
 import SqlEditor from '../../sql-editor'
 import styles from './database-item.module.scss'
-import { useTranslation } from '../../../hooks'
+import {
+  useTranslation,
+  useRunSqlMutation,
+  useAppSelector,
+  useAppDispatch,
+  useGetDatabaseConfiguration,
+} from '../../../hooks'
+import { setSqlRunCode } from '../../../store'
 
 function DatabaseItemSqlQuery() {
-  const {
-    wh,
-    code,
-    codeRunning,
-    codeRunningError,
-    codeRunningResultErrorMsg,
-    handleOnCodeChanged,
-    handleOnClickRunCode,
-  } = useDatabaseItemSqlQueryEffect()
   const t = useTranslation()
+  const { databaseId, configuration } = useGetDatabaseConfiguration()
+  const { wh, sqlRunCodes } = useAppSelector((state) => state.container)
+  const dispatch = useAppDispatch()
+  const [runSql, { isLoading }] = useRunSqlMutation()
+
+  const { code, isError, errorMsg } = useMemo(() => {
+    const item = sqlRunCodes?.[databaseId] || {}
+    return {
+      code: item?.value || '',
+      isError: item?.isError,
+      errorMsg: item?.errorMsg,
+    }
+  }, [databaseId, sqlRunCodes])
+
+  const handleOnCodeChanged = (value: string) => {
+    dispatch(
+      setSqlRunCode({
+        id: databaseId,
+        target: { value },
+      }),
+    )
+  }
+
+  const handleOnClickRunCode = async () => {
+    if (isLoading) return
+    const result = await runSql({ configuration, code })
+    const errorMsg = result?.error as string
+    dispatch(
+      setSqlRunCode({
+        id: databaseId,
+        target: { isError: !!errorMsg, errorMsg: errorMsg ? errorMsg : '' },
+      }),
+    )
+  }
 
   return (
     <RouteDrawer
       extra={
-        <Button type="primary" disabled={!code.trim()} loading={codeRunning} ghost onClick={handleOnClickRunCode}>
+        <Button type="primary" disabled={!code.trim()} loading={isLoading} ghost onClick={handleOnClickRunCode}>
           {t('sql.run')}
         </Button>
       }
@@ -31,9 +62,9 @@ function DatabaseItemSqlQuery() {
       <Flex className={styles.dbDrawerEditor} vertical align="flex-start" justify="flex-start">
         <SqlEditor defaultValue={code} onChange={handleOnCodeChanged} style={{ width: '100%', height: '100%' }} />
       </Flex>
-      {codeRunningError && (
+      {isError && (
         <Flex className={styles.dbDrawerError} vertical align="flex-start" justify="flex-start">
-          <Alert message={codeRunningResultErrorMsg} type="error" showIcon />
+          <Alert message={errorMsg} type="error" showIcon />
         </Flex>
       )}
     </RouteDrawer>

@@ -46,16 +46,11 @@ export default async function bootstrap() {
     await i18nConfig.changeLanguage()
 
     ReactDOM.createRoot(injector).render(
-      <React.StrictMode>
-        <ErrorBoundary
-          fallback={<GlobalError />}
-          onError={(error, info) => logger.error('UI render oops', error, info)}
-        >
-          <Provider store={store}>
-            <App />
-          </Provider>
-        </ErrorBoundary>
-      </React.StrictMode>,
+      <ErrorBoundary fallback={<GlobalError />} onError={(error, info) => logger.error('UI render oops', error, info)}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ErrorBoundary>,
     )
 
     logger.debug('Success')

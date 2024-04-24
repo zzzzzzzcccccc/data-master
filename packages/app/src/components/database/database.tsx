@@ -1,11 +1,11 @@
 import React from 'react'
-import { useDatabaseEffect } from '../../effects'
+import { useGetDatabaseConfiguration } from '../../hooks'
 import { Outlet } from 'react-router-dom'
 
 function Database() {
-  const { databaseId } = useDatabaseEffect()
+  const { hasConfiguration } = useGetDatabaseConfiguration()
 
-  return !databaseId ? 'selected you connection' : <Outlet />
+  return !hasConfiguration ? 'selected you connection' : <Outlet />
 }
 
 export default Database

@@ -1,14 +1,16 @@
 import React from 'react'
 import { ConfigProvider, App, Flex } from 'antd'
-import { useGlobalLayoutEffect } from '../../effects'
 import GlobalHeader from './global-header'
 import GlobalSlider from './global-slider'
 import GlobalContent from './global-content'
 import Settings from '../settings'
 import styles from './global-layout.module.scss'
+import { useTheme, useGetConnectionConfigurationsQuery } from '../../hooks'
 
 function GlobalLayout() {
-  const { configProviderProps, isDark } = useGlobalLayoutEffect()
+  const { isDark, configProviderProps } = useTheme()
+
+  useGetConnectionConfigurationsQuery()
 
   return (
     <ConfigProvider {...configProviderProps}>

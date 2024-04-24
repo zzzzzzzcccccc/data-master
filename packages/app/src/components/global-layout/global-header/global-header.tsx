@@ -4,14 +4,16 @@ import styles from '../global-layout.module.scss'
 import { useTheme } from '../../../hooks'
 
 function GlobalHeader() {
-  const { colorPrimary, size } = useTheme()
+  const {
+    theme: { primaryColor, size },
+  } = useTheme()
 
   return (
     <Flex
       className={styles.header}
       justify="flex-start"
       align="center"
-      style={{ backgroundColor: colorPrimary }}
+      style={{ backgroundColor: primaryColor }}
       gap={size}
     >
       <div className={styles.headerDrag} />

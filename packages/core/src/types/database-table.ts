@@ -15,7 +15,6 @@ export interface DatabaseForeignKey {
 export interface DatabaseColumn {
   name: string
   dataType: string
-  size?: number
   defaultValue?: unknown
   notNull?: boolean
   comment?: string

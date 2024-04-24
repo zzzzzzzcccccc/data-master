@@ -1,4 +1,5 @@
 import { configureStore, combineReducers, type Middleware, type Reducer } from '@reduxjs/toolkit'
+import { setupListeners } from '@reduxjs/toolkit/query'
 import {
   persistStore,
   persistReducer,
@@ -12,14 +13,16 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { appSlice, containerSlice } from './slices'
+import { gatewayApi } from './gateway'
 import { createLogger } from 'redux-logger'
 import { APP_NAME, STORE_VERSION } from '@dm/core'
 import { RootState } from './types'
 
-const middleware: Middleware[] = [
+const middlewares: Middleware[] = [
   createLogger({
     collapsed: true,
   }),
+  gatewayApi.middleware,
 ]
 const persistConfig: Record<string, { reducer: Reducer; config?: Omit<PersistConfig<RootState>, 'key'> }> = {
   app: {
@@ -32,6 +35,14 @@ const persistConfig: Record<string, { reducer: Reducer; config?: Omit<PersistCon
   },
   container: {
     reducer: containerSlice.reducer,
+    config: {
+      version: STORE_VERSION,
+      storage,
+      whitelist: [],
+    },
+  },
+  [gatewayApi.reducerPath]: {
+    reducer: gatewayApi.reducer,
     config: {
       version: STORE_VERSION,
       storage,
@@ -60,8 +71,10 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(middleware),
+    }).concat(middlewares),
 })
+
+setupListeners(store.dispatch)
 
 const persist = persistStore(store)
 

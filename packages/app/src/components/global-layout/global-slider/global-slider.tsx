@@ -8,7 +8,9 @@ import SelectConnection from '../../select-connection'
 import Connections from '../../connections'
 
 function GlobalSlider() {
-  const { colorPrimary, size } = useTheme()
+  const {
+    theme: { size, primaryColor },
+  } = useTheme()
 
   const dispatch = useAppDispatch()
   const t = useTranslation()
@@ -34,7 +36,7 @@ function GlobalSlider() {
       vertical
       justify="flex-start"
       align="flex-start"
-      style={{ backgroundColor: colorPrimary }}
+      style={{ backgroundColor: primaryColor }}
     >
       <Flex vertical justify="center" align="center" gap={size}>
         {menus.map((menu) => (

@@ -1,5 +1,5 @@
 import Database from './database'
-import DatabaseItem, { DatabaseItemSqlQuery } from './database-item'
+import DatabaseItem, { DatabaseItemTable, DatabaseItemSqlQuery } from './database-item'
 
 export default Database
-export { DatabaseItem, DatabaseItemSqlQuery }
+export { DatabaseItem, DatabaseItemTable, DatabaseItemSqlQuery }

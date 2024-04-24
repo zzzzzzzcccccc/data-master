@@ -1,14 +1,19 @@
 import React from 'react'
 import { Form, Button, Flex, Spin, Popconfirm } from 'antd'
-import { CLIENT_NAMES, ConnectionConfiguration, ASYNC_STATUS } from '@dm/core'
+import { CLIENT_NAMES, ConnectionConfiguration } from '@dm/core'
 import { ConnectionFormProps } from './types'
 import ConnectionMysql from './connection-mysql'
-import { useAppSelector, useAppDispatch, useTranslation } from '../../hooks'
+import {
+  useAppSelector,
+  useAppDispatch,
+  useTranslation,
+  useTestConnectionMutation,
+  useInsertConnectionConfigurationMutation,
+} from '../../hooks'
 import {
   setAddConnectionConfigurationForClient,
-  fetchTestConnection,
-  fetchAddConnectionConfiguration,
-  setAddConnectionConfigurationsConnectionErrorForClient,
+  setAddConnectionConfigurationErrorForClient,
+  resetAddConnectionConfiguration,
 } from '../../store'
 import { logger as baseLogger } from '../../utils'
 import Icon from '../icon'
@@ -19,25 +24,23 @@ const formLayout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
 }
+const formMapper: Record<string, React.ReactNode> = {
+  [CLIENT_NAMES.mysql.key]: <ConnectionMysql />,
+}
 
 function ConnectionForm(props: ConnectionFormProps) {
   const { client } = props
   const t = useTranslation()
-  const {
-    addConnectionConfigurations,
-    addConnectionConfigurationsConnectionError,
-    addConnectionConfigurationsLoading,
-  } = useAppSelector((state) => state.app)
+  const { addConnectionConfigurations, addConnectionConfigurationsError } = useAppSelector((state) => state.app)
+  const [testConnection, { isLoading: isLoadingTestConnection }] = useTestConnectionMutation()
+  const [insertConnectionConfiguration, { isLoading: isLoadingInsertConnectionConfiguration }] =
+    useInsertConnectionConfigurationMutation()
   const dispatch = useAppDispatch()
   const [form] = Form.useForm()
 
-  const connectionError = addConnectionConfigurationsConnectionError[client]
-  const loading = addConnectionConfigurationsLoading[client]
+  const connectionError = !!addConnectionConfigurationsError?.[client]
+  const loading = isLoadingTestConnection || isLoadingInsertConnectionConfiguration
   const initialValues = addConnectionConfigurations[client]
-
-  const formMapper: Record<string, React.ReactNode> = {
-    [CLIENT_NAMES.mysql.key]: <ConnectionMysql />,
-  }
 
   const handlerOnValuesChange = (changedValues: Partial<Omit<ConnectionConfiguration, 'id' | 'client'>>) => {
     logger.debug(`changed to: ${JSON.stringify(changedValues)}`)
@@ -47,26 +50,36 @@ function ConnectionForm(props: ConnectionFormProps) {
 
   const handleOnSaveConnection = async () => {
     const values = form.getFieldsValue() as Omit<ConnectionConfiguration, 'id'>
-    const resultFetchAddConnectionConfigurationAction = await dispatch(
-      fetchAddConnectionConfiguration({ client, configuration: values }),
-    )
-    if (resultFetchAddConnectionConfigurationAction.meta.requestStatus === ASYNC_STATUS.fulfilled) {
+    const result = await insertConnectionConfiguration({ client, configuration: values })
+    if (result?.data) {
+      dispatch(resetAddConnectionConfiguration({ client }))
       form.resetFields()
     }
   }
 
   const handlerOnCancel = () => {
-    dispatch(setAddConnectionConfigurationsConnectionErrorForClient({ client, target: false }))
+    dispatch(
+      setAddConnectionConfigurationErrorForClient({
+        client,
+        target: false,
+      }),
+    )
   }
 
   const handlerOnFinish = async (values: Omit<ConnectionConfiguration, 'id'>) => {
     logger.debug(`submit to: ${JSON.stringify(values)}`)
 
     if (!loading) {
-      const resultFetchTestConnectionAction = await dispatch(fetchTestConnection({ client, configuration: values }))
-
-      if (resultFetchTestConnectionAction.meta.requestStatus === ASYNC_STATUS.fulfilled) {
+      const resultTestConnection = await testConnection({ client, configuration: values })
+      if (resultTestConnection?.data) {
         handleOnSaveConnection()
+      } else {
+        dispatch(
+          setAddConnectionConfigurationErrorForClient({
+            client,
+            target: true,
+          }),
+        )
       }
     }
   }

@@ -57,11 +57,17 @@ class MysqlClient extends DatabaseClient implements DatabaseClientImp<Connection
   }
 
   private getTableColumns(connection: Connection, tableName: string) {
-    return connection.execute(`SHOW COLUMNS FROM ${tableName}`)
+    return connection.execute(`SELECT * FROM information_schema.columns WHERE table_schema = ? AND table_name = ?`, [
+      connection.config.database,
+      tableName,
+    ])
   }
 
   private getTableIndexes(connection: Connection, tableName: string) {
-    return connection.execute(`SHOW INDEX FROM ${tableName} `)
+    return connection.execute(`SELECT * FROM information_schema.statistics WHERE table_schema = ? AND table_name = ?`, [
+      connection.config.database,
+      tableName,
+    ])
   }
 
   private getDatabaseTable({

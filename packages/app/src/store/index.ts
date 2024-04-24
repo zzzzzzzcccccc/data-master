@@ -1,6 +1,6 @@
 import store, { persist } from './store'
 import { appSlice, containerSlice } from './slices'
-import thunks from './thunks'
+import { gatewayApi } from './gateway'
 
 export * from './types'
 
@@ -10,10 +10,8 @@ export const {
   setSettingsVisible,
   setCurrentAddConnectionClient,
   setAddConnectionConfigurationForClient,
-  setAddConnectionConfigurationsConnectionErrorForClient,
+  setAddConnectionConfigurationErrorForClient,
+  resetAddConnectionConfiguration,
 } = appSlice.actions
-export const { setWh, setSqlRunCode, setActiveTable } = containerSlice.actions
-export const { fetchTestConnection, fetchAddConnectionConfiguration, fetchConnectionConfigurations } = thunks.appThunk
-export const { fetchTables, fetchRunSql, fetchTableDetails } = thunks.containerThunk
-
-export { store, persist }
+export const { setWh, setSqlRunCode } = containerSlice.actions
+export { store, persist, gatewayApi }

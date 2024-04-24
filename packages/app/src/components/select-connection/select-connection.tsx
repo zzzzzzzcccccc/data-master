@@ -1,11 +1,31 @@
 import React from 'react'
 import { Flex, Button, Popover } from 'antd'
-import { useSelectConnectionEffect } from '../../effects'
+import { CLIENT_NAMES } from '@dm/core'
 import Icon from '../icon'
 import ConnectionForm from '../connection-form'
+import { useAppDispatch, useAppSelector, useTheme, useTranslation } from '../../hooks'
+import { setCurrentAddConnectionClient } from '../../store'
 
 function SelectConnection() {
-  const { size, list, currentAddConnectionClient, handleOnClick } = useSelectConnectionEffect()
+  const t = useTranslation()
+  const {
+    theme: { size },
+  } = useTheme()
+  const { currentAddConnectionClient } = useAppSelector((state) => state.app)
+  const dispatch = useAppDispatch()
+  const list = Object.keys(CLIENT_NAMES).map((key) => {
+    const item = CLIENT_NAMES[key as keyof typeof CLIENT_NAMES]
+    return {
+      key,
+      icon: item.icon,
+      label: t(key),
+    }
+  })
+
+  const handleOnClick = (client: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
+    dispatch(setCurrentAddConnectionClient(client))
+  }
 
   return (
     <Flex style={{ width: 200 }} vertical justify="flex-start" align="flex-start" gap={size}>
