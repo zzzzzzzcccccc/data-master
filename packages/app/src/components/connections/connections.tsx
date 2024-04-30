@@ -1,19 +1,36 @@
 import React from 'react'
 import { Spin, Flex } from 'antd'
-import { ConnectionConfiguration, BASE_ROUTE, URI_NAMESPACES } from '@dm/core'
+import { ConnectionConfiguration } from '@dm/core'
 import ConnectionItem from './connection-item'
-import { useGetDatabaseConfiguration, useTheme } from '../../hooks'
-import { history } from '../../utils'
+import {
+  useGetDatabaseConfiguration,
+  useTheme,
+  useDeleteConnectionConfigurationMutation,
+  useHistory,
+} from '../../hooks'
+import styles from './connections.module.scss'
 
 function Connections() {
   const { databaseId, configurations, isLoading, isError } = useGetDatabaseConfiguration()
+  const [deleteConnectionConfiguration] = useDeleteConnectionConfigurationMutation()
   const {
     theme: { size },
   } = useTheme()
+  const { linkToDatabase } = useHistory()
 
   const handleOnClick = (item: ConnectionConfiguration) => () => {
     if (databaseId !== item.id) {
-      history.push(`${BASE_ROUTE}${URI_NAMESPACES.database}/${item.id}`)
+      linkToDatabase(item.id)
+    }
+  }
+
+  const handleOnRemove = (item: ConnectionConfiguration) => async () => {
+    const active = item.id === databaseId
+    const result = await deleteConnectionConfiguration(item.id)
+    if (result?.data) {
+      if (active) {
+        linkToDatabase()
+      }
     }
   }
 
@@ -22,9 +39,15 @@ function Connections() {
       {isError ? (
         'connections error'
       ) : (
-        <Flex style={{ width: 200 }} vertical justify="flex-start" align="flex-start" gap={size}>
+        <Flex className={styles.connectionsWrapper} vertical justify="flex-start" align="flex-start" gap={size}>
           {configurations.map((item) => (
-            <ConnectionItem onClick={handleOnClick(item)} item={item} key={item.id} active={databaseId === item.id} />
+            <ConnectionItem
+              onClick={handleOnClick(item)}
+              onRemove={handleOnRemove(item)}
+              item={item}
+              key={item.id}
+              active={databaseId === item.id}
+            />
           ))}
         </Flex>
       )}

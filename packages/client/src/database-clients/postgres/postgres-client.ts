@@ -32,10 +32,8 @@ class PostgresClient extends DatabaseClient implements DatabaseClientImp<ClientC
 
   public getTables(configuration: ClientConfig) {
     return this.connection(configuration, async (connection) => {
-      const queryResult = await connection.query(
-        `SELECT table_name FROM information_schema.tables WHERE table_schema = current_database()`,
-      )
-      return queryResult.rows.map((row) => row.table_name) as string[]
+      await connection.query(`SELECT table_name FROM information_schema.tables WHERE table_schema = current_database()`)
+      return []
     })
   }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, Button, Flex, Spin, Popconfirm } from 'antd'
 import { CLIENT_NAMES, ConnectionConfiguration } from '@dm/core'
 import { ConnectionFormProps } from './types'
@@ -31,7 +31,8 @@ const formMapper: Record<string, React.ReactNode> = {
 function ConnectionForm(props: ConnectionFormProps) {
   const { client } = props
   const t = useTranslation()
-  const { addConnectionConfigurations, addConnectionConfigurationsError } = useAppSelector((state) => state.app)
+  const { addConnectionConfigurations, resetAddConnectionConfigurationsAt, addConnectionConfigurationsError } =
+    useAppSelector((state) => state.app)
   const [testConnection, { isLoading: isLoadingTestConnection }] = useTestConnectionMutation()
   const [insertConnectionConfiguration, { isLoading: isLoadingInsertConnectionConfiguration }] =
     useInsertConnectionConfigurationMutation()
@@ -53,7 +54,6 @@ function ConnectionForm(props: ConnectionFormProps) {
     const result = await insertConnectionConfiguration({ client, configuration: values })
     if (result?.data) {
       dispatch(resetAddConnectionConfiguration({ client }))
-      form.resetFields()
     }
   }
 
@@ -83,6 +83,12 @@ function ConnectionForm(props: ConnectionFormProps) {
       }
     }
   }
+
+  useEffect(() => {
+    if (resetAddConnectionConfigurationsAt?.[client]) {
+      form.resetFields()
+    }
+  }, [form, client, resetAddConnectionConfigurationsAt])
 
   return (
     <Form

@@ -1,6 +1,9 @@
 .dbHeader {
   width: 100%;
   box-sizing: border-box;
+  :global(.ant-tabs-nav) {
+    margin-bottom: 0;
+  }
 }
 
 .dbHeaderRight {
@@ -31,4 +34,26 @@
   width: 100%;
   padding: 0 var(--dm-spacing-4) var(--dm-spacing-4) var(--dm-spacing-4);
   box-sizing: border-box;
+}
+
+.dbItemTableWrapper {
+  width: 100%;
+  height: 100%;
+}
+.dbItemTable {
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+}
+.dbItemTableContainer {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  :global(.ant-table-wrapper) {
+    width: 100%;
+  }
+}
+.dbItemTableDetails {
+  height: 100%;
+  width: 200px;
 }

@@ -18,6 +18,14 @@ const configuration = (build: EndpointBuilder<BaseRPCQuery, string, string>) => 
     }),
     invalidatesTags: [TAG_TYPES.ConnectionConfiguration],
   }),
+  deleteConnectionConfiguration: build.mutation<string, string>({
+    query: (id) => ({
+      uri: URI.store.configuration,
+      method: 'delete',
+      args: [id],
+    }),
+    invalidatesTags: [TAG_TYPES.ConnectionConfiguration],
+  }),
   testConnection: build.mutation<
     boolean,
     { client: string; configuration: Omit<ConnectionConfiguration, 'id' | 'client'> }

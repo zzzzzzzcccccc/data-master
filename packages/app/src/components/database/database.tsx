@@ -3,9 +3,11 @@ import { useGetDatabaseConfiguration } from '../../hooks'
 import { Outlet } from 'react-router-dom'
 
 function Database() {
-  const { hasConfiguration } = useGetDatabaseConfiguration()
+  const { hasConfiguration, isError } = useGetDatabaseConfiguration()
 
-  return !hasConfiguration ? 'selected you connection' : <Outlet />
+  if (isError) return null
+
+  return hasConfiguration ? <Outlet /> : 'selected your connection'
 }
 
 export default Database

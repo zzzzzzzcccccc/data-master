@@ -5,4 +5,5 @@ export interface ConnectionItemProps {
   item: ConnectionConfiguration
   active?: boolean
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  onRemove?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }

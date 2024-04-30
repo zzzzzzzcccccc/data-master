@@ -1,32 +1,57 @@
-export interface DatabaseIndex {
-  name: string
-  columns: string[]
+export interface TableColumn {
+  columnName: string
+  columnType: string
+  columnDefaultValue: unknown
+  columnNotNull: boolean
+  columnIsPrimaryKey: boolean
+  columnExtra: string
+  columnComment: string
+}
+
+export interface TableIndex {
+  columnName: string
+  indexName: string
+  indexType: string
+  indexComment: string
   unique: boolean
 }
 
-export interface DatabaseForeignKey {
-  column: string
-  references: {
-    table: string
-    column: string
-  }
+export interface TableForeign {
+  columnName: string
+  constraintName: string
+  referencedTableName: string
+  referencedColumnName: string
 }
 
-export interface DatabaseColumn {
-  name: string
-  dataType: string
-  defaultValue?: unknown
-  notNull?: boolean
-  comment?: string
+export interface TableCheck {
+  constraintName: string
+  checkClause: string
 }
 
-export interface DatabaseTable {
+export interface TableDetails {
   name: string
-  columns: DatabaseColumn[]
-  primaryKey?: string[]
-  uniqueKeys?: string[]
-  indexes?: DatabaseIndex[]
-  foreignKeys?: DatabaseForeignKey[]
-  checks?: string[]
-  comment?: string
+  columns: TableColumn[]
+  indexes: TableIndex[]
+  foreign: TableForeign[]
+  checks: TableCheck[]
+}
+
+export interface Table {
+  tableName: string
+  tableType: string
+  tableEngine: string
+  tableVersion: string
+  tableRowFormat: string
+  tableRows: string
+  tableAvgRowLength: string
+  tableDataLength: string
+  tableMaxDataLength: string
+  tableIndexLength: string
+  tableDataFree: string
+  tableAutoIncrement: string
+  tableCreateTime: string
+  tableUpdateTime: string
+  tableCheckTime: string
+  tableCollation: string
+  tableComment: string
 }

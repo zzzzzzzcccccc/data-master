@@ -15,6 +15,7 @@ export interface AppState {
   settingsVisible: boolean
   currentAddConnectionClient: string
   addConnectionConfigurations: Record<string, ConnectionConfiguration>
+  resetAddConnectionConfigurationsAt: Record<string, string>
   addConnectionConfigurationsError: Record<string, boolean>
 }
 
@@ -37,6 +38,7 @@ const initialState: AppState = {
     },
     {} as AppState['addConnectionConfigurations'],
   ),
+  resetAddConnectionConfigurationsAt: {},
   addConnectionConfigurationsError: {},
   settingsVisible: false,
 }
@@ -94,6 +96,7 @@ const appSlice = createSlice({
       state.addConnectionConfigurations[client] = CLIENT_NAMES[client as keyof typeof CLIENT_NAMES]
         .defaultConfiguration as ConnectionConfiguration
       state.addConnectionConfigurationsError[client] = false
+      state.resetAddConnectionConfigurationsAt[client] = new Date().toISOString()
     },
   },
 })
