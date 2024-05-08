@@ -86,3 +86,8 @@ export const URI = {
     {} as Record<string, string>,
   ),
 }
+export const PAGE_SIZE_MAPPER = {
+  '500': 500,
+  '1000': 1000,
+  '5000': 5000,
+}

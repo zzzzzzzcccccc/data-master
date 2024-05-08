@@ -1,6 +1,15 @@
 import DatabaseClient from '../database-client'
-import { DatabaseClientImp } from '../types'
-import { numberToString, Table, TableDetails, TableColumn, TableIndex, TableForeign, TableCheck } from '@dm/core'
+import { DatabaseClientImp, QueryListPayload, QueryListResult } from '../types'
+import {
+  numberToString,
+  rowToString,
+  Table,
+  TableDetails,
+  TableColumn,
+  TableIndex,
+  TableForeign,
+  TableCheck,
+} from '@dm/core'
 import mysql, { Connection, ConnectionOptions } from 'mysql2/promise'
 
 class MysqlClient extends DatabaseClient implements DatabaseClientImp<ConnectionOptions, Connection> {
@@ -62,6 +71,20 @@ class MysqlClient extends DatabaseClient implements DatabaseClientImp<Connection
         foreign: foreign.map((item) => this.convertForeign(item)),
         checks: checks.map((item) => this.convertCheck(item)),
       }
+    })
+  }
+
+  public queryList<Result extends Record<string, unknown>>(
+    configuration: ConnectionOptions,
+    { tableName, limit = [0, 0] }: QueryListPayload,
+  ): Promise<QueryListResult<Result> | null> {
+    return this.connection(configuration, async (connection) => {
+      const [[rows], [countRows]] = await Promise.all([
+        connection.execute<mysql.RowDataPacket[]>(`SELECT * FROM ${tableName} LIMIT ${limit[0]}, ${limit[1]}`),
+        connection.execute<mysql.RowDataPacket[]>(`SELECT COUNT(*) as total FROM ${tableName}`),
+      ])
+      const total = numberToString(countRows?.[0]?.total || 0)
+      return { data: rows.map((item) => rowToString(item) as Result), total }
     })
   }
 

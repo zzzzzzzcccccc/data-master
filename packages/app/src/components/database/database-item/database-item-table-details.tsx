@@ -3,9 +3,13 @@ import { useGetDatabaseTableDetails } from '../../../hooks'
 import styles from './database-item.module.scss'
 
 function DatabaseItemTableDetails() {
-  useGetDatabaseTableDetails()
+  const { tableDetailWidth } = useGetDatabaseTableDetails()
 
-  return <div className={styles.dbItemTableDetails}>table details</div>
+  return (
+    <div className={styles.dbItemTableDetails} style={{ width: tableDetailWidth }}>
+      table details
+    </div>
+  )
 }
 
 export default DatabaseItemTableDetails

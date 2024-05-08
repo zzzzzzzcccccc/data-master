@@ -49,11 +49,16 @@
   flex: 1;
   height: 100%;
   width: 100%;
-  :global(.ant-table-wrapper) {
-    width: 100%;
+}
+.dbItemTableContainerInfo {
+  width: 100%;
+  flex: 1;
+  :global(.ant-table-thead .ant-table-cell) {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }
 .dbItemTableDetails {
   height: 100%;
-  width: 200px;
 }

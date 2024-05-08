@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import { Flex } from 'antd'
 import { useGetDatabaseTables, useHistory } from '../../../hooks'
 import DatabaseItemHeader from './database-item-header'
@@ -9,6 +9,7 @@ import styles from './database-item.module.scss'
 function DatabaseItem() {
   const { isError, tables, tableName, tableNames, isLoading } = useGetDatabaseTables()
   const { linkToTable } = useHistory()
+  const tableRef = useRef<HTMLDivElement | null>(null)
 
   useLayoutEffect(() => {
     if (tables.length === 0 || isError || isLoading) return
@@ -25,7 +26,7 @@ function DatabaseItem() {
       ) : (
         <>
           <DatabaseItemHeader />
-          <Flex className={styles.dbItemTable} justify="flex-start" align="flex-start">
+          <Flex className={styles.dbItemTable} ref={tableRef} justify="flex-start" align="flex-start">
             {tables.length === 0 ? (
               'no tables'
             ) : (

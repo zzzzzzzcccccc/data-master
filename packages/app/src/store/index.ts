@@ -13,5 +13,5 @@ export const {
   setAddConnectionConfigurationErrorForClient,
   resetAddConnectionConfiguration,
 } = appSlice.actions
-export const { setWh, setSqlRunCode } = containerSlice.actions
+export const { setWh, setTableQuery, setSqlRunCode } = containerSlice.actions
 export { store, persist, gatewayApi }

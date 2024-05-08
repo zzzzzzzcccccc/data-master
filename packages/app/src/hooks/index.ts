@@ -37,4 +37,5 @@ export const {
   useGetTablesQuery,
   useRunSqlMutation,
   useGetTableDetailQuery,
+  useGetTableDataQuery,
 } = gatewayApi

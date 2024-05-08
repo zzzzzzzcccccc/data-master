@@ -47,6 +47,11 @@ class PostgresClient extends DatabaseClient implements DatabaseClientImp<ClientC
     // TODO implement
     return Promise.resolve(null)
   }
+
+  public queryList<Result extends Record<string, unknown>>() {
+    // TODO implement
+    return Promise.resolve({ data: [] as Result[], total: '0' })
+  }
 }
 
 const postgresClient = new PostgresClient()

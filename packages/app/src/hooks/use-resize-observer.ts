@@ -1,13 +1,15 @@
-import { MutableRefObject, useLayoutEffect, useRef } from 'react'
+import { MutableRefObject, useLayoutEffect, useEffect, useRef } from 'react'
 import { getElementOffsetWidthHeight } from '../utils'
 
 function useResizeObserver<Element extends HTMLElement | null>(
   elementRef: MutableRefObject<Element>,
   onChange?: (payload: [number, number]) => void,
+  enableLayoutEffect = true,
 ) {
   const onChangeRef = useRef(onChange)
+  const targetEffect = enableLayoutEffect ? useLayoutEffect : useEffect
 
-  useLayoutEffect(() => {
+  targetEffect(() => {
     if (!elementRef.current) return
     const target = elementRef.current
     const ro = new ResizeObserver(() => {

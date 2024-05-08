@@ -40,7 +40,8 @@ function DatabaseItemSqlQuery() {
   const handleOnClickRunCode = async () => {
     if (isLoading) return
     const result = await runSql({ configuration, code })
-    const errorMsg = result?.error as string
+    // @ts-ignore
+    const errorMsg = result?.error
     dispatch(
       setSqlRunCode({
         id: databaseId,
