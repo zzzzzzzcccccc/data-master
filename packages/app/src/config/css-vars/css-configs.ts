@@ -4,6 +4,7 @@ const configs: Record<string, string> = {
   white: 'rgba(255, 255, 255, 0.66)',
   black: 'rgba(0, 0, 0, 0.88)',
   dark: 'rgba(33, 33, 33, 1)',
+  gray: '#f0f0f0',
   'spacing-1': `${BASE_SPACE}px`,
   'spacing-2': `${BASE_SPACE * 2}px`,
   'spacing-3': `${BASE_SPACE * 3}px`,

@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 import { TableDetails, PAGE_SIZE_MAPPER, jsonToString } from '@dm/core'
-import { useAppSelector } from './use-store'
+import { useAppSelector, useAppDispatch } from './use-store'
 import useGetDatabaseConfiguration from './use-get-database-configuration'
 import useGetDatabaseTableName from './use-get-database-table-name'
-import { gatewayApi } from '../store'
+import { gatewayApi, setTableQuery } from '../store'
 
 const { useGetTableDetailQuery, useGetTableDataQuery } = gatewayApi
 const ROW_KEY = '__row_key__'
@@ -45,12 +45,14 @@ function buildTableProps(
       current: query.pageIndex,
       pageSize: query.pageSize,
       total: tableData?.total ? +tableData.total : 0,
+      pageSizeOptions: Object.values(PAGE_SIZE_MAPPER),
     },
   }
 }
 
 function useGetDatabaseTableDetails() {
   const tableName = useGetDatabaseTableName()
+  const dispatch = useAppDispatch()
   const { tableQuery, tableDetailWidth, wh } = useAppSelector((state) => state.container)
 
   const { configuration } = useGetDatabaseConfiguration()
@@ -103,6 +105,15 @@ function useGetDatabaseTableDetails() {
   const isLoading = isLoadingTableDetail || isLoadingTableData
   const isError = isErrorTableDetail || isErrorTableData
 
+  const handleOnPageChange = (page: number, pageSize: number) => {
+    const currentPageSize = query.pageSize
+    const payload = {
+      id: tableName,
+      target: currentPageSize !== pageSize ? { pageIndex: 1, pageSize } : { pageIndex: page, pageSize },
+    }
+    dispatch(setTableQuery(payload))
+  }
+
   return {
     tableName,
     wh,
@@ -111,6 +122,7 @@ function useGetDatabaseTableDetails() {
     isLoading,
     isError,
     tableDetailWidth,
+    handleOnPageChange,
   }
 }
 

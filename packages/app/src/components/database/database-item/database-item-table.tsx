@@ -1,26 +1,30 @@
 import React from 'react'
-import { Flex, Table } from 'antd'
+import { Flex, Table, Pagination } from 'antd'
 import { Outlet } from 'react-router-dom'
 import { useGetDatabaseTableDetails } from '../../../hooks'
 import styles from './database-item.module.scss'
 
 function DatabaseItemTable() {
-  const { details, isLoading, wh, tableDetailWidth } = useGetDatabaseTableDetails()
+  const { details, isLoading, handleOnPageChange } = useGetDatabaseTableDetails()
 
   return (
     <>
       <Flex className={styles.dbItemTableContainer} vertical justify="flex-start" align="flex-start">
-        <div className={styles.dbItemTableContainerInfo}>
+        <Flex className={styles.dbItemTableInfo} vertical justify="flex-start" align="flex-start">
           <Table
+            sticky
             loading={isLoading}
             columns={details.columns}
             rowKey={details.rowKey}
             dataSource={details.dataSource}
             pagination={false}
-            scroll={{ x: wh[0] - tableDetailWidth, y: 300 }}
-            bordered
           />
-        </div>
+        </Flex>
+        {details?.pagination && details?.pagination?.total && (
+          <Flex className={styles.dbItemTablePage} vertical justify="flex-start" align="flex-end">
+            <Pagination {...details.pagination} showSizeChanger onChange={handleOnPageChange} />
+          </Flex>
+        )}
       </Flex>
       <Outlet />
     </>

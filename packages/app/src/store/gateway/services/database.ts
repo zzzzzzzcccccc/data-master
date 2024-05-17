@@ -42,6 +42,9 @@ const database = (build: EndpointBuilder<BaseRPCQuery, string, string>) => ({
         ],
       }
     },
+    forceRefetch: ({ currentArg, previousArg }) => {
+      return currentArg !== previousArg
+    },
   }),
 })
 
