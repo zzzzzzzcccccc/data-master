@@ -10,8 +10,9 @@ import useGetDatabaseTables from './use-get-database-tables'
 import useGetDatabaseTableName from './use-get-database-table-name'
 import useGetDatabaseTable from './use-get-database-table'
 import useHistory from './use-history'
-import useGetDatabaseTableDetails from './use-get-datbase-table-details'
+import useGetDatabaseTableDetails from './use-get-database-table-details'
 import useResizeObserver from './use-resize-observer'
+import useAntdTableScroll, { AntdTableScrollScene } from './use-antd-table-scroll'
 
 export {
   useAppSelector,
@@ -28,7 +29,10 @@ export {
   useHistory,
   useGetDatabaseTableDetails,
   useResizeObserver,
+  useAntdTableScroll,
+  AntdTableScrollScene,
 }
+
 export const {
   useGetConnectionConfigurationsQuery,
   useTestConnectionMutation,

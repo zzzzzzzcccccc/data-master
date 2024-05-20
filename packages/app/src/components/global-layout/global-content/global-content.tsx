@@ -32,7 +32,9 @@ function GlobalContent() {
     )
   }
 
-  useResizeObserver(contentRef, (payload) => dispatch(setWh(payload)))
+  useResizeObserver(contentRef, (payload) => {
+    dispatch(setWh(payload))
+  })
 
   return (
     <Flex ref={contentRef} className={styles.content} vertical justify="flex-start" align="flex-start" flex={1}>

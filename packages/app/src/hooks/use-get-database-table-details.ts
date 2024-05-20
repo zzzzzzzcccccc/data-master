@@ -24,6 +24,8 @@ function buildTableProps(
           key: item.columnName,
           title: item.columnName,
           dataIndex: item.columnName,
+          ellipsis: true,
+          width: 150,
         },
       ]
       return acc
