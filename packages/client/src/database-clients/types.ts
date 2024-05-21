@@ -3,6 +3,7 @@ import { Table, TableDetails } from '@dm/core'
 export type QueryListPayload = {
   tableName: string
   limit?: [number, number]
+  sorts?: Array<{ type: string; field: string }>
 }
 
 export type QueryListResult<Result> = {

@@ -1,9 +1,10 @@
 import { useMemo } from 'react'
-import { TableDetails, PAGE_SIZE_MAPPER, jsonToString } from '@dm/core'
+import { TableDetails, PAGE_SIZE_MAPPER, jsonToString, SORT_TYPE } from '@dm/core'
 import { useAppSelector, useAppDispatch } from './use-store'
 import useGetDatabaseConfiguration from './use-get-database-configuration'
 import useGetDatabaseTableName from './use-get-database-table-name'
 import { gatewayApi, setTableQuery } from '../store'
+import { type SorterResult, type TablePaginationConfig, type FilterValue } from 'antd/es/table/interface'
 
 const { useGetTableDetailQuery, useGetTableDataQuery } = gatewayApi
 const ROW_KEY = '__row_key__'
@@ -25,6 +26,7 @@ function buildTableProps(
           title: item.columnName,
           dataIndex: item.columnName,
           ellipsis: true,
+          sorter: true,
           width: 150,
         },
       ]
@@ -108,12 +110,36 @@ function useGetDatabaseTableDetails() {
   const isError = isErrorTableDetail || isErrorTableData
 
   const handleOnPageChange = (page: number, pageSize: number) => {
+    if (!details?.pagination?.total) return
     const currentPageSize = query.pageSize
     const payload = {
       id: tableName,
       target: currentPageSize !== pageSize ? { pageIndex: 1, pageSize } : { pageIndex: page, pageSize },
     }
     dispatch(setTableQuery(payload))
+  }
+
+  const handleOnTableChange = (
+    _p: TablePaginationConfig,
+    _f: Record<string, FilterValue | null>,
+    sorter: SorterResult<Record<string, unknown>> | SorterResult<Record<string, unknown>>[],
+  ) => {
+    let result: Array<{ type: string; field: string }> = []
+    if (Array.isArray(sorter)) {
+      if (sorter?.length > 0) {
+        result = sorter.map((item) => ({
+          type: item.order === 'ascend' ? SORT_TYPE.asc : SORT_TYPE.desc,
+          field: item.field as string,
+        }))
+      }
+    } else {
+      const sortType = sorter?.order ? (sorter.order === 'ascend' ? SORT_TYPE.asc : SORT_TYPE.desc) : ''
+      const sortField = (sorter?.column?.dataIndex || '') as string
+      if (sortType && sortField) {
+        result.push({ type: sortType, field: sortField })
+      }
+    }
+    dispatch(setTableQuery({ id: tableName, target: { sorts: result } }))
   }
 
   return {
@@ -125,6 +151,7 @@ function useGetDatabaseTableDetails() {
     isError,
     tableDetailWidth,
     handleOnPageChange,
+    handleOnTableChange,
   }
 }
 

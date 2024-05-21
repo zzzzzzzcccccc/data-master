@@ -5,8 +5,8 @@ import { useGetDatabaseTableDetails, useAntdTableScroll, AntdTableScrollScene } 
 import styles from './database-item.module.scss'
 
 function DatabaseItemTable() {
-  const { details, isLoading, handleOnPageChange } = useGetDatabaseTableDetails()
-  const { wrapperRef, scroll } = useAntdTableScroll({ scene: AntdTableScrollScene.detail, isLoading })
+  const { details, isLoading, handleOnPageChange, handleOnTableChange } = useGetDatabaseTableDetails()
+  const { wrapperRef, scroll } = useAntdTableScroll({ scene: AntdTableScrollScene.detail })
 
   return (
     <>
@@ -14,6 +14,7 @@ function DatabaseItemTable() {
         <Flex className={styles.dbItemTableInfo} vertical justify="flex-start" align="flex-start" ref={wrapperRef}>
           <Table
             loading={isLoading}
+            onChange={handleOnTableChange}
             columns={details.columns}
             rowKey={details.rowKey}
             dataSource={details.dataSource}
@@ -23,11 +24,9 @@ function DatabaseItemTable() {
             virtual
           />
         </Flex>
-        {!!(details?.pagination && details?.pagination?.total) && (
-          <Flex className={styles.dbItemTablePage} vertical justify="flex-start" align="flex-end">
-            <Pagination {...details.pagination} showSizeChanger onChange={handleOnPageChange} />
-          </Flex>
-        )}
+        <Flex className={styles.dbItemTablePage} vertical justify="flex-start" align="flex-end">
+          <Pagination {...details.pagination} showSizeChanger onChange={handleOnPageChange} />
+        </Flex>
       </Flex>
       <Outlet />
     </>

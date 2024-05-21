@@ -38,6 +38,7 @@ const database = (build: EndpointBuilder<BaseRPCQuery, string, string>) => ({
           {
             tableName: payload.query.tableName,
             limit: [(payload.query.pageIndex - 1) * payload.query.pageSize, payload.query.pageSize],
+            sorts: payload.query.sorts,
           },
         ],
       }

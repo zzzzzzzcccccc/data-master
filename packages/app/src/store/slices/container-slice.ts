@@ -10,6 +10,7 @@ export type RunCode = {
 export type TableQueryPayload = {
   pageIndex: number
   pageSize: number
+  sorts: Array<{ type: string; field: string }>
 }
 
 export interface ContainerState {
@@ -35,7 +36,7 @@ const containerSlice = createSlice({
     },
     setTableQuery(state, action: PayloadAction<{ id: string; target: Partial<TableQueryPayload> }>) {
       if (!state.tableQuery[action.payload.id]) {
-        state.tableQuery[action.payload.id] = { pageIndex: 1, pageSize: PAGE_SIZE_MAPPER['5000'] }
+        state.tableQuery[action.payload.id] = { pageIndex: 1, pageSize: PAGE_SIZE_MAPPER['5000'], sorts: [] }
       }
       state.tableQuery[action.payload.id] = { ...state.tableQuery[action.payload.id], ...action.payload.target }
     },

@@ -76,11 +76,16 @@ class MysqlClient extends DatabaseClient implements DatabaseClientImp<Connection
 
   public queryList<Result extends Record<string, unknown>>(
     configuration: ConnectionOptions,
-    { tableName, limit = [0, 0] }: QueryListPayload,
+    { tableName, limit = [0, 0], sorts = [] }: QueryListPayload,
   ): Promise<QueryListResult<Result> | null> {
     return this.connection(configuration, async (connection) => {
+      const orderByClause = sorts.length
+        ? 'ORDER BY ' + sorts.map((sort) => `${sort.field} ${sort.type}`).join(', ')
+        : ''
       const [[rows], [countRows]] = await Promise.all([
-        connection.execute<mysql.RowDataPacket[]>(`SELECT * FROM ${tableName} LIMIT ${limit[0]}, ${limit[1]}`),
+        connection.execute<mysql.RowDataPacket[]>(
+          `SELECT * FROM ${tableName} ${orderByClause} LIMIT ${limit[0]}, ${limit[1]}`,
+        ),
         connection.execute<mysql.RowDataPacket[]>(`SELECT COUNT(*) as total FROM ${tableName}`),
       ])
       const total = numberToString(countRows?.[0]?.total || 0)

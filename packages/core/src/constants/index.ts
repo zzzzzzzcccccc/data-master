@@ -91,3 +91,7 @@ export const PAGE_SIZE_MAPPER = {
   '1000': 1000,
   '5000': 5000,
 }
+export const SORT_TYPE = {
+  asc: 'ASC',
+  desc: 'DESC',
+}
