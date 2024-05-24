@@ -38,7 +38,7 @@ const persistConfig: Record<string, { reducer: Reducer; config?: Omit<PersistCon
     config: {
       version: STORE_VERSION,
       storage,
-      whitelist: [],
+      whitelist: ['tableDetailWidth'],
     },
   },
   [gatewayApi.reducerPath]: {

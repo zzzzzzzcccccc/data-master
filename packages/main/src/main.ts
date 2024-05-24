@@ -15,6 +15,7 @@ class Client {
   private _isRunning = false
   private _mainWindow: electron.BrowserWindow | null = null
   private _unListener: (() => void) | null = null
+  private _isDev = !electron.app.isPackaged
 
   public init() {
     if (!this._isRunning) {
@@ -78,7 +79,9 @@ class Client {
     window.on(ELECTRON_WINDOW_EVENT_NAME.readyToShow, boundReadyToShow)
     window.on(ELECTRON_WINDOW_EVENT_NAME.close, boundClose)
 
-    window.webContents.openDevTools()
+    if (this._isDev) {
+      window.webContents.openDevTools()
+    }
     window.loadURL(`http://localhost:3333`)
 
     return () => {

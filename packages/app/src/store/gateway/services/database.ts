@@ -1,5 +1,5 @@
 import { type EndpointBuilder } from '@reduxjs/toolkit/query/react'
-import { ConnectionConfiguration, URI, Table, TableDetails } from '@dm/core'
+import { type ConnectionConfiguration, type Table, type TableDetails, URI } from '@dm/core'
 import { type BaseRPCQuery } from '../gateway'
 import { type TableQueryPayload } from '../../slices/container-slice'
 

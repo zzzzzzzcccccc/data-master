@@ -62,7 +62,7 @@ function useGetDatabaseTableDetails() {
   const { configuration } = useGetDatabaseConfiguration()
   const {
     data: tableDetail,
-    isLoading: isLoadingTableDetail,
+    isFetching: isLoadingTableDetail,
     isError: isErrorTableDetail,
   } = useGetTableDetailQuery({ configuration, table: tableName })
 
@@ -74,6 +74,7 @@ function useGetDatabaseTableDetails() {
       }
     } else {
       return {
+        sorts: [],
         pageIndex: 1,
         pageSize: PAGE_SIZE_MAPPER['5000'],
         tableName,
@@ -82,7 +83,7 @@ function useGetDatabaseTableDetails() {
   }, [tableQuery, tableName])
   const {
     data: tableData,
-    isLoading: isLoadingTableData,
+    isFetching: isLoadingTableData,
     isError: isErrorTableData,
   } = useGetTableDataQuery({ configuration, query })
   const details = useMemo(() => {
@@ -110,7 +111,6 @@ function useGetDatabaseTableDetails() {
   const isError = isErrorTableDetail || isErrorTableData
 
   const handleOnPageChange = (page: number, pageSize: number) => {
-    if (!details?.pagination?.total) return
     const currentPageSize = query.pageSize
     const payload = {
       id: tableName,
@@ -149,7 +149,9 @@ function useGetDatabaseTableDetails() {
     query,
     isLoading,
     isError,
+    isLoadingTableDetail,
     tableDetailWidth,
+    tableDetail,
     handleOnPageChange,
     handleOnTableChange,
   }

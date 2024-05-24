@@ -27,14 +27,8 @@ function DatabaseItem() {
         <>
           <DatabaseItemHeader />
           <Flex className={styles.dbItemTable} ref={tableRef} justify="flex-start" align="flex-start">
-            {tables.length === 0 ? (
-              'no tables'
-            ) : (
-              <>
-                <Outlet />
-                {tableName && <DatabaseItemTableDetails />}
-              </>
-            )}
+            <Outlet />
+            {tables.length > 0 && tableName && <DatabaseItemTableDetails />}
           </Flex>
         </>
       )}

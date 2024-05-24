@@ -87,4 +87,24 @@
 
 .dbItemTableDetails {
   height: 100%;
+  :global(.ant-spin-nested-loading) {
+    width: 100%;
+    height: 100%;
+  }
+  :global(.ant-spin-container) {
+    width: 100%;
+    height: 100%;
+  }
+}
+.dbItemTableDetailsInfo {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.dbColumns {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 var(--dm-spacing-3);
 }
