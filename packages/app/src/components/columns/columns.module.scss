@@ -1,4 +1,28 @@
+.columns {
+  width: 100%;
+  overflow: auto;
+}
+
 .dbItem {
   width: 100%;
-  overflow: hidden;
+}
+
+.dbColumn {
+  width: 100%;
+  font-size: var(--dm-large-font-size);
+  span {
+    white-space: nowrap;
+  }
+}
+
+.dbColumnName {
+  font-size: var(--dm-large-font-size);
+}
+
+.dbColumnType {
+  font-size: var(--dm-small-font-size);
+}
+
+.dbColumnOther {
+  font-size: var(--dm-small-font-size);
 }

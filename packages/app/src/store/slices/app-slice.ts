@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { type Update } from 'history'
 import { history } from '../../utils'
 import { THEME_MODE, SIZE, DEFAULT_THEME_PRIMARY_COLOR, CLIENT_NAMES, ConnectionConfiguration } from '@dm/core'
-import { i18nConfig } from '../../config'
 
 export interface AppState {
   historyUpdate: Update
@@ -51,9 +50,6 @@ const appSlice = createSlice({
       state.historyUpdate = action.payload
     },
     setTheme(state, action: PayloadAction<Partial<AppState['theme']>>) {
-      if (action.payload.lang && action.payload.lang !== state.theme.lang) {
-        i18nConfig.changeLanguage(action.payload.lang)
-      }
       state.theme = {
         ...state.theme,
         ...action.payload,

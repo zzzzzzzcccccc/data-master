@@ -1,10 +1,11 @@
 const BASE_SPACE = 2
 
-const configs: Record<string, string> = {
+const configs: Record<string, string | number> = {
   white: 'rgba(255, 255, 255, 0.66)',
   black: 'rgba(0, 0, 0, 0.88)',
   dark: 'rgba(33, 33, 33, 1)',
   gray: '#f0f0f0',
+  'font-gray': 'rgba(0, 0, 0, 0.45)',
   'spacing-1': `${BASE_SPACE}px`,
   'spacing-2': `${BASE_SPACE * 2}px`,
   'spacing-3': `${BASE_SPACE * 3}px`,
@@ -20,6 +21,9 @@ const configs: Record<string, string> = {
   'small-font-size': '12px',
   'medium-font-size': '14px',
   'large-font-size': '16px',
+  'small-font-weight': 400,
+  'medium-font-weight': 500,
+  'large-font-weight': 600,
 }
 
 export default configs

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import { Collapse, Flex } from 'antd'
 import { useGetDatabaseTableDetails, useTranslation } from '../../../hooks'
 import Columns from '../../columns'
+import Indexes from '../../indexes'
 import styles from './database-item.module.scss'
 
 function DatabaseItemTableDetailsColumns() {
@@ -12,8 +13,13 @@ function DatabaseItemTableDetailsColumns() {
     return [
       {
         key: 'columns',
-        label: t('columns'),
+        label: `${t('columns')} (${tableDetail?.columns.length})`,
         children: tableDetail ? <Columns mode="db" data={tableDetail.columns} /> : '',
+      },
+      {
+        key: 'indexes',
+        label: `${t('indexes')} (${tableDetail?.indexes.length})`,
+        children: tableDetail ? <Indexes mode="db" data={tableDetail.indexes} /> : '',
       },
     ]
   }, [t, tableDetail])

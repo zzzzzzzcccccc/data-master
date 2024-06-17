@@ -1,5 +1,6 @@
 import * as electron from 'electron'
-import * as path from 'path'
+import * as path from 'node:path'
+import * as os from 'node:os'
 import {
   DARWIN,
   WIN32,
@@ -7,6 +8,7 @@ import {
   ELECTRON_WINDOW_EVENT_NAME,
   APP_NAME,
   DEFAULT_MAIN_WINDOW_LAYOUT,
+  CHROME_EXTENSIONS,
 } from '@dm/core'
 import { rendererListener } from './renderer'
 import { logger } from './utils'
@@ -80,6 +82,7 @@ class Client {
     window.on(ELECTRON_WINDOW_EVENT_NAME.close, boundClose)
 
     if (this._isDev) {
+      this.setupDevelopPlugins()
       window.webContents.openDevTools()
     }
     window.loadURL(`http://localhost:3333`)
@@ -140,6 +143,20 @@ class Client {
     this._mainWindow = null
     this._isRunning = false
     this._unListener = null
+  }
+
+  private async setupDevelopPlugins() {
+    const commonDir = '/Library/Application Support/Google/Chrome/Default/Extensions'
+    const reactDir = path.join(os.homedir(), `${commonDir}/${CHROME_EXTENSIONS.react.id}/5.2.0_0`)
+    const reduxDir = path.join(os.homedir(), `${commonDir}/${CHROME_EXTENSIONS.redux.id}/3.1.6_0`)
+    try {
+      await Promise.all([
+        electron.session.defaultSession.loadExtension(reactDir),
+        electron.session.defaultSession.loadExtension(reduxDir),
+      ])
+    } catch (e) {
+      logger.warning(`Setup develop installer error`, e)
+    }
   }
 
   get isDarwin() {

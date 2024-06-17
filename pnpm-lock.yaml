@@ -21,7 +21,6 @@ importers:
       '@vitejs/plugin-legacy': ^5.3.2
       '@vitejs/plugin-react': ^4.2.1
       electron: ^29.1.4
-      electron-devtools-installer: ^3.2.0
       eslint: ^8.57.0
       eslint-config-prettier: ^9.1.0
       eslint-plugin-prettier: ^5.1.3
@@ -63,7 +62,6 @@ importers:
       '@typescript-eslint/parser': 7.3.1_5iotri5aeibafrgj7thsggiclm
       '@vitejs/plugin-legacy': 5.3.2_terser@5.29.2+vite@5.1.6
       '@vitejs/plugin-react': 4.2.1_vite@5.1.6
-      electron-devtools-installer: 3.2.0
       eslint: 8.57.0
       eslint-config-prettier: 9.1.0_eslint@8.57.0
       eslint-plugin-prettier: 5.1.3_udeglvt2rvqfn252kbszwwr7nu
@@ -4846,16 +4844,6 @@ packages:
       jake: 10.8.7
     dev: true
 
-  /electron-devtools-installer/3.2.0:
-    resolution:
-      { integrity: sha512-t3UczsYugm4OAbqvdImMCImIMVdFzJAHgbwHpkl5jmfu1izVgUcP/mnrPqJIpEeCK1uZGpt+yHgWEN+9EwoYhQ== }
-    dependencies:
-      rimraf: 3.0.2
-      semver: 7.6.0
-      tslib: 2.6.2
-      unzip-crx-3: 0.2.0
-    dev: true
-
   /electron-to-chromium/1.4.708:
     resolution:
       { integrity: sha512-iWgEEvREL4GTXXHKohhh33+6Y8XkPI5eHihDmm8zUk5Zo7HICEW+wI/j5kJ2tbuNUCXJ/sNXa03ajW635DiJXA== }
@@ -6243,11 +6231,6 @@ packages:
     engines: { node: '>= 4' }
     dev: true
 
-  /immediate/3.0.6:
-    resolution:
-      { integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ== }
-    dev: true
-
   /immer/10.0.4:
     resolution:
       { integrity: sha512-cuBuGK40P/sk5IzWa9QPUaAdvPHjkk1c+xYsd9oZw+YQQEV+10G0P5uMpGctZZKnyQ+ibRO08bD25nWLmYi2pw== }
@@ -6916,16 +6899,6 @@ packages:
       object.values: 1.2.0
     dev: true
 
-  /jszip/3.10.1:
-    resolution:
-      { integrity: sha512-xXDvecyTpGLrqFrvkrUSoxxfJI5AH7U8zxxtVclpsUtMCq4JQ290LY8AW5c7Ggnr/Y/oK+bQMbqK2qmtk3pN4g== }
-    dependencies:
-      lie: 3.3.0
-      pako: 1.0.11
-      readable-stream: 2.3.8
-      setimmediate: 1.0.5
-    dev: true
-
   /keyv/4.5.4:
     resolution:
       { integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw== }
@@ -7073,13 +7046,6 @@ packages:
     resolution:
       { integrity: sha512-HeTsOrDF/hWhEiKqZVwg9Cqlep5x2T+IYDENvT2VRj3iX8JQ7Y+omENv+AIn0vC8m6GYhivfCed5Cgfw27r5SA== }
     dev: false
-
-  /lie/3.3.0:
-    resolution:
-      { integrity: sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ== }
-    dependencies:
-      immediate: 3.0.6
-    dev: true
 
   /lilconfig/3.0.0:
     resolution:
@@ -7600,14 +7566,6 @@ packages:
     dependencies:
       minipass: 3.3.6
       yallist: 4.0.0
-    dev: true
-
-  /mkdirp/0.5.6:
-    resolution:
-      { integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw== }
-    hasBin: true
-    dependencies:
-      minimist: 1.2.8
     dev: true
 
   /mkdirp/1.0.4:
@@ -8339,11 +8297,6 @@ packages:
     transitivePeerDependencies:
       - bluebird
       - supports-color
-    dev: true
-
-  /pako/1.0.11:
-    resolution:
-      { integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw== }
     dev: true
 
   /parent-module/1.0.1:
@@ -10052,11 +10005,6 @@ packages:
       has-property-descriptors: 1.0.2
     dev: true
 
-  /setimmediate/1.0.5:
-    resolution:
-      { integrity: sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA== }
-    dev: true
-
   /shallow-clone/3.0.1:
     resolution:
       { integrity: sha512-/6KqX+GVUdqPuPPd2LxDDxzX6CAbjJehAAOKlNpqqUpAqPM6HeL8f+o3a+JsyGjn2lv0WY8UsTgUJjU9Ok55NA== }
@@ -10891,15 +10839,6 @@ packages:
     engines: { node: '>= 10.0.0' }
     dev: true
 
-  /unzip-crx-3/0.2.0:
-    resolution:
-      { integrity: sha512-0+JiUq/z7faJ6oifVB5nSwt589v1KCduqIJupNVDoWSXZtWDmjDGO3RAEOvwJ07w90aoXoP4enKsR7ecMrJtWQ== }
-    dependencies:
-      jszip: 3.10.1
-      mkdirp: 0.5.6
-      yaku: 0.16.7
-    dev: true
-
   /upath/2.0.1:
     resolution:
       { integrity: sha512-1uEe95xksV1O0CYKXo8vQvN1JEbtJp7lb7C5U9HMsIp6IVwntkH/oNUzyVNQSd4S1sYk2FpSSW44FqMc8qee5w== }
@@ -11260,11 +11199,6 @@ packages:
     resolution:
       { integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA== }
     engines: { node: '>=10' }
-    dev: true
-
-  /yaku/0.16.7:
-    resolution:
-      { integrity: sha512-Syu3IB3rZvKvYk7yTiyl1bo/jiEFaaStrgv1V2TIJTqYPStSMQVO8EQjg/z+DRzLq/4LIIharNT3iH1hylEIRw== }
     dev: true
 
   /yallist/3.1.1:

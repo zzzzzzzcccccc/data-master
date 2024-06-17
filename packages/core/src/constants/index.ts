@@ -95,3 +95,11 @@ export const SORT_TYPE = {
   asc: 'ASC',
   desc: 'DESC',
 }
+export const CHROME_EXTENSIONS = {
+  react: {
+    id: 'fmkadmapgofadopljbjfkapdkoienihi',
+  },
+  redux: {
+    id: 'lmhkpmbekcpmknklioeibfkpmmfibljd',
+  },
+}

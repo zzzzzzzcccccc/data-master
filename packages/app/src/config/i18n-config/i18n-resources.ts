@@ -1,6 +1,7 @@
 const resources = {
   'en-US': {
     translation: {
+      no_found: 'No Found',
       settings: 'Settings',
       theme: 'Theme',
       language: 'Language',
@@ -31,11 +32,13 @@ const resources = {
         'Currently unable to connect to the data source, do you want to continue saving this configuration?',
       'sql.run': 'Run',
       columns: 'Columns',
+      indexes: 'Indexes',
     },
     displayLang: '🇺🇸 English',
   },
   'zh-CN': {
     translation: {
+      no_found: '暂无数据',
       settings: '设置',
       theme: '主题',
       language: '语言',
@@ -65,6 +68,7 @@ const resources = {
       'connection.failed.message': '当前无法连接到数据源，是否继续保存此配置?',
       'sql.run': '运行',
       columns: '列',
+      indexes: '索引',
     },
     displayLang: '🇨🇳 简体中文',
   },

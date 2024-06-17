@@ -1,21 +1,20 @@
 import React from 'react'
 import { Flex } from 'antd'
 import { ColumnsProps } from './types'
-import Icon from '../icon'
-import { useTheme } from '../../hooks'
+import DbColumn from './db-column'
 import styles from './columns.module.scss'
+import NoFound from '../no-found'
 
 function Columns(props: ColumnsProps) {
   const { data } = props
-  const { theme } = useTheme()
+  const isEmpty = !data || data.length === 0
 
-  return (
-    <Flex vertical className="w100">
+  return isEmpty ? (
+    <NoFound />
+  ) : (
+    <Flex className={styles.columns} vertical>
       {data.map((item) => (
-        <Flex className={styles.dbItem} key={item.columnName} title={item.columnName}>
-          <Icon target="icon-db_field" style={{ color: item.columnIsPrimaryKey ? theme.primaryColor : 'inherit' }} />
-          <span style={{ paddingLeft: 'var(--dm-spacing-2)' }}>{item.columnName}</span>
-        </Flex>
+        <DbColumn item={item} key={item.columnName} />
       ))}
     </Flex>
   )

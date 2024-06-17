@@ -6,10 +6,19 @@ import { useAppSelector, useAppDispatch } from '../../hooks'
 import { history } from '../../utils'
 import { setHistoryUpdate } from '../../store'
 import { BASE_ROUTE, URI_NAMESPACES } from '@dm/core'
+import { i18nConfig } from '../../config'
 
 function App() {
   const { historyUpdate } = useAppSelector((state) => state.app)
   const dispatch = useAppDispatch()
+
+  useAppSelector(
+    (state) => state.app.theme.lang,
+    (pre, next) => {
+      i18nConfig.changeLanguage(next)
+      return pre === next
+    },
+  )
 
   useLayoutEffect(() => {
     const unbind = history.listen((update) => {

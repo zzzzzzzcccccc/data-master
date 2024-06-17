@@ -4,3 +4,7 @@ export interface ColumnsProps {
   mode: 'db'
   data: TableColumn[]
 }
+
+export interface DbColumnProps {
+  item: TableColumn
+}
