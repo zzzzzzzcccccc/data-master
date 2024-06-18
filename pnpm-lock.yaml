@@ -151,12 +151,14 @@ importers:
       '@dm/client': '*'
       '@dm/core': '*'
       '@dm/logger': '*'
+      rotating-file-stream: ^3.2.3
       tslog: ^4.9.1
       uuid: ^9.0.1
     dependencies:
       '@dm/client': link:../client
       '@dm/core': link:../core
       '@dm/logger': link:../logger
+      rotating-file-stream: 3.2.3
       tslog: 4.9.2
       uuid: 9.0.1
 
@@ -9846,6 +9848,12 @@ packages:
       '@rollup/rollup-win32-x64-msvc': 4.13.0
       fsevents: 2.3.3
     dev: true
+
+  /rotating-file-stream/3.2.3:
+    resolution:
+      { integrity: sha512-cfmm3tqdnbuYw2FBmRTPBDaohYEbMJ3211T35o6eZdr4d7v69+ZeK1Av84Br7FLj2dlzyeZSbN6qTuXXE6dawQ== }
+    engines: { node: '>=14.0' }
+    dev: false
 
   /run-async/2.4.1:
     resolution:

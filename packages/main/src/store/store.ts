@@ -1,8 +1,8 @@
 import * as fs from 'fs'
 import * as electron from 'electron'
-import { APP_NAME, STORE_ROOT_DIR_NAME, STORE_VERSION } from '@dm/core'
+import { APP_NAME, STORE_ROOT_DIR_NAME, STORE_VERSION, jsonToString } from '@dm/core'
 import ConfigurationStore from './configuration-store'
-import { jsonToString, logger as baseLogger } from '../utils'
+import { logger as baseLogger } from '../utils'
 
 const logger = baseLogger.getSubLogger('Store')
 

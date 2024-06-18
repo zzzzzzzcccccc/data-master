@@ -1,7 +1,14 @@
 import * as electron from 'electron'
-import { URI_GATE_WAY, URI_NAMESPACES, RpcRequestMessage, HTTP_REQUEST_CODE, safePromiseCall } from '@dm/core'
+import {
+  URI_GATE_WAY,
+  URI_NAMESPACES,
+  RpcRequestMessage,
+  HTTP_REQUEST_CODE,
+  safePromiseCall,
+  jsonToString,
+} from '@dm/core'
 import { databaseClients } from '@dm/client'
-import { logger as baseLogger, jsonToString } from '../utils'
+import { logger as baseLogger, rendererLogger } from '../utils'
 import store from '../store'
 
 const logger = baseLogger.getSubLogger('RendererListener')
@@ -26,8 +33,8 @@ class RendererListener {
 
   private static loggerHandler = (subName: string, event: electron.IpcMainEvent, message: RpcRequestMessage) => {
     const { replyEvent, method, args } = message
-    if (method in baseLogger) {
-      const log = baseLogger.getSubLogger(['Renderer', subName].filter(Boolean).join(':'))
+    if (method in rendererLogger) {
+      const log = subName ? rendererLogger.getSubLogger(subName) : rendererLogger
       log?.[method as keyof typeof log](...args)
       event.reply(replyEvent, {
         data: null,

@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import { StoreOptions } from './types'
-import { generateUUID, jsonToString, stringToJson, logger as baseLogger } from '../utils'
-import { ConnectionConfiguration, STORE_NAMES } from '@dm/core'
+import { generateUUID, logger as baseLogger } from '../utils'
+import { ConnectionConfiguration, STORE_NAMES, jsonToString, stringToJson } from '@dm/core'
 
 const logger = baseLogger.getSubLogger('ConfigurationStore')
 

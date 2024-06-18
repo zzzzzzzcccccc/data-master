@@ -9,6 +9,7 @@ import {
   APP_NAME,
   DEFAULT_MAIN_WINDOW_LAYOUT,
   CHROME_EXTENSIONS,
+  jsonToString,
 } from '@dm/core'
 import { rendererListener } from './renderer'
 import { logger } from './utils'
@@ -45,7 +46,7 @@ class Client {
       electron.Menu.setApplicationMenu(null)
 
       this._mainWindow = new electron.BrowserWindow(options)
-      logger.info(`Create main window with options = ${JSON.stringify(options)}`)
+      logger.info(`Create main window with options = ${jsonToString(options)}`)
     }
 
     return this._mainWindow

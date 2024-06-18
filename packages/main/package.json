@@ -17,6 +17,7 @@
     "@dm/logger": "*",
     "@dm/client": "*",
     "tslog": "^4.9.1",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "rotating-file-stream": "^3.2.3"
   }
 }
