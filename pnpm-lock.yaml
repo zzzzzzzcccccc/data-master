@@ -86,7 +86,6 @@ importers:
     specifiers:
       '@ant-design/icons': ^5.3.5
       '@dm/core': '*'
-      '@dm/logger': '*'
       '@reduxjs/toolkit': ^2.2.2
       '@welldone-software/why-did-you-render': ^8.0.1
       antd: ^5.15.3
@@ -106,7 +105,6 @@ importers:
     dependencies:
       '@ant-design/icons': 5.3.5_biqbaboplfbrettd7655fr4n2y
       '@dm/core': link:../core
-      '@dm/logger': link:../logger
       '@reduxjs/toolkit': 2.2.2_xjpui5vowofmlfxsssmirucdoe
       antd: 5.15.3_biqbaboplfbrettd7655fr4n2y
       history: 5.3.0

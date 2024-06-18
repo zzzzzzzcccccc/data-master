@@ -24,6 +24,25 @@ class RendererListener {
     logger.error(`path=${path} method=${method}`, error)
   }
 
+  private static loggerHandler = (subName: string, event: electron.IpcMainEvent, message: RpcRequestMessage) => {
+    const { replyEvent, method, args } = message
+    if (method in baseLogger) {
+      const log = baseLogger.getSubLogger(['Renderer', subName].filter(Boolean).join(':'))
+      log?.[method as keyof typeof log](...args)
+      event.reply(replyEvent, {
+        data: null,
+        error: null,
+        code: HTTP_REQUEST_CODE.ok,
+      })
+    } else {
+      event.reply(replyEvent, {
+        data: null,
+        error: `method is not found for ${method}`,
+        code: HTTP_REQUEST_CODE.notFound,
+      })
+    }
+  }
+
   private static databaseHandler = (client: string, event: electron.IpcMainEvent, message: RpcRequestMessage) => {
     logger.info(`start databaseHandler message=${jsonToString(message)}`)
 
@@ -79,11 +98,9 @@ class RendererListener {
 
   private listener() {
     const handler = (event: electron.IpcMainEvent, message: RpcRequestMessage) => {
-      logger.info(`start gateway handler message=${jsonToString(message)}`)
-
       const uri = message.uri
       const [namespace, ...paths] = (uri || '').split('/')
-      if (!namespace || !paths?.length) {
+      if (!namespace) {
         event.reply(message.replyEvent, {
           data: null,
           error: 'uri is invalid',
@@ -94,6 +111,7 @@ class RendererListener {
         const uriHandlers = {
           [URI_NAMESPACES.database]: () => RendererListener.databaseHandler(path, event, message),
           [URI_NAMESPACES.store]: () => RendererListener.storeHandler(path, event, message),
+          [URI_NAMESPACES.logger]: () => RendererListener.loggerHandler(path, event, message),
         }
         if (!uriHandlers[namespace]) {
           event.reply(message.replyEvent, {

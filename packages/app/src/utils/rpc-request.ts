@@ -1,12 +1,12 @@
 import getPreloadInjector from './get-preload-injector'
 import baseLogger from './logger'
-import { HTTP_REQUEST_CODE } from '@dm/core'
+import { HTTP_REQUEST_CODE, jsonToString } from '@dm/core'
 
 const { rpcRequest: baseRpcRequest } = getPreloadInjector()
 const logger = baseLogger.getSubLogger('RpcRequest')
 
 const rpcRequest = async <Data>(uri: string, method: string, ...args: unknown[]): Promise<Data | null> => {
-  logger.debug(`RPC request start: uri=${uri} method=${method} args=${JSON.stringify(args)}`)
+  logger.info(`RPC request start: uri=${uri} method=${method} args=${jsonToString(args)}`)
 
   const response = await baseRpcRequest<Data>(uri, method, ...args)
   if (response?.code !== HTTP_REQUEST_CODE.ok) {

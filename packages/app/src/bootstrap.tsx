@@ -33,7 +33,7 @@ async function preloadModules() {
 }
 
 export default async function bootstrap() {
-  logger.debug('Start')
+  logger.info('Start')
 
   preloadModules()
   setupWhyDidRender()
@@ -58,6 +58,6 @@ export default async function bootstrap() {
       </React.StrictMode>,
     )
 
-    logger.debug('Success')
+    logger.info('Success')
   }
 }

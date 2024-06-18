@@ -17,7 +17,7 @@ function I18nConfig() {
   }
 
   const initialize = async (lang: string) => {
-    logger.debug(`Start initialize i18n for ${lang}`)
+    logger.info(`Start initialize i18n for ${lang}`)
 
     _lang = lang
 
@@ -45,7 +45,7 @@ function I18nConfig() {
       },
     })
 
-    logger.debug(`Success initialize i18n for ${lang}`)
+    logger.info(`Success initialize i18n for ${lang}`)
   }
 
   return {
@@ -60,7 +60,7 @@ function I18nConfig() {
 
       if (lang !== _lang) {
         _lang = lang
-        logger.debug(`Change i18n to ${lang}`)
+        logger.info(`Change i18n to ${lang}`)
         await i18n.changeLanguage(lang)
       }
     },

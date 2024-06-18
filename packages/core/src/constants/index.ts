@@ -38,6 +38,7 @@ export const URI_GATE_WAY = 'data-master://gateway'
 export const URI_NAMESPACES = {
   database: 'database',
   store: 'store',
+  logger: 'logger',
 }
 export const CLIENT_NAMES = {
   mysql: {

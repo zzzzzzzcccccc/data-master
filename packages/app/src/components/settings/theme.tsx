@@ -21,7 +21,7 @@ function Theme() {
   }))
 
   const handleOnValuesChange = (current: Record<string, string | Color>) => {
-    logger.debug(`changed to: ${JSON.stringify(current)}`)
+    logger.info(`changed to: ${JSON.stringify(current)}`)
 
     if (current.primaryColor) {
       current.primaryColor = (current.primaryColor as Color).toHexString()

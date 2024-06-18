@@ -4,7 +4,8 @@ function Logger(options: ISettingsParam<ILogObj> = {}) {
   const defaultOptions = {
     ...options,
     prettyLogTemplate: '[{{logLevelName}}] {{dateIsoStr}} {{name}} ',
-  }
+    prettyLogTimeZone: 'local',
+  } as ISettingsParam<ILogObj>
   const instance = new TsLogger<ILogObj>(defaultOptions)
 
   const getLoggerInstance = (target: typeof instance) => {
