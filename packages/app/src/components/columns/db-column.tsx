@@ -3,11 +3,12 @@ import { type DbColumnProps } from './types'
 import { Flex } from 'antd'
 import styles from './columns.module.scss'
 import Icon from '../icon'
-import { useTheme } from '../../hooks'
+import { useTheme, useTranslation } from '../../hooks'
 
 function DbColumn(props: DbColumnProps) {
   const { item } = props
   const { theme } = useTheme()
+  const t = useTranslation()
 
   const items = [
     { className: styles.dbColumnName, value: item.columnName },
@@ -16,7 +17,11 @@ function DbColumn(props: DbColumnProps) {
       value: item.columnType + (item.columnDefaultValue ? ` = ${item.columnDefaultValue}` : ''),
     },
     { className: styles.dbColumnOther, value: item.columnExtra ? `(${item.columnExtra})` : '' },
-    { className: styles.dbColumnOther, value: item.columnNotNull ? 'NOT NULL' : 'NULL' },
+    { className: styles.dbColumnOther, value: item.columnNotNull ? t('notNull') : t('null') },
+    {
+      className: styles.dbColumnOther,
+      value: item.columnComment ? t('comment_with_content', { content: item.columnComment }) : '',
+    },
   ]
   const title = items
     .map((i) => i.value)

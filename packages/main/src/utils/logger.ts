@@ -24,14 +24,18 @@ const formatLog = (log: ILogObj & ILogObjMeta) => {
   return `[${meta.logLevelName}] ${meta.date.toString()} ${name} ${msg}`
 }
 
+const createLogName = (fileName: string) => {
+  const appPath = electron.app.getPath('appData') + `/${APP_NAME}`
+  return `${appPath}/logs/${fileName}.log`
+}
+
 const logger = Logger({
   name: 'Main',
   minLevel: 0,
   attachedTransports: [
     (target) => {
       if (!mainStream) {
-        const appPath = electron.app.getPath('appData') + `/${APP_NAME}`
-        mainStream = createStream(`${appPath}/logs/main.log`, options)
+        mainStream = createStream(createLogName(`${new Date().toString()}-main`), options)
       }
       mainStream.write(`${formatLog(target)}\n`)
     },
@@ -44,8 +48,7 @@ const rendererLogger = Logger({
   attachedTransports: [
     (target) => {
       if (!renderStream) {
-        const appPath = electron.app.getPath('appData') + `/${APP_NAME}`
-        renderStream = createStream(`${appPath}/logs/renderer.log`, options)
+        renderStream = createStream(createLogName(`${new Date().toString()}-renderer`), options)
       }
       renderStream.write(`${formatLog(target)}\n`)
     },

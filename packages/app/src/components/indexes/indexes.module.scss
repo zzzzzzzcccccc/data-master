@@ -1,8 +1,19 @@
-.indexes {
+.indexItem {
   width: 100%;
   overflow: auto;
 }
 
-.dbIndex {
+.indexes {
   width: 100%;
+  span {
+    white-space: nowrap;
+  }
+}
+
+.indexColumnName {
+  font-size: var(--dm-large-font-size);
+}
+
+.indexOther {
+  font-size: var(--dm-small-font-size);
 }
