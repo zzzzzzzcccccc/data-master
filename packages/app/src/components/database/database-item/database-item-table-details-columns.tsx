@@ -3,6 +3,7 @@ import { Collapse, Flex } from 'antd'
 import { useGetDatabaseTableDetails, useTranslation } from '../../../hooks'
 import Columns from '../../columns'
 import Indexes from '../../indexes'
+import Foreigner from '../../foreigner'
 import styles from './database-item.module.scss'
 
 function DatabaseItemTableDetailsColumns() {
@@ -20,6 +21,11 @@ function DatabaseItemTableDetailsColumns() {
         key: 'indexes',
         label: `${t('indexes')} (${tableDetail?.indexes.length})`,
         children: tableDetail ? <Indexes mode="db" data={tableDetail.indexes} /> : '',
+      },
+      {
+        key: 'foreigner',
+        label: `${t('foreigner')} (${tableDetail?.foreign.length})`,
+        children: tableDetail ? <Foreigner mode="db" data={tableDetail.foreign} /> : '',
       },
     ]
   }, [t, tableDetail])

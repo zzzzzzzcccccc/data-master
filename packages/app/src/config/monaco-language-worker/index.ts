@@ -5,7 +5,7 @@ import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
 window.MonacoEnvironment = {
-  getWorker(_: unknown, label: string) {
+  getWorker(_workerId: string, label: string) {
     if (label === 'json') {
       return new JsonWorker()
     }

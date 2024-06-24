@@ -1,19 +1,19 @@
-.indexes {
+.foreigner {
   width: 100%;
   overflow: auto;
 }
 
-.indexItem {
+.foreign {
   width: 100%;
   span {
     white-space: nowrap;
   }
 }
 
-.indexColumnName {
+.foreignColumnName {
   font-size: var(--dm-large-font-size);
 }
 
-.indexOther {
+.foreignOther {
   font-size: var(--dm-small-font-size);
 }

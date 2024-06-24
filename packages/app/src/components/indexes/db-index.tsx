@@ -22,8 +22,8 @@ function DbIndex(props: DbIndexProps) {
   const title = items.map((i) => i.value).join(' ')
 
   return (
-    <Flex vertical className={styles.indexItem} title={title}>
-      <Flex className={styles.indexes} align="center" justify="flex-start" gap={theme.size}>
+    <Flex vertical title={title}>
+      <Flex className={styles.indexItem} align="center" justify="flex-start" gap={theme.size}>
         <Icon target="icon-index" style={{ color: item.indexName === 'PRIMARY' ? theme.primaryColor : 'inherit' }} />
         {items.map((record, index) => (
           <React.Fragment key={index}>
