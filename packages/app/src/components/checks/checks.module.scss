@@ -1,0 +1,23 @@
+.checks {
+  width: 100%;
+  overflow: auto;
+}
+
+.checkItem {
+  width: 100%;
+}
+
+.dbCheck {
+  width: 100%;
+  span {
+    white-space: nowrap;
+  }
+}
+
+.checkName {
+  font-size: var(--dm-large-font-size);
+}
+
+.checkOther {
+  font-size: var(--dm-small-font-size);
+}

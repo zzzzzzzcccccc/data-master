@@ -4,6 +4,7 @@ import { useGetDatabaseTableDetails, useTranslation } from '../../../hooks'
 import Columns from '../../columns'
 import Indexes from '../../indexes'
 import Foreigner from '../../foreigner'
+import Checks from '../../checks'
 import styles from './database-item.module.scss'
 
 function DatabaseItemTableDetailsColumns() {
@@ -26,6 +27,11 @@ function DatabaseItemTableDetailsColumns() {
         key: 'foreigner',
         label: `${t('foreigner')} (${tableDetail?.foreign.length})`,
         children: tableDetail ? <Foreigner mode="db" data={tableDetail.foreign} /> : '',
+      },
+      {
+        key: 'checks',
+        label: `${t('checks')} (${tableDetail?.checks.length})`,
+        children: tableDetail ? <Checks mode="db" data={tableDetail.checks} /> : '',
       },
     ]
   }, [t, tableDetail])
