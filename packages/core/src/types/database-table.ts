@@ -1,3 +1,11 @@
+export interface TableSqlResult {
+  rows?: Record<string, unknown>[]
+  fields?: string[]
+  affectedRows?: string
+  insertId?: string
+  fieldCount?: string
+}
+
 export interface TableColumn {
   columnName: string
   columnType: string

@@ -6,36 +6,6 @@
   }
 }
 
-.dbHeaderRight {
-  padding: 0 var(--dm-spacing-4);
-  box-sizing: border-box;
-}
-
-.dbDrawerHeader {
-  width: 100%;
-  padding: var(--dm-spacing-4) !important;
-}
-
-.dbDrawerBody {
-  padding: 0 !important;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.dbDrawerWrapper {
-  width: 100%;
-  flex: 1;
-}
-.dbDrawerEditor {
-  width: 100%;
-  height: 300px;
-}
-.dbDrawerError {
-  width: 100%;
-  padding: 0 var(--dm-spacing-4) var(--dm-spacing-4) var(--dm-spacing-4);
-  box-sizing: border-box;
-}
-
 .dbItemTableWrapper {
   width: 100%;
   height: 100%;
@@ -53,18 +23,6 @@
   width: 100%;
   box-sizing: border-box;
   overflow: auto;
-}
-
-.dbItemTableInfo {
-  width: 100%;
-  flex: 1;
-  overflow: hidden;
-  :global(.ant-table-wrapper) {
-    width: 100%;
-  }
-  :global(.ant-table-container) {
-    border-top-width: 0 !important;
-  }
 }
 
 .dbItemTablePage {
@@ -107,4 +65,32 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0 var(--dm-spacing-3);
+}
+
+.dbHeaderRight {
+  padding: 0 var(--dm-spacing-4);
+  box-sizing: border-box;
+}
+
+.dbDrawerHeader {
+  width: 100%;
+  padding: var(--dm-spacing-4) !important;
+}
+
+.dbDrawerBody {
+  padding: 0 !important;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dbDrawerEditor {
+  width: 100%;
+  height: 300px;
+}
+
+.dbDrawerWrapper {
+  width: 100%;
+  flex: 1;
+  background-color: red;
 }

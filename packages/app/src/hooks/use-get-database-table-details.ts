@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { TableDetails, PAGE_SIZE_MAPPER, jsonToString, SORT_TYPE } from '@dm/core'
+import { TableDetails, PAGE_SIZE_MAPPER, SORT_TYPE } from '@dm/core'
 import { useAppSelector, useAppDispatch } from './use-store'
 import useGetDatabaseConfiguration from './use-get-database-configuration'
 import useGetDatabaseTableName from './use-get-database-table-name'
@@ -7,7 +7,6 @@ import { gatewayApi, setTableQuery } from '../store'
 import { type SorterResult, type TablePaginationConfig, type FilterValue } from 'antd/es/table/interface'
 
 const { useGetTableDetailQuery, useGetTableDataQuery } = gatewayApi
-const ROW_KEY = '__row_key__'
 
 function buildTableProps(
   details: TableDetails,
@@ -34,17 +33,11 @@ function buildTableProps(
     },
     { columns: [] as Record<string, unknown>[], rowKey: '' },
   )
-  const dataSource = rowKey
-    ? tableData?.data || []
-    : (tableData?.data || []).map((item) => ({
-        ...item,
-        [ROW_KEY]: jsonToString(item),
-      }))
 
   return {
     columns,
-    rowKey: rowKey || ROW_KEY,
-    dataSource,
+    rowKey,
+    dataSource: tableData?.data,
     pagination: {
       current: query.pageIndex,
       pageSize: query.pageSize,
@@ -122,23 +115,12 @@ function useGetDatabaseTableDetails() {
   const handleOnTableChange = (
     _p: TablePaginationConfig,
     _f: Record<string, FilterValue | null>,
-    sorter: SorterResult<Record<string, unknown>> | SorterResult<Record<string, unknown>>[],
+    sorter: SorterResult<Record<string, unknown>>[],
   ) => {
-    let result: Array<{ type: string; field: string }> = []
-    if (Array.isArray(sorter)) {
-      if (sorter?.length > 0) {
-        result = sorter.map((item) => ({
-          type: item.order === 'ascend' ? SORT_TYPE.asc : SORT_TYPE.desc,
-          field: item.field as string,
-        }))
-      }
-    } else {
-      const sortType = sorter?.order ? (sorter.order === 'ascend' ? SORT_TYPE.asc : SORT_TYPE.desc) : ''
-      const sortField = (sorter?.column?.dataIndex || '') as string
-      if (sortType && sortField) {
-        result.push({ type: sortType, field: sortField })
-      }
-    }
+    const result = sorter.map((item) => ({
+      type: item.order === 'ascend' ? SORT_TYPE.asc : SORT_TYPE.desc,
+      field: item.field as string,
+    }))
     dispatch(setTableQuery({ id: tableName, target: { sorts: result } }))
   }
 

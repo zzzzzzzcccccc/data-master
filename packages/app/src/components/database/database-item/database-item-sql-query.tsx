@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Flex, Button, Alert } from 'antd'
+import { Flex, Button } from 'antd'
 import RouteDrawer from '../../route-drawer'
 import SqlEditor from '../../sql-editor'
 import styles from './database-item.module.scss'
@@ -19,12 +19,13 @@ function DatabaseItemSqlQuery() {
   const dispatch = useAppDispatch()
   const [runSql, { isLoading }] = useRunSqlMutation()
 
-  const { code, isError, errorMsg } = useMemo(() => {
+  const { code } = useMemo(() => {
     const item = sqlRunCodes?.[databaseId] || {}
     return {
       code: item?.value || '',
       isError: item?.isError,
       errorMsg: item?.errorMsg,
+      data: item?.data,
     }
   }, [databaseId, sqlRunCodes])
 
@@ -42,10 +43,12 @@ function DatabaseItemSqlQuery() {
     const result = await runSql({ configuration, code })
     // @ts-ignore
     const errorMsg = result?.error
+    // @ts-ignore
+    const data = result?.data
     dispatch(
       setSqlRunCode({
         id: databaseId,
-        target: { isError: !!errorMsg, errorMsg: errorMsg ? errorMsg : '' },
+        target: { isError: !!errorMsg, errorMsg: errorMsg ? errorMsg : '', data },
       }),
     )
   }
@@ -61,13 +64,11 @@ function DatabaseItemSqlQuery() {
       classNames={{ header: styles.dbDrawerHeader, body: styles.dbDrawerBody }}
     >
       <Flex className={styles.dbDrawerEditor} vertical align="flex-start" justify="flex-start">
-        <SqlEditor defaultValue={code} onChange={handleOnCodeChanged} style={{ width: '100%', height: '100%' }} />
+        <SqlEditor className="w100 h100" defaultValue={code} onChange={handleOnCodeChanged} />
       </Flex>
-      {isError && (
-        <Flex className={styles.dbDrawerError} vertical align="flex-start" justify="flex-start">
-          <Alert message={errorMsg} type="error" showIcon />
-        </Flex>
-      )}
+      <Flex className={styles.dbDrawerWrapper} vertical align="flex-start" justify="flex-start">
+        hello
+      </Flex>
     </RouteDrawer>
   )
 }

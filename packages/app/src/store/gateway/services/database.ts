@@ -1,10 +1,10 @@
 import { type EndpointBuilder } from '@reduxjs/toolkit/query/react'
-import { type ConnectionConfiguration, type Table, type TableDetails, URI } from '@dm/core'
+import { type ConnectionConfiguration, type Table, type TableDetails, type TableSqlResult, URI } from '@dm/core'
 import { type BaseRPCQuery } from '../gateway'
 import { type TableQueryPayload } from '../../slices/container-slice'
 
 const database = (build: EndpointBuilder<BaseRPCQuery, string, string>) => ({
-  runSql: build.mutation<unknown, { configuration: ConnectionConfiguration; code: string }>({
+  runSql: build.mutation<TableSqlResult, { configuration: ConnectionConfiguration; code: string }>({
     query: (payload) => ({
       uri: URI.database?.[payload.configuration.client],
       method: 'runSql',

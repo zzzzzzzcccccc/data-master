@@ -9,6 +9,7 @@ import {
   TableIndex,
   TableForeign,
   TableCheck,
+  TableSqlResult,
 } from '@dm/core'
 import mysql, { Connection, ConnectionOptions } from 'mysql2/promise'
 
@@ -39,9 +40,17 @@ class MysqlClient extends DatabaseClient implements DatabaseClientImp<Connection
     return true
   }
 
-  public runSql(configuration: ConnectionOptions, sql: string): Promise<unknown> {
-    return this.connection(configuration, (connection) => {
-      return connection.execute(sql)
+  public runSql(configuration: ConnectionOptions, sql: string): Promise<TableSqlResult> {
+    return this.connection(configuration, async (connection) => {
+      const [rows, fields] = await connection.execute<mysql.RowDataPacket[] | mysql.ResultSetHeader>(sql)
+      const rowsIsArray = Array.isArray(rows)
+
+      return {
+        rows: rowsIsArray ? rows.map((item) => rowToString(item)) : [],
+        fields: rowsIsArray ? fields.map((field) => field.name) : [],
+        affectedRows: rowsIsArray ? undefined : (rows as mysql.ResultSetHeader)?.affectedRows,
+        insertId: rowsIsArray ? undefined : (rows as mysql.ResultSetHeader)?.insertId,
+      }
     })
   }
 

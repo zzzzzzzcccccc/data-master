@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { PAGE_SIZE_MAPPER } from '@dm/core'
+import { PAGE_SIZE_MAPPER, type TableSqlResult } from '@dm/core'
 
 export type RunCode = {
   value: string
   isError?: boolean
   errorMsg?: string
+  data?: TableSqlResult
 }
 
 export type TableQueryPayload = {
@@ -42,7 +43,7 @@ const containerSlice = createSlice({
     },
     setSqlRunCode(state, action: PayloadAction<{ id: string; target: Partial<RunCode> }>) {
       if (!state.sqlRunCodes[action.payload.id]) {
-        state.sqlRunCodes[action.payload.id] = { value: '', isError: false, errorMsg: '' }
+        state.sqlRunCodes[action.payload.id] = { value: '', isError: false, errorMsg: '', data: {} }
       }
       state.sqlRunCodes[action.payload.id] = { ...state.sqlRunCodes[action.payload.id], ...action.payload.target }
     },

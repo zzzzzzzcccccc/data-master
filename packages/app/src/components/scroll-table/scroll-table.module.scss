@@ -1,0 +1,11 @@
+.scrollTableWrapper {
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+  :global(.ant-table-wrapper) {
+    width: 100%;
+  }
+  :global(.ant-table-container) {
+    border-top-width: 0 !important;
+  }
+}
