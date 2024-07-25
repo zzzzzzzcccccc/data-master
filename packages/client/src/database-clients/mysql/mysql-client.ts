@@ -40,16 +40,18 @@ class MysqlClient extends DatabaseClient implements DatabaseClientImp<Connection
     return true
   }
 
-  public runSql(configuration: ConnectionOptions, sql: string): Promise<TableSqlResult> {
+  public runSql(configuration: ConnectionOptions, sql: string): Promise<TableSqlResult | null> {
     return this.connection(configuration, async (connection) => {
+      const now = Date.now()
       const [rows, fields] = await connection.execute<mysql.RowDataPacket[] | mysql.ResultSetHeader>(sql)
       const rowsIsArray = Array.isArray(rows)
 
       return {
         rows: rowsIsArray ? rows.map((item) => rowToString(item)) : [],
         fields: rowsIsArray ? fields.map((field) => field.name) : [],
-        affectedRows: rowsIsArray ? undefined : (rows as mysql.ResultSetHeader)?.affectedRows,
-        insertId: rowsIsArray ? undefined : (rows as mysql.ResultSetHeader)?.insertId,
+        affectedRows: rowsIsArray ? undefined : numberToString((rows as mysql.ResultSetHeader)?.affectedRows),
+        insertId: rowsIsArray ? undefined : numberToString((rows as mysql.ResultSetHeader)?.insertId),
+        duration: numberToString(Date.now() - now),
       }
     })
   }
@@ -88,6 +90,7 @@ class MysqlClient extends DatabaseClient implements DatabaseClientImp<Connection
     { tableName, limit = [0, 0], sorts = [] }: QueryListPayload,
   ): Promise<QueryListResult<Result> | null> {
     return this.connection(configuration, async (connection) => {
+      const now = Date.now()
       const orderByClause = sorts.length
         ? 'ORDER BY ' + sorts.map((sort) => `${sort.field} ${sort.type}`).join(', ')
         : ''
@@ -97,8 +100,11 @@ class MysqlClient extends DatabaseClient implements DatabaseClientImp<Connection
         ),
         connection.execute<mysql.RowDataPacket[]>(`SELECT COUNT(*) as total FROM ${tableName}`),
       ])
-      const total = numberToString(countRows?.[0]?.total || 0)
-      return { data: rows.map((item) => rowToString(item) as Result), total }
+      return {
+        data: rows.map((item) => rowToString(item) as Result),
+        total: numberToString(countRows?.[0]?.total || 0),
+        duration: numberToString(Date.now() - now),
+      }
     })
   }
 

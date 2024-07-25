@@ -7,7 +7,7 @@ import styles from './database-item.module.scss'
 
 function DatabaseItemTable() {
   const { details, isLoading, handleOnPageChange, handleOnTableChange } = useGetDatabaseTableDetails()
-  const { wrapperRef, scroll } = useAntdTableScroll({ scene: AntdTableScrollScene.detail })
+  const { wrapperRef, scroll } = useAntdTableScroll({ scene: AntdTableScrollScene.databaseDetail })
 
   return (
     <>

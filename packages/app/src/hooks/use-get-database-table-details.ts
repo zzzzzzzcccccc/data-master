@@ -11,7 +11,7 @@ const { useGetTableDetailQuery, useGetTableDataQuery } = gatewayApi
 function buildTableProps(
   details: TableDetails,
   query: { pageIndex: number; pageSize: number },
-  tableData?: { data: Record<string, unknown>[]; total: string } | null,
+  tableData?: { data: Record<string, unknown>[]; total: string; duration: string } | null,
 ) {
   const { columns, rowKey } = details.columns.reduce(
     (acc, item) => {
@@ -38,6 +38,7 @@ function buildTableProps(
     columns,
     rowKey,
     dataSource: tableData?.data,
+    duration: tableData?.duration ? +tableData.duration : 0,
     pagination: {
       current: query.pageIndex,
       pageSize: query.pageSize,

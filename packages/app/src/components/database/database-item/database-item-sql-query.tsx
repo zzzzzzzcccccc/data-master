@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import { Flex, Button } from 'antd'
 import RouteDrawer from '../../route-drawer'
 import SqlEditor from '../../sql-editor'
+import DatabaseItemSqlQueryResult from './database-item-sql-query-result'
 import styles from './database-item.module.scss'
 import {
   useTranslation,
@@ -19,13 +20,14 @@ function DatabaseItemSqlQuery() {
   const dispatch = useAppDispatch()
   const [runSql, { isLoading }] = useRunSqlMutation()
 
-  const { code } = useMemo(() => {
+  const { code, isError, showResult, duration, total } = useMemo(() => {
     const item = sqlRunCodes?.[databaseId] || {}
     return {
-      code: item?.value || '',
       isError: item?.isError,
-      errorMsg: item?.errorMsg,
-      data: item?.data,
+      duration: item?.data?.duration,
+      total: (item?.data?.rows || []).length,
+      code: item?.value || '',
+      showResult: Object.keys(item?.data || {}).length > 0 || item?.isError,
     }
   }, [databaseId, sqlRunCodes])
 
@@ -55,20 +57,27 @@ function DatabaseItemSqlQuery() {
 
   return (
     <RouteDrawer
+      title={t('sql_query_title')}
       extra={
-        <Button type="primary" disabled={!code.trim()} loading={isLoading} ghost onClick={handleOnClickRunCode}>
-          {t('sql.run')}
-        </Button>
+        <Flex align="center" className={styles.dbDrawerHeaderRight}>
+          {total > 0 && <span>{t('sql_query_total', { total })}</span>}
+          {showResult && !isError && <span>{t('sql_query_duration', { duration })}</span>}
+          <Button type="primary" disabled={!code.trim()} loading={isLoading} ghost onClick={handleOnClickRunCode}>
+            {t('sql.run')}
+          </Button>
+        </Flex>
       }
       width={wh[0]}
       classNames={{ header: styles.dbDrawerHeader, body: styles.dbDrawerBody }}
     >
-      <Flex className={styles.dbDrawerEditor} vertical align="flex-start" justify="flex-start">
+      <Flex className={styles.dbDrawerEditor} vertical align="center" justify="center">
         <SqlEditor className="w100 h100" defaultValue={code} onChange={handleOnCodeChanged} />
       </Flex>
-      <Flex className={styles.dbDrawerWrapper} vertical align="flex-start" justify="flex-start">
-        hello
-      </Flex>
+      {showResult && (
+        <Flex className={styles.dbDrawerWrapper} vertical align="flex-start" justify="flex-start">
+          <DatabaseItemSqlQueryResult />
+        </Flex>
+      )}
     </RouteDrawer>
   )
 }

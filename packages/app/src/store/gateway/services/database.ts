@@ -26,8 +26,8 @@ const database = (build: EndpointBuilder<BaseRPCQuery, string, string>) => ({
     }),
   }),
   getTableData: build.query<
-    { data: Array<Record<string, unknown>>; total: string } | null,
-    { configuration: ConnectionConfiguration; query: { tableName: string } & TableQueryPayload }
+    { data: Array<Record<string, unknown>>; total: string; duration: string } | null,
+    { configuration: ConnectionConfiguration; query: { tableName: string } & Omit<TableQueryPayload, 'duration'> }
   >({
     query: (payload) => {
       return {

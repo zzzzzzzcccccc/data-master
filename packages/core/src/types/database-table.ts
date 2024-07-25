@@ -4,6 +4,7 @@ export interface TableSqlResult {
   affectedRows?: string
   insertId?: string
   fieldCount?: string
+  duration?: string
 }
 
 export interface TableColumn {

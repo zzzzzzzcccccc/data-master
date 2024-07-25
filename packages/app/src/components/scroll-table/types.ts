@@ -22,4 +22,5 @@ export interface ScrollTableProps {
     _f: Record<string, FilterValue | null>,
     sorters: SorterResult<Record<string, unknown>>[],
   ) => void
+  hiddenTopBorder?: boolean
 }

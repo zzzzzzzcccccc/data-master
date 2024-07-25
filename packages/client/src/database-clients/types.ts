@@ -9,13 +9,14 @@ export type QueryListPayload = {
 export type QueryListResult<Result> = {
   data: Result[]
   total: string
+  duration: string
 }
 
 export interface DatabaseClientImp<Configuration, Connection> {
   testConnection(configuration: Configuration): Promise<boolean>
   connection<R>(configuration: Configuration, inConnection?: (connection: Connection) => Promise<R>): Promise<R | null>
   disconnection(connection: Connection): Promise<boolean>
-  runSql(configuration: Configuration, sql: string): Promise<TableSqlResult>
+  runSql(configuration: Configuration, sql: string): Promise<TableSqlResult | null>
   getTables(configuration: Configuration): Promise<Table[] | null>
   getTableInfo(configuration: Configuration, tableName: string): Promise<TableDetails | null>
   queryList<Result extends Record<string, unknown>>(

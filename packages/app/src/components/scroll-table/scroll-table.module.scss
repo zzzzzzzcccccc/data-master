@@ -5,6 +5,9 @@
   :global(.ant-table-wrapper) {
     width: 100%;
   }
+}
+
+.hiddenTopBorder {
   :global(.ant-table-container) {
     border-top-width: 0 !important;
   }

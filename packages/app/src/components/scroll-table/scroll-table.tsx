@@ -8,7 +8,16 @@ import { type FilterValue, type SorterResult, type TablePaginationConfig } from 
 const ROW_KEY = '__row_key__'
 
 function ScrollTable(props: ScrollTableProps) {
-  const { isLoading = false, wrapperRef, scroll, rowKey = '', columns = [], dataSource = [], onChange } = props
+  const {
+    isLoading = false,
+    wrapperRef,
+    scroll,
+    rowKey = '',
+    columns = [],
+    dataSource = [],
+    onChange,
+    hiddenTopBorder = true,
+  } = props
 
   const fieldKey = useMemo(() => {
     if (!rowKey) {
@@ -32,8 +41,10 @@ function ScrollTable(props: ScrollTableProps) {
     onChange?.(_p, _f, Array.isArray(sorter) ? sorter : [sorter])
   }
 
+  const className = [styles.scrollTableWrapper, hiddenTopBorder ? styles.hiddenTopBorder : ''].join(' ')
+
   return (
-    <Flex className={styles.scrollTableWrapper} vertical justify="flex-start" align="flex-start" ref={wrapperRef}>
+    <Flex className={className} vertical justify="flex-start" align="flex-start" ref={wrapperRef}>
       <Table
         loading={isLoading}
         onChange={handleOnTableChange}
